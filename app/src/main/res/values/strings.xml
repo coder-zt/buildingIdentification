@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">buildingIdentification</string>
+    
+    <string-array name="magic_tab_name">
+        <item name = "frist">数据处理</item>
+        <item name = "second">数据管理</item>
+    </string-array>
+</resources>
