@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="300dp"
+    android:layout_height="200dp">
+    <RelativeLayout
+        android:id="@+id/operation_area"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:gravity="center">
+
+
+        <ImageView
+            android:id="@+id/to_left"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toLeftOf="@+id/delete_btn"
+            android:padding="10dp"
+            android:rotation="180"
+            android:layout_alignTop="@+id/delete_btn"
+            android:src="@mipmap/to_right" />
+
+        <ImageView
+            android:id="@+id/to_right"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_toRightOf="@+id/delete_btn"
+            android:padding="10dp"
+            android:layout_alignTop="@+id/delete_btn"
+            android:src="@mipmap/to_right" />
+
+        <com.zhangtao.buildingidentification.Views.Circle_ImageView
+            android:id="@+id/delete_btn"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="10dp"
+            android:src="@mipmap/delete_btn"
+            android:background="@drawable/shape_panel_circle"
+            android:layout_centerInParent="true"
+            android:layout_margin="24dp"
+            android:layout_below="@+id/to_up"/>
+
+        <ImageView
+            android:id="@+id/to_down"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_below="@+id/delete_btn"
+            android:layout_alignLeft="@+id/delete_btn"
+            android:padding="10dp"
+            android:rotation="90"
+            android:src="@mipmap/to_right" />
+
+        <ImageView
+            android:id="@+id/to_up"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="10dp"
+            android:rotation="-90"
+            android:layout_alignLeft="@+id/delete_btn"
+            android:src="@mipmap/to_right" />
+
+
+</RelativeLayout>
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:layout_alignTop="@+id/operation_area"
+        android:layout_toRightOf="@+id/operation_area">
+
+        <RadioButton
+            android:id="@+id/unit_m"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="m"/>
+        <RadioButton
+            android:id="@+id/unit_dm"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="dm"/>
+        <RadioButton
+            android:id="@+id/unit_cm"
+            android:layout_weight="1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="cm"/>
+
+    </RadioGroup>
+</RelativeLayout>

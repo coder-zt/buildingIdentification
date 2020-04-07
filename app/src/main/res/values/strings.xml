@@ -1,8 +1,22 @@
 <resources>
     <string name="app_name">buildingIdentification</string>
-    
+
     <string-array name="magic_tab_name">
-        <item name = "frist">数据处理</item>
-        <item name = "second">数据管理</item>
+        <item name="frist">数据处理</item>
+        <item name="second">数据管理</item>
+    </string-array>
+
+    <string-array name="indicator_title">
+        <item>推荐</item>
+        <item>订阅</item>
+        <item>历史</item>
+    </string-array>
+
+    <string-array name="survey_tab_name">
+        <item name="frist">主页</item>
+        <item name="second">基本表</item>
+        <item name="thrid">界址表示表</item>
+        <item name="fourth">界址签章表</item>
+        <item name="fifth">调查审核表</item>
     </string-array>
 </resources>

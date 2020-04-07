@@ -1,11 +1,16 @@
 package com.zhangtao.buildingidentification;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageView;
@@ -22,11 +27,13 @@ import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerInd
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.abs.IPagerTitleView;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.titles.CommonPagerTitleView;
 
+import static com.zhangtao.buildingidentification.Utils.Constant.MAIN_PAGE;
 import static com.zhangtao.buildingidentification.Utils.Constant.selected;
 import static com.zhangtao.buildingidentification.Utils.Constant.selector;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity{
 
+    private static final String TAG = "MainActivity";
     private NoScrollViewPager mViewPager;
     private String[] mDataList;
 
@@ -35,6 +42,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         initView();
+
+        getPermission();
+    }
+
+    void getPermission(){
+        if (ContextCompat.checkSelfPermission(MainActivity.this,
+            Manifest.permission.READ_EXTERNAL_STORAGE)
+            != PackageManager.PERMISSION_GRANTED) {
+
+        // Permission is not granted
+        // Should we show an explanation?
+        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
+                Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+        } else {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1);
+        }
+    }
     }
 
     /**
@@ -44,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         mViewPager = findViewById(R.id.view_pager);
         mDataList = this.getApplicationContext().getResources().getStringArray(R.array.magic_tab_name);
         FragmentManager supportFragmentManager = getSupportFragmentManager();
-        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(supportFragmentManager);
+        ViewPagerAdapter viewPagerAdapter = new ViewPagerAdapter(MAIN_PAGE,supportFragmentManager, mDataList.length);
         mViewPager.setAdapter(viewPagerAdapter);
         mViewPager.setScroll(false);
         initMagicIndicator();
