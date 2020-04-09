@@ -25,18 +25,24 @@
             android:text="房屋信息采集"
             android:gravity="center"
             android:textSize="28sp"
-            android:textColor="@color/blcak"/>
+            android:textColor="@color/black"/>
     </LinearLayout>
 
-    <net.lucode.hackware.magicindicator.MagicIndicator
-        android:id="@+id/magic_indicator"
+    <com.zhangtao.buildingidentification.Views.TableBar
+        android:id="@+id/table_bar"
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
-    
-<androidx.viewpager.widget.ViewPager
-    android:id="@+id/view_pager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginBottom="50dp"/>
-\
+        android:layout_height="45dp" />
+
+
+    <WebView
+        android:id="@+id/table_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+<!--<androidx.viewpager.widget.ViewPager-->
+<!--    android:id="@+id/view_pager"-->
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="match_parent"-->
+<!--    android:layout_marginBottom="50dp"/>-->
+
 </LinearLayout>
