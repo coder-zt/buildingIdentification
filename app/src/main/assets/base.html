@@ -1,127 +1,174 @@
-<html><head>
+<html>
+
+<head>
 	<meta charset="UTF-8">
 	<title></title>
+	<script>
+		function toJson() {
+			var data = document.getElementsByName("info")
+			var str = '{"base_page" : {'
+			for (var i = 0; i < data.length; i++) {
+				str += '"' + data[i].id + '":"' + data[i].value + '"'
+				if (i != data.length - 1) {
+					str += ","
+				}
+			}
+			str += '}}'
+<!--			console.log(str);-->
+			Android.toJson(str);
+		}
+
+
+		function parseJsonFromHtml() {
+			var text = '{"index_page" : {"index":"lllsztdlp","code":"lllsztdlp","name":"张滔",' +
+				' "time_year":"2020","time_month":"4","time_day":"11","eare_name":"开州区"}}'
+			parseJson(text)
+		}
+
+		function parseJson(info) {
+<!--			console.log(info)-->
+			obj = JSON.parse(info)
+			for (i in obj.base_page) {
+<!--				console.log(i + "===" + obj.base_page[i])-->
+				document.getElementById(i).value = obj.base_page[i]
+			}
+		}
+	</script>
+
 	<style type="text/css">
-		table{
-			width:1080px;
-			height:1500px;
+		table {
+			width: 1080px;
+			height: 1500px;
 			border-collapse: collapse;
-			text-align:center;
+			text-align: center;
 			table-layout: fixed;
 		}
 
+		input {
+			border-style: none;
+			height: 100%;
+			width: 100%;
+			font-size: 30px;
+			text-align: center;
+		}
 	</style>
 </head>
-	<body>
-	<table border="1">
-		<tbody>
-		<td colspan="6"> 基本表</td>
-		<tr>
-			<td rowspan="4">土地权利人</td>
-			<td rowspan="4" colspan="2"></td>
-			<td>单位性质</td>
-			<td colspan="2" ></td>
-		</tr>
-		<tr>
-			<td>证件类型</td>
-			<td colspan="2" ></td>
-		</tr>
-		<tr>
-			<td>证件编号</td>
-			<td colspan="2" ></td>
-		</tr>
-		<tr>
-			<td>通信地址</td>
-			<td colspan="2" ></td>
-		</tr>
-		<tr>
-			<td>土地权属性质</td>
-			<td colspan="2" ></td>
-			<td>使用权类型</td>
-			<td colspan="2" ></td>
-		</tr>
-		<tr>
-			<td>土地坐落落 </td>
-			<td colspan="5" ></td>
-		</tr>
-		<tr>
-			<td rowspan="2">法定代表人或负责人姓名</td>
-			<td rowspan="2"></td>
-			<td>证件类型</td>
-			<td></td>
-			<td rowspan="2">电话</td>
-			<td rowspan="2"></td>
-		</tr>
-		<tr>
-		<td>证件编号</td>
-		</tr>
-		<tr>
-			<td rowspan="2">代理人姓名</td>
-			<td rowspan="2"></td>
-			<td>证件类型</td>
-			<td></td>
-			<td rowspan="2">电话</td>
-			<td rowspan="2"></td>
-		</tr>
-		<tr>
-		<td>证件编号</td>
-		</tr>
-		
-		<tr>
-			<td>国民经济行业分类代码 </td>
-			<td colspan="5" ></td>
-		</tr>
-		<tr>
-			<td>预编宗地代码</td>
-			<td colspan="2" ></td>
-			<td>宗地代码</td>
-			<td colspan="2" ></td>
-		</tr>
-		<tr>
-			<td rowspan="2">所在图幅号</td>
-			<td>比例尺</td>
-			<td colspan="4"></td>
-		</tr>
-		<tr>
-			<td>图幅号</td>
-			<td colspan="4"></td>
-		</tr>
-		<tr>
-			<td rowspan="2">批准用途</td>
-			<td colspan="2"></td>
-			<td rowspan="2">实际用途</td>
-			<td colspan="2"></td>
-		</tr>
-		<tr>
-			<td>地类编码</td>
-			<td></td>
-			<td>地类编码</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td rowspan="2">批准面积</td>
-			<td rowspan="2"></td>
-			<td rowspan="2">宗地面积</td>
-			<td rowspan="2"></td>
-			<td>建筑占地面积</td>
-			<td></td>
-		</tr>
-			<td>建筑面积</td>
-			<td></td>
-		</tr>
-		<tr>
-			<td>使用期限 </td>
-			<td colspan="5" ></td>
-		</tr>
-		<tr>
-			<td>共有/共用权利人情况 </td>
-			<td colspan="5" ></td>
-		</tr>
-		<tr>
-			<td>备注 </td>
-			<td colspan="5" ></td>
-		</tr>
-	</tbody></table>
 
+<body>
+<table border="1 #ffffff solid">
+	<tbody>
+	<td colspan="6"> 基本表</td>
+	<tr>
+		<td rowspan="4">土地权利人</td>
+		<td rowspan="4" colspan="2"><input id='土地权利人' type='text' name='info' /></td>
+		<td>单位性质</td>
+		<td colspan="2"><input id='单位性质' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>证件类型</td>
+		<td colspan="2"><input id='证件类型' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>证件编号</td>
+		<td colspan="2"><input id='证件编号' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>通信地址</td>
+		<td colspan="2"><input id='通信地址' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>土地权属性质</td>
+		<td colspan="2"><input id='土地权属性质' type='text' name='info' /></td>
+		<td>使用权类型</td>
+		<td colspan="2"><input id='使用权类型' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>土地坐落落 </td>
+		<td colspan="5"><input id='土地坐落落 ' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td rowspan="2">法定代表人或负责人姓名</td>
+		<td rowspan="2"><input id='法定代表人或负责人姓名' type='text' name='info' /></td>
+		<td>证件类型</td>
+		<td><input id='证件类型1' type='text' name='info' /></td>
+		<td rowspan="2">电话</td>
+		<td rowspan="2"><input id='电话' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>证件编号</td>
+		<td><input id='证件编号2' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td rowspan="2">代理人姓名</td>
+		<td rowspan="2"><input id='代理人姓名' type='text' name='info' /></td>
+		<td>证件类型</td>
+		<td><input id='证件类型3' type='text' name='info' /></td>
+		<td rowspan="2">电话</td>
+		<td rowspan="2"><input id='电话4' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>证件编号</td>
+		<td><input id='证件编号5' type='text' name='info' /></td>
+	</tr>
 
-	</body></html>
+	<tr>
+		<td>国民经济行业分类代码 </td>
+		<td colspan="5"><input id='国民经济行业分类代码 ' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>预编宗地代码</td>
+		<td colspan="2"><input id='预编宗地代码' type='text' name='info' /></td>
+		<td>宗地代码</td>
+		<td colspan="2"><input id='宗地代码' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td rowspan="2">所在图幅号</td>
+		<td>比例尺</td>
+		<td colspan="4"><input id='比例尺' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>图幅号</td>
+		<td colspan="4"><input id='图幅号' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td rowspan="2">批准用途</td>
+		<td colspan="2"><input id='批准用途' type='text' name='info' /></td>
+		<td rowspan="2">实际用途</td>
+		<td colspan="2"><input id='实际用途' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>地类编码</td>
+		<td><input id='地类编码' type='text' name='info' /></td>
+		<td>地类编码</td>
+		<td><input id='地类编码6' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td rowspan="2">批准面积</td>
+		<td rowspan="2"><input id='批准面积' type='text' name='info' /></td>
+		<td rowspan="2">宗地面积</td>
+		<td rowspan="2"><input id='宗地面积' type='text' name='info' /></td>
+		<td>建筑占地面积</td>
+		<td><input id='建筑占地面积' type='text' name='info' /></td>
+	</tr>
+	<td>建筑面积</td>
+	<td><input id='建筑面积' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>使用期限 </td>
+		<td colspan="5"><input id='使用期限 ' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>共有/共用权利人情况 </td>
+		<td colspan="5"><input id='共有/共用权利人情况 ' type='text' name='info' /></td>
+	</tr>
+	<tr>
+		<td>备注 </td>
+		<td colspan="5"><input id='备注 ' type='text' name='info' /></td>
+	</tr>
+	</tbody>
+</table>
+<input onclick="toJson()" type="button" value="toJson" />
+
+</body>
+
+</html>

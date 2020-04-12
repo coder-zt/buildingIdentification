@@ -1,0 +1,1432 @@
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        .title {
+            height: 50px;
+            border: 1px #000 solid;
+            width: 1080px;
+            font-size: 24px;
+            line-height: 50px;
+            text-align: center;
+        }
+
+        .tables {
+            width: 1080px;
+
+        }
+
+        table {
+            border-collapse: collapse;
+            height: 1450px;
+            text-align: center;
+        }
+
+        .fristrow {
+            height: 55px;
+        }
+
+        .secondrow {
+            height: 100px;
+        }
+
+        .left_table {
+            width: 380px;
+            border-width: 1px 0.5px 1px 1px;
+            float: left;
+        }
+
+        .right_table {
+            width: 700px;
+            border-width: 1px 1px 1px 0.5px;
+        }
+
+
+        .species {
+            height: 50px;
+            width: 20px;
+            writing-mode: vertical-lr;
+            text-align: center;
+            vertical-align: middle;
+            font-size: 16px;
+            margin: 0 auto;
+        }
+
+        .final_line {
+            height: 100%;
+        }
+
+        .secondrow>td {
+            width: 33px;
+        }
+
+        td {
+            border: 1px #000 solid;
+        }
+
+
+
+
+        input {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            border-style: none;
+        }
+
+        /* 自定义复选框样式 */
+
+        input[type="radio"] {
+            display: none;
+            width: 1.54rem;
+            height: 1.54rem;
+            display: inline-block;
+            text-align: center;
+            vertical-align: baseline;
+            line-height: 1.54rem;
+            position: relative;
+            outline: none;
+            -webkit-appearance: none;
+            border: 1px solid #fff;
+            -webkit-tab-highlight-color: rgba(0, 0, 0, 0);
+            color: #fff;
+            background: #fff;
+        }
+
+        input[type="radio"]::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: #fff;
+            width: 100%;
+            height: 100%;
+            border: 1px solid #999999;
+            color: #fff;
+        }
+
+        input[type="radio"]:checked::before {
+            content: "\2713";
+            background-color: #657AFE;
+            border: 1px solid #657AFE;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            color: #fff;
+            font-size: 1.1rem;
+        }
+
+        .data_line {
+            height: 43px;
+        }
+
+        #blank {
+            width: 100px;
+        }
+
+        #header {
+            width: 80px;
+        }
+    </style>
+    <script>
+        function toJson() {
+            var data = '{"boundary_page":['
+            for (var index = 1; index <= 30; index++) {
+                var str = '{"' + index + '":{'
+                //四种name:jn\jn_type\jn_ltype\jn_lloc
+                //J1(3)
+                var JnLine = document.getElementsByName("J" + index)
+                //J1_type(6)
+                var Jn_type = document.getElementsByName("J" + index + "_type")
+                //J1_ltype(8)
+                var Jn_ltype = document.getElementsByName("J" + index + "_ltype")
+                //J1_lloc(3)----------J29_llocal
+                var Jn_llocal = document.getElementsByName("J" + index + "_llocal")
+                //遍历JnLine
+                for (var i = 0; i < JnLine.length; i++) {
+                    str += '"' + JnLine[i].id + '":"' + JnLine[i].value + '",'
+                }
+                //遍历Jn_type
+                var default_type = -1
+                for (var i = 0; i < Jn_type.length; i++) {
+                    if (Jn_type[i].checked) {
+                        default_type = i + 1
+                    }
+                }
+                str += '"type":"' + default_type + '",'
+                //遍历Jn_ltype
+                var default_ltype = -1
+                for (var i = 0; i < Jn_ltype.length; i++) {
+                    if (Jn_ltype[i].checked) {
+                        default_ltype = i + 1
+
+                    }
+                }
+                str += '"ltype":"' + default_ltype + '",'
+                //遍历Jn_llocal
+                var default_llocal = -1
+                for (var i = 0; i < Jn_llocal.length; i++) {
+
+                    if (Jn_llocal[i].checked) {
+                        default_llocal = i + 1
+
+                    }
+                }
+                str += '"llocal":"' + default_llocal + '"}}'
+                data += str
+                if(index < 30){
+                    data += ','
+                }
+
+            }
+            data += ']}'
+            Android.toJson(data);
+        }
+        function addJson(){
+            var text = '{"boundary_page":[{"1":{"J1_index":"J1","J1_len":"11.1","J1_note":"","type":"3","ltype":"6","llocal":"1"}},{"2":{"J2_index":"J2","J2_len":"","J2_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"3":{"J3_index":"J3","J3_len":"","J3_note":"agrae","type":"3","ltype":"-1","llocal":"-1"}},{"4":{"J4_index":"J4","J4_len":"","J4_note":"eag","type":"3","ltype":"4","llocal":"-1"}},{"5":{"J5_index":"J5","J5_len":"ferafea","J5_note":"reagrf","type":"3","ltype":"-1","llocal":"-1"}},{"6":{"J6_index":"J6","J6_len":"eafeaw","J6_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"7":{"J7_index":"J7","J7_len":"eafeaf","J7_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"8":{"J8_index":"J8","J8_len":"afeaf","J8_note":"","type":"3","ltype":"3","llocal":"-1"}},{"9":{"J9_index":"J9","J9_len":"dasf","J9_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"10":{"J10_index":"J10","J10_len":"","J10_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"11":{"J11_index":"J11","J11_len":"","J11_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"12":{"J12_index":"J12","J12_len":"","J12_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"13":{"J13_index":"J13","J13_len":"","J13_note":"","type":"-1","ltype":"2","llocal":"-1"}},{"14":{"J14_index":"J14","J14_len":"","J14_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"15":{"J15_index":"J15","J15_len":"","J15_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"16":{"J16_index":"J16","J16_len":"","J16_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"17":{"J17_index":"J17","J17_len":"","J17_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"18":{"J18_index":"J18","J18_len":"","J18_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"19":{"J19_index":"J19","J19_len":"","J19_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"20":{"J20_index":"J20","J20_len":"","J20_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"21":{"J21_index":"J21","J21_len":"","J21_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"22":{"J22_index":"J22","J22_len":"","J22_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"23":{"J23_index":"J23","J23_len":"","J23_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"24":{"J24_index":"J24","J24_len":"","J24_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"25":{"J25_index":"J25","J25_len":"","J25_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"26":{"J26_index":"J26","J26_len":"","J26_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"27":{"J27_index":"J27","J27_len":"","J27_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"28":{"J28_index":"J28","J28_len":"","J28_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"29":{"J29_index":"J29","J29_len":"","J29_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"30":{"J30_index":"J30","type":"-1","ltype":"-1","llocal":"-1"}}]}'
+            parseJson(text)
+        }
+
+        function parseJson(tt){
+            ///var text = '{"boundary_page":[{"1":{"J1_index":"J1","J1_len":"11.1","J1_note":"","type":"3","ltype":"6","llocal":"1"}},{"2":{"J2_index":"J2","J2_len":"","J2_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"3":{"J3_index":"J3","J3_len":"","J3_note":"agrae","type":"3","ltype":"-1","llocal":"-1"}},{"4":{"J4_index":"J4","J4_len":"","J4_note":"eag","type":"3","ltype":"4","llocal":"-1"}},{"5":{"J5_index":"J5","J5_len":"ferafea","J5_note":"reagrf","type":"3","ltype":"-1","llocal":"-1"}},{"6":{"J6_index":"J6","J6_len":"eafeaw","J6_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"7":{"J7_index":"J7","J7_len":"eafeaf","J7_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"8":{"J8_index":"J8","J8_len":"afeaf","J8_note":"","type":"3","ltype":"3","llocal":"-1"}},{"9":{"J9_index":"J9","J9_len":"dasf","J9_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"10":{"J10_index":"J10","J10_len":"","J10_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"11":{"J11_index":"J11","J11_len":"","J11_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"12":{"J12_index":"J12","J12_len":"","J12_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"13":{"J13_index":"J13","J13_len":"","J13_note":"","type":"-1","ltype":"2","llocal":"-1"}},{"14":{"J14_index":"J14","J14_len":"","J14_note":"","type":"3","ltype":"-1","llocal":"-1"}},{"15":{"J15_index":"J15","J15_len":"","J15_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"16":{"J16_index":"J16","J16_len":"","J16_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"17":{"J17_index":"J17","J17_len":"","J17_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"18":{"J18_index":"J18","J18_len":"","J18_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"19":{"J19_index":"J19","J19_len":"","J19_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"20":{"J20_index":"J20","J20_len":"","J20_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"21":{"J21_index":"J21","J21_len":"","J21_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"22":{"J22_index":"J22","J22_len":"","J22_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"23":{"J23_index":"J23","J23_len":"","J23_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"24":{"J24_index":"J24","J24_len":"","J24_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"25":{"J25_index":"J25","J25_len":"","J25_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"26":{"J26_index":"J26","J26_len":"","J26_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"27":{"J27_index":"J27","J27_len":"","J27_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"28":{"J28_index":"J28","J28_len":"","J28_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"29":{"J29_index":"J29","J29_len":"","J29_note":"","type":"-1","ltype":"-1","llocal":"-1"}},{"30":{"J30_index":"J30","type":"-1","ltype":"-1","llocal":"-1"}}]}'
+            var obj = JSON.parse(tt)
+            for(var line in obj.boundary_page){
+                var lines = obj.boundary_page[line]
+                for(var item in lines){
+                    for(var id in lines[item]){
+
+                        if(id[0] == 'J'){
+                            document.getElementById(id).value = lines[item][id]
+                        }else if(id == 'type' && lines[item][id] != -1){
+                            var nId = 'J' + item + '_' + lines[item][id]
+<!--                            console.log(nId)-->
+                            document.getElementById(nId).checked = true
+                            //J1_1_ltype
+                        }else if(id == 'ltype' && lines[item][id] != -1){
+                            var nId = 'J' + item + '_' + lines[item][id] + '_ltype'
+<!--                            console.log(nId)-->
+                            document.getElementById(nId).checked = true
+                                //J2_3_lloc
+                        }else if(id == 'llocal' && lines[item][id] != -1){
+                            var nId = 'J' + item + '_' + lines[item][id]+ '_lloc'
+<!--                            console.log(nId)-->
+                            document.getElementById(nId).checked = true
+                        }
+
+                    }
+
+                }
+            }
+        }
+    </script>
+</head>
+
+<body>
+<!-- onclick="addJson()" -->
+<div class="title"  ondblclick="toJson()"> 界址表示表</div>
+<div class="tables">
+    <table class="left_table">
+        <tbody>
+        <tr class="fristrow">
+            <td id="header" rowspan="2">界址点号</td>
+            <td colspan="6"> 界标种类</td>
+        </tr>
+        <tr class="secondrow">
+            <td>
+                <div class="species">钢钉</div>
+            </td>
+            <td>
+                <div class="species">水泥桩</div>
+            </td>
+            <td>
+                <div class="species">钢钉</div>
+            </td>
+            <td>
+                <div class="species">喷涂</div>
+            </td>
+            <td>
+                <div class="species"></div>
+            </td>
+            <td>
+                <div class="species"></div>
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J1_index" type="text" value="J1" name="J1" /></td>
+            <td>
+                <input id="J1_1" class="square-check" type="radio" value="" name="J1_type" />
+            </td>
+
+            <td>
+                <input id="J1_2" class="square-check" type="radio" value="" name="J1_type" />
+            </td>
+            <td>
+                <input id="J1_3" class="square-check" type="radio" value="" name="J1_type" />
+            </td>
+            <td>
+                <input id="J1_4" class="square-check" type="radio" value="" name="J1_type" />
+            </td>
+
+            <td>
+                <input id="J1_5" class="square-check" type="radio" value="" name="J1_type" />
+            </td>
+            <td>
+                <input id="J1_6" class="square-check" type="radio" value="" name="J1_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J2_index" type="text" value="J2" name="J2" /></td>
+            <td>
+                <input id="J2_1" class="square-check" type="radio" value="" name="J2_type" />
+            </td>
+
+            <td>
+                <input id="J2_2" class="square-check" type="radio" value="" name="J2_type" />
+            </td>
+            <td>
+                <input id="J2_3" class="square-check" type="radio" value="" name="J2_type" />
+            </td>
+            <td>
+                <input id="J2_4" class="square-check" type="radio" value="" name="J2_type" />
+            </td>
+
+            <td>
+                <input id="J2_5" class="square-check" type="radio" value="" name="J2_type" />
+            </td>
+            <td>
+                <input id="J2_6" class="square-check" type="radio" value="" name="J2_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J3_index" type="text" value="J3" name="J3" /></td>
+            <td>
+                <input id="J3_1" class="square-check" type="radio" value="" name="J3_type" />
+            </td>
+
+            <td>
+                <input id="J3_2" class="square-check" type="radio" value="" name="J3_type" />
+            </td>
+            <td>
+                <input id="J3_3" class="square-check" type="radio" value="" name="J3_type" />
+            </td>
+            <td>
+                <input id="J3_4" class="square-check" type="radio" value="" name="J3_type" />
+            </td>
+
+            <td>
+                <input id="J3_5" class="square-check" type="radio" value="" name="J3_type" />
+            </td>
+            <td>
+                <input id="J3_6" class="square-check" type="radio" value="" name="J3_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J4_index" type="text" value="J4" name="J4" /></td>
+            <td>
+                <input id="J4_1" class="square-check" type="radio" value="" name="J4_type" />
+            </td>
+
+            <td>
+                <input id="J4_2" class="square-check" type="radio" value="" name="J4_type" />
+            </td>
+            <td>
+                <input id="J4_3" class="square-check" type="radio" value="" name="J4_type" />
+            </td>
+            <td>
+                <input id="J4_4" class="square-check" type="radio" value="" name="J4_type" />
+            </td>
+
+            <td>
+                <input id="J4_5" class="square-check" type="radio" value="" name="J4_type" />
+            </td>
+            <td>
+                <input id="J4_6" class="square-check" type="radio" value="" name="J4_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J5_index" type="text" value="J5" name="J5" /></td>
+            <td>
+                <input id="J5_1" class="square-check" type="radio" value="" name="J5_type" />
+            </td>
+
+            <td>
+                <input id="J5_2" class="square-check" type="radio" value="" name="J5_type" />
+            </td>
+            <td>
+                <input id="J5_3" class="square-check" type="radio" value="" name="J5_type" />
+            </td>
+            <td>
+                <input id="J5_4" class="square-check" type="radio" value="" name="J5_type" />
+            </td>
+
+            <td>
+                <input id="J5_5" class="square-check" type="radio" value="" name="J5_type" />
+            </td>
+            <td>
+                <input id="J5_6" class="square-check" type="radio" value="" name="J5_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J6_index" type="text" value="J6" name="J6" /></td>
+            <td>
+                <input id="J6_1" class="square-check" type="radio" value="" name="J6_type" />
+            </td>
+
+            <td>
+                <input id="J6_2" class="square-check" type="radio" value="" name="J6_type" />
+            </td>
+            <td>
+                <input id="J6_3" class="square-check" type="radio" value="" name="J6_type" />
+            </td>
+            <td>
+                <input id="J6_4" class="square-check" type="radio" value="" name="J6_type" />
+            </td>
+
+            <td>
+                <input id="J6_5" class="square-check" type="radio" value="" name="J6_type" />
+            </td>
+            <td>
+                <input id="J6_6" class="square-check" type="radio" value="" name="J6_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J7_index" type="text" value="J7" name="J7" /></td>
+            <td>
+                <input id="J7_1" class="square-check" type="radio" value="" name="J7_type" />
+            </td>
+
+            <td>
+                <input id="J7_2" class="square-check" type="radio" value="" name="J7_type" />
+            </td>
+            <td>
+                <input id="J7_3" class="square-check" type="radio" value="" name="J7_type" />
+            </td>
+            <td>
+                <input id="J7_4" class="square-check" type="radio" value="" name="J7_type" />
+            </td>
+
+            <td>
+                <input id="J7_5" class="square-check" type="radio" value="" name="J7_type" />
+            </td>
+            <td>
+                <input id="J7_6" class="square-check" type="radio" value="" name="J7_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J8_index" type="text" value="J8" name="J8" /></td>
+            <td>
+                <input id="J8_1" class="square-check" type="radio" value="" name="J8_type" />
+            </td>
+
+            <td>
+                <input id="J8_2" class="square-check" type="radio" value="" name="J8_type" />
+            </td>
+            <td>
+                <input id="J8_3" class="square-check" type="radio" value="" name="J8_type" />
+            </td>
+            <td>
+                <input id="J8_4" class="square-check" type="radio" value="" name="J8_type" />
+            </td>
+
+            <td>
+                <input id="J8_5" class="square-check" type="radio" value="" name="J8_type" />
+            </td>
+            <td>
+                <input id="J8_6" class="square-check" type="radio" value="" name="J8_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J9_index" type="text" value="J9" name="J9" /></td>
+            <td>
+                <input id="J9_1" class="square-check" type="radio" value="" name="J9_type" />
+            </td>
+
+            <td>
+                <input id="J9_2" class="square-check" type="radio" value="" name="J9_type" />
+            </td>
+            <td>
+                <input id="J9_3" class="square-check" type="radio" value="" name="J9_type" />
+            </td>
+            <td>
+                <input id="J9_4" class="square-check" type="radio" value="" name="J9_type" />
+            </td>
+
+            <td>
+                <input id="J9_5" class="square-check" type="radio" value="" name="J9_type" />
+            </td>
+            <td>
+                <input id="J9_6" class="square-check" type="radio" value="" name="J9_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J10_index" type="text" value="J10" name="J10" /></td>
+            <td>
+                <input id="J10_1" class="square-check" type="radio" value="" name="J10_type" />
+            </td>
+
+            <td>
+                <input id="J10_2" class="square-check" type="radio" value="" name="J10_type" />
+            </td>
+            <td>
+                <input id="J10_3" class="square-check" type="radio" value="" name="J10_type" />
+            </td>
+            <td>
+                <input id="J10_4" class="square-check" type="radio" value="" name="J10_type" />
+            </td>
+
+            <td>
+                <input id="J10_5" class="square-check" type="radio" value="" name="J10_type" />
+            </td>
+            <td>
+                <input id="J10_6" class="square-check" type="radio" value="" name="J10_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J11_index" type="text" value="J11" name="J11" /></td>
+            <td>
+                <input id="J11_1" class="square-check" type="radio" value="" name="J11_type" />
+            </td>
+
+            <td>
+                <input id="J11_2" class="square-check" type="radio" value="" name="J11_type" />
+            </td>
+            <td>
+                <input id="J11_3" class="square-check" type="radio" value="" name="J11_type" />
+            </td>
+            <td>
+                <input id="J11_4" class="square-check" type="radio" value="" name="J11_type" />
+            </td>
+
+            <td>
+                <input id="J11_5" class="square-check" type="radio" value="" name="J11_type" />
+            </td>
+            <td>
+                <input id="J11_6" class="square-check" type="radio" value="" name="J11_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J12_index" type="text" value="J12" name="J12" /></td>
+            <td>
+                <input id="J12_1" class="square-check" type="radio" value="" name="J12_type" />
+            </td>
+
+            <td>
+                <input id="J12_2" class="square-check" type="radio" value="" name="J12_type" />
+            </td>
+            <td>
+                <input id="J12_3" class="square-check" type="radio" value="" name="J12_type" />
+            </td>
+            <td>
+                <input id="J12_4" class="square-check" type="radio" value="" name="J12_type" />
+            </td>
+
+            <td>
+                <input id="J12_5" class="square-check" type="radio" value="" name="J12_type" />
+            </td>
+            <td>
+                <input id="J12_6" class="square-check" type="radio" value="" name="J12_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J13_index" type="text" value="J13" name="J13" /></td>
+            <td>
+                <input id="J13_1" class="square-check" type="radio" value="" name="J13_type" />
+            </td>
+
+            <td>
+                <input id="J13_2" class="square-check" type="radio" value="" name="J13_type" />
+            </td>
+            <td>
+                <input id="J13_3" class="square-check" type="radio" value="" name="J13_type" />
+            </td>
+            <td>
+                <input id="J13_4" class="square-check" type="radio" value="" name="J13_type" />
+            </td>
+
+            <td>
+                <input id="J13_5" class="square-check" type="radio" value="" name="J13_type" />
+            </td>
+            <td>
+                <input id="J13_6" class="square-check" type="radio" value="" name="J13_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J14_index" type="text" value="J14" name="J14" /></td>
+            <td>
+                <input id="J14_1" class="square-check" type="radio" value="" name="J14_type" />
+            </td>
+
+            <td>
+                <input id="J14_2" class="square-check" type="radio" value="" name="J14_type" />
+            </td>
+            <td>
+                <input id="J14_3" class="square-check" type="radio" value="" name="J14_type" />
+            </td>
+            <td>
+                <input id="J14_4" class="square-check" type="radio" value="" name="J14_type" />
+            </td>
+
+            <td>
+                <input id="J14_5" class="square-check" type="radio" value="" name="J14_type" />
+            </td>
+            <td>
+                <input id="J14_6" class="square-check" type="radio" value="" name="J14_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J15_index" type="text" value="J15" name="J15" /></td>
+            <td>
+                <input id="J15_1" class="square-check" type="radio" value="" name="J15_type" />
+            </td>
+
+            <td>
+                <input id="J15_2" class="square-check" type="radio" value="" name="J15_type" />
+            </td>
+            <td>
+                <input id="J15_3" class="square-check" type="radio" value="" name="J15_type" />
+            </td>
+            <td>
+                <input id="J15_4" class="square-check" type="radio" value="" name="J15_type" />
+            </td>
+
+            <td>
+                <input id="J15_5" class="square-check" type="radio" value="" name="J15_type" />
+            </td>
+            <td>
+                <input id="J15_6" class="square-check" type="radio" value="" name="J15_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J16_index" type="text" value="J16" name="J16" /></td>
+            <td>
+                <input id="J16_1" class="square-check" type="radio" value="" name="J16_type" />
+            </td>
+
+            <td>
+                <input id="J16_2" class="square-check" type="radio" value="" name="J16_type" />
+            </td>
+            <td>
+                <input id="J16_3" class="square-check" type="radio" value="" name="J16_type" />
+            </td>
+            <td>
+                <input id="J16_4" class="square-check" type="radio" value="" name="J16_type" />
+            </td>
+
+            <td>
+                <input id="J16_5" class="square-check" type="radio" value="" name="J16_type" />
+            </td>
+            <td>
+                <input id="J16_6" class="square-check" type="radio" value="" name="J16_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J17_index" type="text" value="J17" name="J17" /></td>
+            <td>
+                <input id="J17_1" class="square-check" type="radio" value="" name="J17_type" />
+            </td>
+
+            <td>
+                <input id="J17_2" class="square-check" type="radio" value="" name="J17_type" />
+            </td>
+            <td>
+                <input id="J17_3" class="square-check" type="radio" value="" name="J17_type" />
+            </td>
+            <td>
+                <input id="J17_4" class="square-check" type="radio" value="" name="J17_type" />
+            </td>
+
+            <td>
+                <input id="J17_5" class="square-check" type="radio" value="" name="J17_type" />
+            </td>
+            <td>
+                <input id="J17_6" class="square-check" type="radio" value="" name="J17_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J18_index" type="text" value="J18" name="J18" /></td>
+            <td>
+                <input id="J18_1" class="square-check" type="radio" value="" name="J18_type" />
+            </td>
+
+            <td>
+                <input id="J18_2" class="square-check" type="radio" value="" name="J18_type" />
+            </td>
+            <td>
+                <input id="J18_3" class="square-check" type="radio" value="" name="J18_type" />
+            </td>
+            <td>
+                <input id="J18_4" class="square-check" type="radio" value="" name="J18_type" />
+            </td>
+
+            <td>
+                <input id="J18_5" class="square-check" type="radio" value="" name="J18_type" />
+            </td>
+            <td>
+                <input id="J18_6" class="square-check" type="radio" value="" name="J18_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J19_index" type="text" value="J19" name="J19" /></td>
+            <td>
+                <input id="J19_1" class="square-check" type="radio" value="" name="J19_type" />
+            </td>
+
+            <td>
+                <input id="J19_2" class="square-check" type="radio" value="" name="J19_type" />
+            </td>
+            <td>
+                <input id="J19_3" class="square-check" type="radio" value="" name="J19_type" />
+            </td>
+            <td>
+                <input id="J19_4" class="square-check" type="radio" value="" name="J19_type" />
+            </td>
+
+            <td>
+                <input id="J19_5" class="square-check" type="radio" value="" name="J19_type" />
+            </td>
+            <td>
+                <input id="J19_6" class="square-check" type="radio" value="" name="J19_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J20_index" type="text" value="J20" name="J20" /></td>
+            <td>
+                <input id="J20_1" class="square-check" type="radio" value="" name="J20_type" />
+            </td>
+
+            <td>
+                <input id="J20_2" class="square-check" type="radio" value="" name="J20_type" />
+            </td>
+            <td>
+                <input id="J20_3" class="square-check" type="radio" value="" name="J20_type" />
+            </td>
+            <td>
+                <input id="J20_4" class="square-check" type="radio" value="" name="J20_type" />
+            </td>
+
+            <td>
+                <input id="J20_5" class="square-check" type="radio" value="" name="J20_type" />
+            </td>
+            <td>
+                <input id="J20_6" class="square-check" type="radio" value="" name="J20_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J21_index" type="text" value="J21" name="J21" /></td>
+            <td>
+                <input id="J21_1" class="square-check" type="radio" value="" name="J21_type" />
+            </td>
+
+            <td>
+                <input id="J21_2" class="square-check" type="radio" value="" name="J21_type" />
+            </td>
+            <td>
+                <input id="J21_3" class="square-check" type="radio" value="" name="J21_type" />
+            </td>
+            <td>
+                <input id="J21_4" class="square-check" type="radio" value="" name="J21_type" />
+            </td>
+
+            <td>
+                <input id="J21_5" class="square-check" type="radio" value="" name="J21_type" />
+            </td>
+            <td>
+                <input id="J21_6" class="square-check" type="radio" value="" name="J21_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J22_index" type="text" value="J22" name="J22" /></td>
+            <td>
+                <input id="J22_1" class="square-check" type="radio" value="" name="J22_type" />
+            </td>
+
+            <td>
+                <input id="J22_2" class="square-check" type="radio" value="" name="J22_type" />
+            </td>
+            <td>
+                <input id="J22_3" class="square-check" type="radio" value="" name="J22_type" />
+            </td>
+            <td>
+                <input id="J22_4" class="square-check" type="radio" value="" name="J22_type" />
+            </td>
+
+            <td>
+                <input id="J22_5" class="square-check" type="radio" value="" name="J22_type" />
+            </td>
+            <td>
+                <input id="J22_6" class="square-check" type="radio" value="" name="J22_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J23_index" type="text" value="J23" name="J23" /></td>
+            <td>
+                <input id="J23_1" class="square-check" type="radio" value="" name="J23_type" />
+            </td>
+
+            <td>
+                <input id="J23_2" class="square-check" type="radio" value="" name="J23_type" />
+            </td>
+            <td>
+                <input id="J23_3" class="square-check" type="radio" value="" name="J23_type" />
+            </td>
+            <td>
+                <input id="J23_4" class="square-check" type="radio" value="" name="J23_type" />
+            </td>
+
+            <td>
+                <input id="J23_5" class="square-check" type="radio" value="" name="J23_type" />
+            </td>
+            <td>
+                <input id="J23_6" class="square-check" type="radio" value="" name="J23_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J24_index" type="text" value="J24" name="J24" /></td>
+            <td>
+                <input id="J24_1" class="square-check" type="radio" value="" name="J24_type" />
+            </td>
+
+            <td>
+                <input id="J24_2" class="square-check" type="radio" value="" name="J24_type" />
+            </td>
+            <td>
+                <input id="J24_3" class="square-check" type="radio" value="" name="J24_type" />
+            </td>
+            <td>
+                <input id="J24_4" class="square-check" type="radio" value="" name="J24_type" />
+            </td>
+
+            <td>
+                <input id="J24_5" class="square-check" type="radio" value="" name="J24_type" />
+            </td>
+            <td>
+                <input id="J24_6" class="square-check" type="radio" value="" name="J24_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J25_index" type="text" value="J25" name="J25" /></td>
+            <td>
+                <input id="J25_1" class="square-check" type="radio" value="" name="J25_type" />
+            </td>
+
+            <td>
+                <input id="J25_2" class="square-check" type="radio" value="" name="J25_type" />
+            </td>
+            <td>
+                <input id="J25_3" class="square-check" type="radio" value="" name="J25_type" />
+            </td>
+            <td>
+                <input id="J25_4" class="square-check" type="radio" value="" name="J25_type" />
+            </td>
+
+            <td>
+                <input id="J25_5" class="square-check" type="radio" value="" name="J25_type" />
+            </td>
+            <td>
+                <input id="J25_6" class="square-check" type="radio" value="" name="J25_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J26_index" type="text" value="J26" name="J26" /></td>
+            <td>
+                <input id="J26_1" class="square-check" type="radio" value="" name="J26_type" />
+            </td>
+
+            <td>
+                <input id="J26_2" class="square-check" type="radio" value="" name="J26_type" />
+            </td>
+            <td>
+                <input id="J26_3" class="square-check" type="radio" value="" name="J26_type" />
+            </td>
+            <td>
+                <input id="J26_4" class="square-check" type="radio" value="" name="J26_type" />
+            </td>
+
+            <td>
+                <input id="J26_5" class="square-check" type="radio" value="" name="J26_type" />
+            </td>
+            <td>
+                <input id="J26_6" class="square-check" type="radio" value="" name="J26_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J27_index" type="text" value="J27" name="J27" /></td>
+            <td>
+                <input id="J27_1" class="square-check" type="radio" value="" name="J27_type" />
+            </td>
+
+            <td>
+                <input id="J27_2" class="square-check" type="radio" value="" name="J27_type" />
+            </td>
+            <td>
+                <input id="J27_3" class="square-check" type="radio" value="" name="J27_type" />
+            </td>
+            <td>
+                <input id="J27_4" class="square-check" type="radio" value="" name="J27_type" />
+            </td>
+
+            <td>
+                <input id="J27_5" class="square-check" type="radio" value="" name="J27_type" />
+            </td>
+            <td>
+                <input id="J27_6" class="square-check" type="radio" value="" name="J27_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J28_index" type="text" value="J28" name="J28" /></td>
+            <td>
+                <input id="J28_1" class="square-check" type="radio" value="" name="J28_type" />
+            </td>
+
+            <td>
+                <input id="J28_2" class="square-check" type="radio" value="" name="J28_type" />
+            </td>
+            <td>
+                <input id="J28_3" class="square-check" type="radio" value="" name="J28_type" />
+            </td>
+            <td>
+                <input id="J28_4" class="square-check" type="radio" value="" name="J28_type" />
+            </td>
+
+            <td>
+                <input id="J28_5" class="square-check" type="radio" value="" name="J28_type" />
+            </td>
+            <td>
+                <input id="J28_6" class="square-check" type="radio" value="" name="J28_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J29_index" type="text" value="J29" name="J29" /></td>
+            <td>
+                <input id="J29_1" class="square-check" type="radio" value="" name="J29_type" />
+            </td>
+
+            <td>
+                <input id="J29_2" class="square-check" type="radio" value="" name="J29_type" />
+            </td>
+            <td>
+                <input id="J29_3" class="square-check" type="radio" value="" name="J29_type" />
+            </td>
+            <td>
+                <input id="J29_4" class="square-check" type="radio" value="" name="J29_type" />
+            </td>
+
+            <td>
+                <input id="J29_5" class="square-check" type="radio" value="" name="J29_type" />
+            </td>
+            <td>
+                <input id="J29_6" class="square-check" type="radio" value="" name="J29_type" />
+            </td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J30_index" type="text" value="J30" name="J30" /></td>
+            <td>
+                <input id="J30_1" class="square-check" type="radio" value="" name="J30_type" />
+            </td>
+
+            <td>
+                <input id="J30_2" class="square-check" type="radio" value="" name="J30_type" />
+            </td>
+            <td>
+                <input id="J30_3" class="square-check" type="radio" value="" name="J30_type" />
+            </td>
+            <td>
+                <input id="J30_4" class="square-check" type="radio" value="" name="J30_type" />
+            </td>
+
+            <td>
+                <input id="J30_5" class="square-check" type="radio" value="" name="J30_type" />
+            </td>
+            <td>
+                <input id="J30_6" class="square-check" type="radio" value="" name="J30_type" />
+            </td>
+        </tr>
+
+        </tbody>
+    </table>
+    <table class="right_table">
+        <tbody>
+        <tr class="fristrow">
+            <td width="80px" rowspan="2">界址间距/m</td>
+            <td height="20px" colspan="8">界址线类别</td>
+            <td colspan="3">界址线位置</td>
+            <td>说明</td>
+
+        </tr>
+        <tr class="secondrow">
+            <td>
+                <div class="species">道路</div>
+            </td>
+            <td>
+                <div class="species">沟渠</div>
+            </td>
+            <td>
+                <div class="species">围墙</div>
+            </td>
+            <td>
+                <div class="species">田埂</div>
+            </td>
+            <td>
+                <div class="species">滴水</div>
+            </td>
+            <td>
+                <div class="species">坎子</div>
+            </td>
+            <td>
+                <div class="species">墙壁</div>
+            </td>
+            <td>
+                <div class="species">晒坝</div>
+            </td>
+            <td>
+                <div class="species">内</div>
+            </td>
+            <td>
+                <div class="species">中</div>
+            </td>
+            <td>
+                <div class="species">外</div>
+            </td>
+            <td id="blank"></td>
+        </tr>
+        <tr class="fristrow">
+            <td><input id="J1_len" type="text" value="11.1" name="J1" /></td>
+            <td><input id="J1_1_ltype" class="square-check" type="radio" value="" name="J1_ltype" /></td>
+            <td><input id="J1_2_ltype" class="square-check" type="radio" value="" name="J1_ltype" /></td>
+            <td><input id="J1_3_ltype" class="square-check" type="radio" value="" name="J1_ltype" /></td>
+            <td><input id="J1_4_ltype" class="square-check" type="radio" value="" name="J1_ltype" /></td>
+            <td><input id="J1_5_ltype" class="square-check" type="radio" value="" name="J1_ltype" /></td>
+            <td><input id="J1_6_ltype" class="square-check" type="radio" value="" name="J1_ltype" /></td>
+            <td><input id="J1_7_ltype" class="square-check" type="radio" value="" name="J1_ltype" /></td>
+            <td><input id="J1_8_ltype" class="square-check" type="radio" value="" name="J1_ltype" /></td>
+            <td><input id="J1_1_lloc" class="square-check" type="radio" value="" name="J1_llocal" /></td>
+            <td><input id="J1_2_lloc" class="square-check" type="radio" value="" name="J1_llocal" /></td>
+            <td><input id="J1_3_lloc" class="square-check" type="radio" value="" name="J1_llocal" /></td>
+            <td><input id="J1_note" type="text" value="" name="J1" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J2_len" type="text" value="" name="J2" /></td>
+            <td><input id="J2_1_ltype" class="square-check" type="radio" value="" name="J2_ltype" /></td>
+            <td><input id="J2_2_ltype" class="square-check" type="radio" value="" name="J2_ltype" /></td>
+            <td><input id="J2_3_ltype" class="square-check" type="radio" value="" name="J2_ltype" /></td>
+            <td><input id="J2_4_ltype" class="square-check" type="radio" value="" name="J2_ltype" /></td>
+            <td><input id="J2_5_ltype" class="square-check" type="radio" value="" name="J2_ltype" /></td>
+            <td><input id="J2_6_ltype" class="square-check" type="radio" value="" name="J2_ltype" /></td>
+            <td><input id="J2_7_ltype" class="square-check" type="radio" value="" name="J2_ltype" /></td>
+            <td><input id="J2_8_ltype" class="square-check" type="radio" value="" name="J2_ltype" /></td>
+            <td><input id="J2_1_lloc" class="square-check" type="radio" value="" name="J2_llocal" /></td>
+            <td><input id="J2_2_lloc" class="square-check" type="radio" value="" name="J2_llocal" /></td>
+            <td><input id="J2_3_lloc" class="square-check" type="radio" value="" name="J2_llocal" /></td>
+            <td><input id="J2_note" type="text" value="" name="J2" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J3_len" type="text" value="" name="J3" /></td>
+            <td><input id="J3_1_ltype" class="square-check" type="radio" value="" name="J3_ltype" /></td>
+            <td><input id="J3_2_ltype" class="square-check" type="radio" value="" name="J3_ltype" /></td>
+            <td><input id="J3_3_ltype" class="square-check" type="radio" value="" name="J3_ltype" /></td>
+            <td><input id="J3_4_ltype" class="square-check" type="radio" value="" name="J3_ltype" /></td>
+            <td><input id="J3_5_ltype" class="square-check" type="radio" value="" name="J3_ltype" /></td>
+            <td><input id="J3_6_ltype" class="square-check" type="radio" value="" name="J3_ltype" /></td>
+            <td><input id="J3_7_ltype" class="square-check" type="radio" value="" name="J3_ltype" /></td>
+            <td><input id="J3_8_ltype" class="square-check" type="radio" value="" name="J3_ltype" /></td>
+            <td><input id="J3_1_lloc" class="square-check" type="radio" value="" name="J3_llocal" /></td>
+            <td><input id="J3_2_lloc" class="square-check" type="radio" value="" name="J3_llocal" /></td>
+            <td><input id="J3_3_lloc" class="square-check" type="radio" value="" name="J3_llocal" /></td>
+            <td><input id="J3_note" type="text" value="" name="J3" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J4_len" type="text" value="" name="J4" /></td>
+            <td><input id="J4_1_ltype" class="square-check" type="radio" value="" name="J4_ltype" /></td>
+            <td><input id="J4_2_ltype" class="square-check" type="radio" value="" name="J4_ltype" /></td>
+            <td><input id="J4_3_ltype" class="square-check" type="radio" value="" name="J4_ltype" /></td>
+            <td><input id="J4_4_ltype" class="square-check" type="radio" value="" name="J4_ltype" /></td>
+            <td><input id="J4_5_ltype" class="square-check" type="radio" value="" name="J4_ltype" /></td>
+            <td><input id="J4_6_ltype" class="square-check" type="radio" value="" name="J4_ltype" /></td>
+            <td><input id="J4_7_ltype" class="square-check" type="radio" value="" name="J4_ltype" /></td>
+            <td><input id="J4_8_ltype" class="square-check" type="radio" value="" name="J4_ltype" /></td>
+            <td><input id="J4_1_lloc" class="square-check" type="radio" value="" name="J4_llocal" /></td>
+            <td><input id="J4_2_lloc" class="square-check" type="radio" value="" name="J4_llocal" /></td>
+            <td><input id="J4_3_lloc" class="square-check" type="radio" value="" name="J4_llocal" /></td>
+            <td><input id="J4_note" type="text" value="" name="J4" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J5_len" type="text" value="" name="J5" /></td>
+            <td><input id="J5_1_ltype" class="square-check" type="radio" value="" name="J5_ltype" /></td>
+            <td><input id="J5_2_ltype" class="square-check" type="radio" value="" name="J5_ltype" /></td>
+            <td><input id="J5_3_ltype" class="square-check" type="radio" value="" name="J5_ltype" /></td>
+            <td><input id="J5_4_ltype" class="square-check" type="radio" value="" name="J5_ltype" /></td>
+            <td><input id="J5_5_ltype" class="square-check" type="radio" value="" name="J5_ltype" /></td>
+            <td><input id="J5_6_ltype" class="square-check" type="radio" value="" name="J5_ltype" /></td>
+            <td><input id="J5_7_ltype" class="square-check" type="radio" value="" name="J5_ltype" /></td>
+            <td><input id="J5_8_ltype" class="square-check" type="radio" value="" name="J5_ltype" /></td>
+            <td><input id="J5_1_lloc" class="square-check" type="radio" value="" name="J5_llocal" /></td>
+            <td><input id="J5_2_lloc" class="square-check" type="radio" value="" name="J5_llocal" /></td>
+            <td><input id="J5_3_lloc" class="square-check" type="radio" value="" name="J5_llocal" /></td>
+            <td><input id="J5_note" type="text" value="" name="J5" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J6_len" type="text" value="" name="J6" /></td>
+            <td><input id="J6_1_ltype" class="square-check" type="radio" value="" name="J6_ltype" /></td>
+            <td><input id="J6_2_ltype" class="square-check" type="radio" value="" name="J6_ltype" /></td>
+            <td><input id="J6_3_ltype" class="square-check" type="radio" value="" name="J6_ltype" /></td>
+            <td><input id="J6_4_ltype" class="square-check" type="radio" value="" name="J6_ltype" /></td>
+            <td><input id="J6_5_ltype" class="square-check" type="radio" value="" name="J6_ltype" /></td>
+            <td><input id="J6_6_ltype" class="square-check" type="radio" value="" name="J6_ltype" /></td>
+            <td><input id="J6_7_ltype" class="square-check" type="radio" value="" name="J6_ltype" /></td>
+            <td><input id="J6_8_ltype" class="square-check" type="radio" value="" name="J6_ltype" /></td>
+            <td><input id="J6_1_lloc" class="square-check" type="radio" value="" name="J6_llocal" /></td>
+            <td><input id="J6_2_lloc" class="square-check" type="radio" value="" name="J6_llocal" /></td>
+            <td><input id="J6_3_lloc" class="square-check" type="radio" value="" name="J6_llocal" /></td>
+            <td><input id="J6_note" type="text" value="" name="J6" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J7_len" type="text" value="" name="J7" /></td>
+            <td><input id="J7_1_ltype" class="square-check" type="radio" value="" name="J7_ltype" /></td>
+            <td><input id="J7_2_ltype" class="square-check" type="radio" value="" name="J7_ltype" /></td>
+            <td><input id="J7_3_ltype" class="square-check" type="radio" value="" name="J7_ltype" /></td>
+            <td><input id="J7_4_ltype" class="square-check" type="radio" value="" name="J7_ltype" /></td>
+            <td><input id="J7_5_ltype" class="square-check" type="radio" value="" name="J7_ltype" /></td>
+            <td><input id="J7_6_ltype" class="square-check" type="radio" value="" name="J7_ltype" /></td>
+            <td><input id="J7_7_ltype" class="square-check" type="radio" value="" name="J7_ltype" /></td>
+            <td><input id="J7_8_ltype" class="square-check" type="radio" value="" name="J7_ltype" /></td>
+            <td><input id="J7_1_lloc" class="square-check" type="radio" value="" name="J7_llocal" /></td>
+            <td><input id="J7_2_lloc" class="square-check" type="radio" value="" name="J7_llocal" /></td>
+            <td><input id="J7_3_lloc" class="square-check" type="radio" value="" name="J7_llocal" /></td>
+            <td><input id="J7_note" type="text" value="" name="J7" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J8_len" type="text" value="" name="J8" /></td>
+            <td><input id="J8_1_ltype" class="square-check" type="radio" value="" name="J8_ltype" /></td>
+            <td><input id="J8_2_ltype" class="square-check" type="radio" value="" name="J8_ltype" /></td>
+            <td><input id="J8_3_ltype" class="square-check" type="radio" value="" name="J8_ltype" /></td>
+            <td><input id="J8_4_ltype" class="square-check" type="radio" value="" name="J8_ltype" /></td>
+            <td><input id="J8_5_ltype" class="square-check" type="radio" value="" name="J8_ltype" /></td>
+            <td><input id="J8_6_ltype" class="square-check" type="radio" value="" name="J8_ltype" /></td>
+            <td><input id="J8_7_ltype" class="square-check" type="radio" value="" name="J8_ltype" /></td>
+            <td><input id="J8_8_ltype" class="square-check" type="radio" value="" name="J8_ltype" /></td>
+            <td><input id="J8_1_lloc" class="square-check" type="radio" value="" name="J8_llocal" /></td>
+            <td><input id="J8_2_lloc" class="square-check" type="radio" value="" name="J8_llocal" /></td>
+            <td><input id="J8_3_lloc" class="square-check" type="radio" value="" name="J8_llocal" /></td>
+            <td><input id="J8_note" type="text" value="" name="J8" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J9_len" type="text" value="" name="J9" /></td>
+            <td><input id="J9_1_ltype" class="square-check" type="radio" value="" name="J9_ltype" /></td>
+            <td><input id="J9_2_ltype" class="square-check" type="radio" value="" name="J9_ltype" /></td>
+            <td><input id="J9_3_ltype" class="square-check" type="radio" value="" name="J9_ltype" /></td>
+            <td><input id="J9_4_ltype" class="square-check" type="radio" value="" name="J9_ltype" /></td>
+            <td><input id="J9_5_ltype" class="square-check" type="radio" value="" name="J9_ltype" /></td>
+            <td><input id="J9_6_ltype" class="square-check" type="radio" value="" name="J9_ltype" /></td>
+            <td><input id="J9_7_ltype" class="square-check" type="radio" value="" name="J9_ltype" /></td>
+            <td><input id="J9_8_ltype" class="square-check" type="radio" value="" name="J9_ltype" /></td>
+            <td><input id="J9_1_lloc" class="square-check" type="radio" value="" name="J9_llocal" /></td>
+            <td><input id="J9_2_lloc" class="square-check" type="radio" value="" name="J9_llocal" /></td>
+            <td><input id="J9_3_lloc" class="square-check" type="radio" value="" name="J9_llocal" /></td>
+            <td><input id="J9_note" type="text" value="" name="J9" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J10_len" type="text" value="" name="J10" /></td>
+            <td><input id="J10_1_ltype" class="square-check" type="radio" value="" name="J10_ltype" /></td>
+            <td><input id="J10_2_ltype" class="square-check" type="radio" value="" name="J10_ltype" /></td>
+            <td><input id="J10_3_ltype" class="square-check" type="radio" value="" name="J10_ltype" /></td>
+            <td><input id="J10_4_ltype" class="square-check" type="radio" value="" name="J10_ltype" /></td>
+            <td><input id="J10_5_ltype" class="square-check" type="radio" value="" name="J10_ltype" /></td>
+            <td><input id="J10_6_ltype" class="square-check" type="radio" value="" name="J10_ltype" /></td>
+            <td><input id="J10_7_ltype" class="square-check" type="radio" value="" name="J10_ltype" /></td>
+            <td><input id="J10_8_ltype" class="square-check" type="radio" value="" name="J10_ltype" /></td>
+            <td><input id="J10_1_lloc" class="square-check" type="radio" value="" name="J10_llocal" /></td>
+            <td><input id="J10_2_lloc" class="square-check" type="radio" value="" name="J10_llocal" /></td>
+            <td><input id="J10_3_lloc" class="square-check" type="radio" value="" name="J10_llocal" /></td>
+            <td><input id="J10_note" type="text" value="" name="J10" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J11_len" type="text" value="" name="J11" /></td>
+            <td><input id="J11_1_ltype" class="square-check" type="radio" value="" name="J11_ltype" /></td>
+            <td><input id="J11_2_ltype" class="square-check" type="radio" value="" name="J11_ltype" /></td>
+            <td><input id="J11_3_ltype" class="square-check" type="radio" value="" name="J11_ltype" /></td>
+            <td><input id="J11_4_ltype" class="square-check" type="radio" value="" name="J11_ltype" /></td>
+            <td><input id="J11_5_ltype" class="square-check" type="radio" value="" name="J11_ltype" /></td>
+            <td><input id="J11_6_ltype" class="square-check" type="radio" value="" name="J11_ltype" /></td>
+            <td><input id="J11_7_ltype" class="square-check" type="radio" value="" name="J11_ltype" /></td>
+            <td><input id="J11_8_ltype" class="square-check" type="radio" value="" name="J11_ltype" /></td>
+            <td><input id="J11_1_lloc" class="square-check" type="radio" value="" name="J11_llocal" /></td>
+            <td><input id="J11_2_lloc" class="square-check" type="radio" value="" name="J11_llocal" /></td>
+            <td><input id="J11_3_lloc" class="square-check" type="radio" value="" name="J11_llocal" /></td>
+            <td><input id="J11_note" type="text" value="" name="J11" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J12_len" type="text" value="" name="J12" /></td>
+            <td><input id="J12_1_ltype" class="square-check" type="radio" value="" name="J12_ltype" /></td>
+            <td><input id="J12_2_ltype" class="square-check" type="radio" value="" name="J12_ltype" /></td>
+            <td><input id="J12_3_ltype" class="square-check" type="radio" value="" name="J12_ltype" /></td>
+            <td><input id="J12_4_ltype" class="square-check" type="radio" value="" name="J12_ltype" /></td>
+            <td><input id="J12_5_ltype" class="square-check" type="radio" value="" name="J12_ltype" /></td>
+            <td><input id="J12_6_ltype" class="square-check" type="radio" value="" name="J12_ltype" /></td>
+            <td><input id="J12_7_ltype" class="square-check" type="radio" value="" name="J12_ltype" /></td>
+            <td><input id="J12_8_ltype" class="square-check" type="radio" value="" name="J12_ltype" /></td>
+            <td><input id="J12_1_lloc" class="square-check" type="radio" value="" name="J12_llocal" /></td>
+            <td><input id="J12_2_lloc" class="square-check" type="radio" value="" name="J12_llocal" /></td>
+            <td><input id="J12_3_lloc" class="square-check" type="radio" value="" name="J12_llocal" /></td>
+            <td><input id="J12_note" type="text" value="" name="J12" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J13_len" type="text" value="" name="J13" /></td>
+            <td><input id="J13_1_ltype" class="square-check" type="radio" value="" name="J13_ltype" /></td>
+            <td><input id="J13_2_ltype" class="square-check" type="radio" value="" name="J13_ltype" /></td>
+            <td><input id="J13_3_ltype" class="square-check" type="radio" value="" name="J13_ltype" /></td>
+            <td><input id="J13_4_ltype" class="square-check" type="radio" value="" name="J13_ltype" /></td>
+            <td><input id="J13_5_ltype" class="square-check" type="radio" value="" name="J13_ltype" /></td>
+            <td><input id="J13_6_ltype" class="square-check" type="radio" value="" name="J13_ltype" /></td>
+            <td><input id="J13_7_ltype" class="square-check" type="radio" value="" name="J13_ltype" /></td>
+            <td><input id="J13_8_ltype" class="square-check" type="radio" value="" name="J13_ltype" /></td>
+            <td><input id="J13_1_lloc" class="square-check" type="radio" value="" name="J13_llocal" /></td>
+            <td><input id="J13_2_lloc" class="square-check" type="radio" value="" name="J13_llocal" /></td>
+            <td><input id="J13_3_lloc" class="square-check" type="radio" value="" name="J13_llocal" /></td>
+            <td><input id="J13_note" type="text" value="" name="J13" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J14_len" type="text" value="" name="J14" /></td>
+            <td><input id="J14_1_ltype" class="square-check" type="radio" value="" name="J14_ltype" /></td>
+            <td><input id="J14_2_ltype" class="square-check" type="radio" value="" name="J14_ltype" /></td>
+            <td><input id="J14_3_ltype" class="square-check" type="radio" value="" name="J14_ltype" /></td>
+            <td><input id="J14_4_ltype" class="square-check" type="radio" value="" name="J14_ltype" /></td>
+            <td><input id="J14_5_ltype" class="square-check" type="radio" value="" name="J14_ltype" /></td>
+            <td><input id="J14_6_ltype" class="square-check" type="radio" value="" name="J14_ltype" /></td>
+            <td><input id="J14_7_ltype" class="square-check" type="radio" value="" name="J14_ltype" /></td>
+            <td><input id="J14_8_ltype" class="square-check" type="radio" value="" name="J14_ltype" /></td>
+            <td><input id="J14_1_lloc" class="square-check" type="radio" value="" name="J14_llocal" /></td>
+            <td><input id="J14_2_lloc" class="square-check" type="radio" value="" name="J14_llocal" /></td>
+            <td><input id="J14_3_lloc" class="square-check" type="radio" value="" name="J14_llocal" /></td>
+            <td><input id="J14_note" type="text" value="" name="J14" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J15_len" type="text" value="" name="J15" /></td>
+            <td><input id="J15_1_ltype" class="square-check" type="radio" value="" name="J15_ltype" /></td>
+            <td><input id="J15_2_ltype" class="square-check" type="radio" value="" name="J15_ltype" /></td>
+            <td><input id="J15_3_ltype" class="square-check" type="radio" value="" name="J15_ltype" /></td>
+            <td><input id="J15_4_ltype" class="square-check" type="radio" value="" name="J15_ltype" /></td>
+            <td><input id="J15_5_ltype" class="square-check" type="radio" value="" name="J15_ltype" /></td>
+            <td><input id="J15_6_ltype" class="square-check" type="radio" value="" name="J15_ltype" /></td>
+            <td><input id="J15_7_ltype" class="square-check" type="radio" value="" name="J15_ltype" /></td>
+            <td><input id="J15_8_ltype" class="square-check" type="radio" value="" name="J15_ltype" /></td>
+            <td><input id="J15_1_lloc" class="square-check" type="radio" value="" name="J15_llocal" /></td>
+            <td><input id="J15_2_lloc" class="square-check" type="radio" value="" name="J15_llocal" /></td>
+            <td><input id="J15_3_lloc" class="square-check" type="radio" value="" name="J15_llocal" /></td>
+            <td><input id="J15_note" type="text" value="" name="J15" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J16_len" type="text" value="" name="J16" /></td>
+            <td><input id="J16_1_ltype" class="square-check" type="radio" value="" name="J16_ltype" /></td>
+            <td><input id="J16_2_ltype" class="square-check" type="radio" value="" name="J16_ltype" /></td>
+            <td><input id="J16_3_ltype" class="square-check" type="radio" value="" name="J16_ltype" /></td>
+            <td><input id="J16_4_ltype" class="square-check" type="radio" value="" name="J16_ltype" /></td>
+            <td><input id="J16_5_ltype" class="square-check" type="radio" value="" name="J16_ltype" /></td>
+            <td><input id="J16_6_ltype" class="square-check" type="radio" value="" name="J16_ltype" /></td>
+            <td><input id="J16_7_ltype" class="square-check" type="radio" value="" name="J16_ltype" /></td>
+            <td><input id="J16_8_ltype" class="square-check" type="radio" value="" name="J16_ltype" /></td>
+            <td><input id="J16_1_lloc" class="square-check" type="radio" value="" name="J16_llocal" /></td>
+            <td><input id="J16_2_lloc" class="square-check" type="radio" value="" name="J16_llocal" /></td>
+            <td><input id="J16_3_lloc" class="square-check" type="radio" value="" name="J16_llocal" /></td>
+            <td><input id="J16_note" type="text" value="" name="J16" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J17_len" type="text" value="" name="J17" /></td>
+            <td><input id="J17_1_ltype" class="square-check" type="radio" value="" name="J17_ltype" /></td>
+            <td><input id="J17_2_ltype" class="square-check" type="radio" value="" name="J17_ltype" /></td>
+            <td><input id="J17_3_ltype" class="square-check" type="radio" value="" name="J17_ltype" /></td>
+            <td><input id="J17_4_ltype" class="square-check" type="radio" value="" name="J17_ltype" /></td>
+            <td><input id="J17_5_ltype" class="square-check" type="radio" value="" name="J17_ltype" /></td>
+            <td><input id="J17_6_ltype" class="square-check" type="radio" value="" name="J17_ltype" /></td>
+            <td><input id="J17_7_ltype" class="square-check" type="radio" value="" name="J17_ltype" /></td>
+            <td><input id="J17_8_ltype" class="square-check" type="radio" value="" name="J17_ltype" /></td>
+            <td><input id="J17_1_lloc" class="square-check" type="radio" value="" name="J17_llocal" /></td>
+            <td><input id="J17_2_lloc" class="square-check" type="radio" value="" name="J17_llocal" /></td>
+            <td><input id="J17_3_lloc" class="square-check" type="radio" value="" name="J17_llocal" /></td>
+            <td><input id="J17_note" type="text" value="" name="J17" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J18_len" type="text" value="" name="J18" /></td>
+            <td><input id="J18_1_ltype" class="square-check" type="radio" value="" name="J18_ltype" /></td>
+            <td><input id="J18_2_ltype" class="square-check" type="radio" value="" name="J18_ltype" /></td>
+            <td><input id="J18_3_ltype" class="square-check" type="radio" value="" name="J18_ltype" /></td>
+            <td><input id="J18_4_ltype" class="square-check" type="radio" value="" name="J18_ltype" /></td>
+            <td><input id="J18_5_ltype" class="square-check" type="radio" value="" name="J18_ltype" /></td>
+            <td><input id="J18_6_ltype" class="square-check" type="radio" value="" name="J18_ltype" /></td>
+            <td><input id="J18_7_ltype" class="square-check" type="radio" value="" name="J18_ltype" /></td>
+            <td><input id="J18_8_ltype" class="square-check" type="radio" value="" name="J18_ltype" /></td>
+            <td><input id="J18_1_lloc" class="square-check" type="radio" value="" name="J18_llocal" /></td>
+            <td><input id="J18_2_lloc" class="square-check" type="radio" value="" name="J18_llocal" /></td>
+            <td><input id="J18_3_lloc" class="square-check" type="radio" value="" name="J18_llocal" /></td>
+            <td><input id="J18_note" type="text" value="" name="J18" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J19_len" type="text" value="" name="J19" /></td>
+            <td><input id="J19_1_ltype" class="square-check" type="radio" value="" name="J19_ltype" /></td>
+            <td><input id="J19_2_ltype" class="square-check" type="radio" value="" name="J19_ltype" /></td>
+            <td><input id="J19_3_ltype" class="square-check" type="radio" value="" name="J19_ltype" /></td>
+            <td><input id="J19_4_ltype" class="square-check" type="radio" value="" name="J19_ltype" /></td>
+            <td><input id="J19_5_ltype" class="square-check" type="radio" value="" name="J19_ltype" /></td>
+            <td><input id="J19_6_ltype" class="square-check" type="radio" value="" name="J19_ltype" /></td>
+            <td><input id="J19_7_ltype" class="square-check" type="radio" value="" name="J19_ltype" /></td>
+            <td><input id="J19_8_ltype" class="square-check" type="radio" value="" name="J19_ltype" /></td>
+            <td><input id="J19_1_lloc" class="square-check" type="radio" value="" name="J19_llocal" /></td>
+            <td><input id="J19_2_lloc" class="square-check" type="radio" value="" name="J19_llocal" /></td>
+            <td><input id="J19_3_lloc" class="square-check" type="radio" value="" name="J19_llocal" /></td>
+            <td><input id="J19_note" type="text" value="" name="J19" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J20_len" type="text" value="" name="J20" /></td>
+            <td><input id="J20_1_ltype" class="square-check" type="radio" value="" name="J20_ltype" /></td>
+            <td><input id="J20_2_ltype" class="square-check" type="radio" value="" name="J20_ltype" /></td>
+            <td><input id="J20_3_ltype" class="square-check" type="radio" value="" name="J20_ltype" /></td>
+            <td><input id="J20_4_ltype" class="square-check" type="radio" value="" name="J20_ltype" /></td>
+            <td><input id="J20_5_ltype" class="square-check" type="radio" value="" name="J20_ltype" /></td>
+            <td><input id="J20_6_ltype" class="square-check" type="radio" value="" name="J20_ltype" /></td>
+            <td><input id="J20_7_ltype" class="square-check" type="radio" value="" name="J20_ltype" /></td>
+            <td><input id="J20_8_ltype" class="square-check" type="radio" value="" name="J20_ltype" /></td>
+            <td><input id="J20_1_lloc" class="square-check" type="radio" value="" name="J20_llocal" /></td>
+            <td><input id="J20_2_lloc" class="square-check" type="radio" value="" name="J20_llocal" /></td>
+            <td><input id="J20_3_lloc" class="square-check" type="radio" value="" name="J20_llocal" /></td>
+            <td><input id="J20_note" type="text" value="" name="J20" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J21_len" type="text" value="" name="J21" /></td>
+            <td><input id="J21_1_ltype" class="square-check" type="radio" value="" name="J21_ltype" /></td>
+            <td><input id="J21_2_ltype" class="square-check" type="radio" value="" name="J21_ltype" /></td>
+            <td><input id="J21_3_ltype" class="square-check" type="radio" value="" name="J21_ltype" /></td>
+            <td><input id="J21_4_ltype" class="square-check" type="radio" value="" name="J21_ltype" /></td>
+            <td><input id="J21_5_ltype" class="square-check" type="radio" value="" name="J21_ltype" /></td>
+            <td><input id="J21_6_ltype" class="square-check" type="radio" value="" name="J21_ltype" /></td>
+            <td><input id="J21_7_ltype" class="square-check" type="radio" value="" name="J21_ltype" /></td>
+            <td><input id="J21_8_ltype" class="square-check" type="radio" value="" name="J21_ltype" /></td>
+            <td><input id="J21_1_lloc" class="square-check" type="radio" value="" name="J21_llocal" /></td>
+            <td><input id="J21_2_lloc" class="square-check" type="radio" value="" name="J21_llocal" /></td>
+            <td><input id="J21_3_lloc" class="square-check" type="radio" value="" name="J21_llocal" /></td>
+            <td><input id="J21_note" type="text" value="" name="J21" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J22_len" type="text" value="" name="J22" /></td>
+            <td><input id="J22_1_ltype" class="square-check" type="radio" value="" name="J22_ltype" /></td>
+            <td><input id="J22_2_ltype" class="square-check" type="radio" value="" name="J22_ltype" /></td>
+            <td><input id="J22_3_ltype" class="square-check" type="radio" value="" name="J22_ltype" /></td>
+            <td><input id="J22_4_ltype" class="square-check" type="radio" value="" name="J22_ltype" /></td>
+            <td><input id="J22_5_ltype" class="square-check" type="radio" value="" name="J22_ltype" /></td>
+            <td><input id="J22_6_ltype" class="square-check" type="radio" value="" name="J22_ltype" /></td>
+            <td><input id="J22_7_ltype" class="square-check" type="radio" value="" name="J22_ltype" /></td>
+            <td><input id="J22_8_ltype" class="square-check" type="radio" value="" name="J22_ltype" /></td>
+            <td><input id="J22_1_lloc" class="square-check" type="radio" value="" name="J22_llocal" /></td>
+            <td><input id="J22_2_lloc" class="square-check" type="radio" value="" name="J22_llocal" /></td>
+            <td><input id="J22_3_lloc" class="square-check" type="radio" value="" name="J22_llocal" /></td>
+            <td><input id="J22_note" type="text" value="" name="J22" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J23_len" type="text" value="" name="J23" /></td>
+            <td><input id="J23_1_ltype" class="square-check" type="radio" value="" name="J23_ltype" /></td>
+            <td><input id="J23_2_ltype" class="square-check" type="radio" value="" name="J23_ltype" /></td>
+            <td><input id="J23_3_ltype" class="square-check" type="radio" value="" name="J23_ltype" /></td>
+            <td><input id="J23_4_ltype" class="square-check" type="radio" value="" name="J23_ltype" /></td>
+            <td><input id="J23_5_ltype" class="square-check" type="radio" value="" name="J23_ltype" /></td>
+            <td><input id="J23_6_ltype" class="square-check" type="radio" value="" name="J23_ltype" /></td>
+            <td><input id="J23_7_ltype" class="square-check" type="radio" value="" name="J23_ltype" /></td>
+            <td><input id="J23_8_ltype" class="square-check" type="radio" value="" name="J23_ltype" /></td>
+            <td><input id="J23_1_lloc" class="square-check" type="radio" value="" name="J23_llocal" /></td>
+            <td><input id="J23_2_lloc" class="square-check" type="radio" value="" name="J23_llocal" /></td>
+            <td><input id="J23_3_lloc" class="square-check" type="radio" value="" name="J23_llocal" /></td>
+            <td><input id="J23_note" type="text" value="" name="J23" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J24_len" type="text" value="" name="J24" /></td>
+            <td><input id="J24_1_ltype" class="square-check" type="radio" value="" name="J24_ltype" /></td>
+            <td><input id="J24_2_ltype" class="square-check" type="radio" value="" name="J24_ltype" /></td>
+            <td><input id="J24_3_ltype" class="square-check" type="radio" value="" name="J24_ltype" /></td>
+            <td><input id="J24_4_ltype" class="square-check" type="radio" value="" name="J24_ltype" /></td>
+            <td><input id="J24_5_ltype" class="square-check" type="radio" value="" name="J24_ltype" /></td>
+            <td><input id="J24_6_ltype" class="square-check" type="radio" value="" name="J24_ltype" /></td>
+            <td><input id="J24_7_ltype" class="square-check" type="radio" value="" name="J24_ltype" /></td>
+            <td><input id="J24_8_ltype" class="square-check" type="radio" value="" name="J24_ltype" /></td>
+            <td><input id="J24_1_lloc" class="square-check" type="radio" value="" name="J24_llocal" /></td>
+            <td><input id="J24_2_lloc" class="square-check" type="radio" value="" name="J24_llocal" /></td>
+            <td><input id="J24_3_lloc" class="square-check" type="radio" value="" name="J24_llocal" /></td>
+            <td><input id="J24_note" type="text" value="" name="J24" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J25_len" type="text" value="" name="J25" /></td>
+            <td><input id="J25_1_ltype" class="square-check" type="radio" value="" name="J25_ltype" /></td>
+            <td><input id="J25_2_ltype" class="square-check" type="radio" value="" name="J25_ltype" /></td>
+            <td><input id="J25_3_ltype" class="square-check" type="radio" value="" name="J25_ltype" /></td>
+            <td><input id="J25_4_ltype" class="square-check" type="radio" value="" name="J25_ltype" /></td>
+            <td><input id="J25_5_ltype" class="square-check" type="radio" value="" name="J25_ltype" /></td>
+            <td><input id="J25_6_ltype" class="square-check" type="radio" value="" name="J25_ltype" /></td>
+            <td><input id="J25_7_ltype" class="square-check" type="radio" value="" name="J25_ltype" /></td>
+            <td><input id="J25_8_ltype" class="square-check" type="radio" value="" name="J25_ltype" /></td>
+            <td><input id="J25_1_lloc" class="square-check" type="radio" value="" name="J25_llocal" /></td>
+            <td><input id="J25_2_lloc" class="square-check" type="radio" value="" name="J25_llocal" /></td>
+            <td><input id="J25_3_lloc" class="square-check" type="radio" value="" name="J25_llocal" /></td>
+            <td><input id="J25_note" type="text" value="" name="J25" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J26_len" type="text" value="" name="J26" /></td>
+            <td><input id="J26_1_ltype" class="square-check" type="radio" value="" name="J26_ltype" /></td>
+            <td><input id="J26_2_ltype" class="square-check" type="radio" value="" name="J26_ltype" /></td>
+            <td><input id="J26_3_ltype" class="square-check" type="radio" value="" name="J26_ltype" /></td>
+            <td><input id="J26_4_ltype" class="square-check" type="radio" value="" name="J26_ltype" /></td>
+            <td><input id="J26_5_ltype" class="square-check" type="radio" value="" name="J26_ltype" /></td>
+            <td><input id="J26_6_ltype" class="square-check" type="radio" value="" name="J26_ltype" /></td>
+            <td><input id="J26_7_ltype" class="square-check" type="radio" value="" name="J26_ltype" /></td>
+            <td><input id="J26_8_ltype" class="square-check" type="radio" value="" name="J26_ltype" /></td>
+            <td><input id="J26_1_lloc" class="square-check" type="radio" value="" name="J26_llocal" /></td>
+            <td><input id="J26_2_lloc" class="square-check" type="radio" value="" name="J26_llocal" /></td>
+            <td><input id="J26_3_lloc" class="square-check" type="radio" value="" name="J26_llocal" /></td>
+            <td><input id="J26_note" type="text" value="" name="J26" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J27_len" type="text" value="" name="J27" /></td>
+            <td><input id="J27_1_ltype" class="square-check" type="radio" value="" name="J27_ltype" /></td>
+            <td><input id="J27_2_ltype" class="square-check" type="radio" value="" name="J27_ltype" /></td>
+            <td><input id="J27_3_ltype" class="square-check" type="radio" value="" name="J27_ltype" /></td>
+            <td><input id="J27_4_ltype" class="square-check" type="radio" value="" name="J27_ltype" /></td>
+            <td><input id="J27_5_ltype" class="square-check" type="radio" value="" name="J27_ltype" /></td>
+            <td><input id="J27_6_ltype" class="square-check" type="radio" value="" name="J27_ltype" /></td>
+            <td><input id="J27_7_ltype" class="square-check" type="radio" value="" name="J27_ltype" /></td>
+            <td><input id="J27_8_ltype" class="square-check" type="radio" value="" name="J27_ltype" /></td>
+            <td><input id="J27_1_lloc" class="square-check" type="radio" value="" name="J27_llocal" /></td>
+            <td><input id="J27_2_lloc" class="square-check" type="radio" value="" name="J27_llocal" /></td>
+            <td><input id="J27_3_lloc" class="square-check" type="radio" value="" name="J27_llocal" /></td>
+            <td><input id="J27_note" type="text" value="" name="J27" /></td>
+        </tr>
+        <tr class="data_line">
+            <td><input id="J28_len" type="text" value="" name="J28" /></td>
+            <td><input id="J28_1_ltype" class="square-check" type="radio" value="" name="J28_ltype" /></td>
+            <td><input id="J28_2_ltype" class="square-check" type="radio" value="" name="J28_ltype" /></td>
+            <td><input id="J28_3_ltype" class="square-check" type="radio" value="" name="J28_ltype" /></td>
+            <td><input id="J28_4_ltype" class="square-check" type="radio" value="" name="J28_ltype" /></td>
+            <td><input id="J28_5_ltype" class="square-check" type="radio" value="" name="J28_ltype" /></td>
+            <td><input id="J28_6_ltype" class="square-check" type="radio" value="" name="J28_ltype" /></td>
+            <td><input id="J28_7_ltype" class="square-check" type="radio" value="" name="J28_ltype" /></td>
+            <td><input id="J28_8_ltype" class="square-check" type="radio" value="" name="J28_ltype" /></td>
+            <td><input id="J28_1_lloc" class="square-check" type="radio" value="" name="J28_llocal" /></td>
+            <td><input id="J28_2_lloc" class="square-check" type="radio" value="" name="J28_llocal" /></td>
+            <td><input id="J28_3_lloc" class="square-check" type="radio" value="" name="J28_llocal" /></td>
+            <td><input id="J28_note" type="text" value="" name="J28" /></td>
+        </tr>
+        <tr class="final_line">
+            <td><input id="J29_len" type="text" value="" name="J29" /></td>
+            <td><input id="J29_1_ltype" class="square-check" type="radio" value="" name="J29_ltype" /></td>
+            <td><input id="J29_2_ltype" class="square-check" type="radio" value="" name="J29_ltype" /></td>
+            <td><input id="J29_3_ltype" class="square-check" type="radio" value="" name="J29_ltype" /></td>
+            <td><input id="J29_4_ltype" class="square-check" type="radio" value="" name="J29_ltype" /></td>
+            <td><input id="J29_5_ltype" class="square-check" type="radio" value="" name="J29_ltype" /></td>
+            <td><input id="J29_6_ltype" class="square-check" type="radio" value="" name="J29_ltype" /></td>
+            <td><input id="J29_7_ltype" class="square-check" type="radio" value="" name="J29_ltype" /></td>
+            <td><input id="J29_8_ltype" class="square-check" type="radio" value="" name="J29_ltype" /></td>
+            <td><input id="J29_1_lloc" class="square-check" type="radio" value="" name="J29_llocal" /></td>
+            <td><input id="J29_2_lloc" class="square-check" type="radio" value="" name="J29_llocal" /></td>
+            <td><input id="J29_3_lloc" class="square-check" type="radio" value="" name="J29_llocal" /></td>
+            <td><input id="J29_note" type="text" value="" name="J29" /></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>

@@ -16,7 +16,8 @@
         <item name="frist">主页</item>
         <item name="second">基本表</item>
         <item name="thrid">界址表示表</item>
-        <item name="fourth">界址签章表</item>
-        <item name="fifth">调查审核表</item>
+        <item name="fourth">宗地草图</item>
+        <item name="fifth">界址签章表</item>
+        <item name="sixth">调查审核表</item>
     </string-array>
 </resources>

@@ -3,24 +3,27 @@ package com.zhangtao.buildingidentification;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
-import android.graphics.Color;
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.zhangtao.buildingidentification.Adapters.IndicatorAdapter;
+import com.zhangtao.buildingidentification.Utils.TableBrowserApi;
 import com.zhangtao.buildingidentification.Views.TableBar;
+import com.zhangtao.buildingidentification.WebViewUtils.WebClient;
 
 import net.lucode.hackware.magicindicator.MagicIndicator;
 import net.lucode.hackware.magicindicator.buildins.commonnavigator.CommonNavigator;
 
-public class surveyActivity extends AppCompatActivity implements TableBar.onItemClick {
+public class surveyActivity extends AppCompatActivity implements TableBar.onItemClick, View.OnClickListener {
 
     public static final int TOLFET = 0;
     public static final int TORIGHT = 1;
+    public static final int gestureLength = 540;
     private ViewPager mViewPager;
     private String[] mDataList;
     private final static String TAG = "surveyActivity";
@@ -29,6 +32,7 @@ public class surveyActivity extends AppCompatActivity implements TableBar.onItem
     private CommonNavigator mCommonNavigator;
     float x1, x2, y2, y1;
     private TableBar mTableBar;
+    private TableBrowserApi mApi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +41,10 @@ public class surveyActivity extends AppCompatActivity implements TableBar.onItem
         initView();
     }
 
+    @SuppressLint("JavascriptInterface")
     private void initView() {
+        ImageView backBtn = findViewById(R.id.back_btn);
+        backBtn.setOnClickListener(this);
 //        mViewPager = findViewById(R.id.view_pager);
         String[] mData = getApplicationContext().getResources().getStringArray(R.array.survey_tab_name);
         mDataList = this.getApplicationContext().getResources().getStringArray(R.array.survey_tab_name);//survey_tab_name
@@ -71,15 +78,19 @@ public class surveyActivity extends AppCompatActivity implements TableBar.onItem
                     //当手指离开的时候
                     x2 = event.getX();
                     y2 = event.getY();
-                     if(x1 - x2 > 50) {
+                     if(x1 - x2 > gestureLength) {
                          onScroll(TORIGHT);
-                    } else if(x2 - x1 > 50) {
+                    } else if(x2 - x1 > gestureLength) {
                         onScroll(TOLFET);
                     }
                 }
                 return surveyActivity.super.onTouchEvent(event);
             }
         });
+        mApi = new TableBrowserApi();
+        mTableView.addJavascriptInterface(mApi, "Android");
+        mTableView.setWebViewClient(new WebClient(mApi));
+        //导航栏
         mTableBar = findViewById(R.id.table_bar);
         mTableBar.initView(mData);
         mTableBar.setOnItemClick(this);
@@ -92,26 +103,41 @@ public class surveyActivity extends AppCompatActivity implements TableBar.onItem
         }else if(dir == TORIGHT  && mTableBar.getPosition() < 4){
             mTableBar.setPosition(mTableBar.getPosition() + 1);
         }else if( mTableBar.getPosition() == 4 || mTableBar.getPosition() == 0){
-            Toast.makeText(this, "到边儿了！！！",Toast.LENGTH_SHORT ).show();
+            Toast.makeText(this, "别滑了！到边儿了！！！",Toast.LENGTH_SHORT ).show();
         }
     }
 
     @Override
     public void itemClick(int position) {
+        mTableView.loadUrl("javascript:toJson()");
         switch (position){
             case 0:
                 mTableView.loadUrl("file:///android_asset/index.html");
+
                 break;
             case 1:
                 mTableView.loadUrl("file:///android_asset/base.html");
                 break;
+            case 2:
+                mTableView.loadUrl("file:///android_asset/boundary.html");
+                break;
+            case 3:
+                mTableView.loadUrl("file:///android_asset/signatureTest.html");
+                break;
+
         }
     }
-//
-//    @Override
-//    public void onTabClick(int index) {
-////        mCommonNavigator.onPageSelected(index);
 
-////        mViewPager.setCurrentItem(index);
-//    }
+    @Override
+    public void onClick(View v) {
+        switch(v.getId()){
+            case R.id.back_btn:
+                backToMain();
+                break;
+        }
+    }
+
+    private void backToMain() {
+        finish();
+    }
 }

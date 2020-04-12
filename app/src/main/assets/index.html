@@ -1,106 +1,175 @@
-<html><head>
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta name="generator"/>
 	<meta charset="UTF-8">
-	<title></title>
+	<title>首页</title>
+	<script>
+                function toJson() {
+                        var data = document.getElementsByName("info")
+                        var str = '{"index_page" : {'
+                        for (var i = 0; i < data.length; i++) {
+                                str += '"' + data[i].id + '":"' + data[i].value + '"'
+                                if (i != data.length - 1) {
+                                        str += ","
+                                }
+                        }
+                        str += '}}'
+<!--                        console.log(str);-->
+                        Android.toJson(str);
+                }
+
+
+                function parseJsonFromHtml() {
+                        var text = '{"index_page" : {"index":"lllsztdlp","code":"lllsztdlp","name":"张滔",' +
+                                ' "time_year":"2020","time_month":"4","time_day":"11","eare_name":"开州区"}}'
+                        parseJson(text)
+                }
+
+                function parseJson(info) {
+                        console.log(info)
+                        obj = JSON.parse(info)
+                        for (i in obj.index_page) {
+                                document.getElementById(i).value = obj.index_page[i]
+                        }
+                }
+        </script>
+
 	<style type="text/css">
-		table{
-			width:1080px;
-			border-collapse: collapse;
-			text-align:center;
-			table-layout: fixed;
-		}
+                table {
+                        /* border:#878787 1px solid; */
+                        width: 1080px;
+                        height: 1000px;
+                        border-collapse: collapse;
+                        text-align: center;
+                        table-layout: fixed;
+                }
 
-		.blank_line1{
-			height:80px;
-		}
+                .blank_line1 {
+                        height: 80px;
+                }
 
-		.blank_line6{
-			height:489px;
-		}
-		.bottom_line{
-			height:80px;
-		}
+                .blank_line6 {
+                        height: 300px;
+                }
 
-		.bottom_line td{
-			font-size:34px;
-		}
-		.title_line{
-			height:150px;
-		}
-		.title_line td {
-			
-			font-size:60px;
-		}
-		input{
-			font-size:32px;
-			height:60px;
-			width:320px;
-		}
-		#index_id{
-			text-align:right;
-		}
+                .bottom_line {
+                        height: 80px;
+                }
 
-		
-		
-		input{
-			border-color: #878787;
-			border-style: solid;
-			border-top-width: 0px;
-			border-right-width: 0px;
-			border-bottom-width: 1px;
-			border-left-width: 0px;
-		 )
-	</style>
+                .bottom_line td {
+                        font-size: 34px;
+                }
+
+                .title_line {
+                        height: 150px;
+                }
+
+                .title_line td {
+                        font-size: 60px;
+                }
+
+                #index_id {
+                        text-align: right;
+                }
+
+
+
+                input {
+                        font-size: 36px;
+                        text-align: center;
+                        border-color: #878787;
+                        border-style: solid;
+                        border-top-width: 0px;
+                        border-right-width: 0px;
+                        border-bottom-width: 1px;
+                        border-left-width: 0px;
+                }
+
+                .time {
+                        width: 100px;
+                        border-color: #878787;
+                        border-style: solid;
+                        border-top-width: 0px;
+                        border-right-width: 0px;
+                        border-bottom-width: 1px;
+                        border-left-width: 0px;
+
+
+                }
+
+                #index {
+                        margin-right: 20px;
+                }
+
+                #eare_name {
+                        width: 150px;
+
+                }
+        </style>
 </head>
-	<body>
-	<table>
-		<tbody><tr><th class="blank_line1">
-		</th><td width="750px"></td>
+
+<body>
+<table>
+	<tbody>
+	<tr>
+		<th class="blank_line1"></th>
+		<td width="750px"></td>
 		<td></td>
-		
-		</tr><tr class="bottom_line">
-			<td></td>
-			<td id="index_id" colspan="2">编号：
-			<input type="text">
-			</td>
-		</tr>
-		<tr class="blank_line1"></tr>
-		<tr class="title_line">
-			<td></td>
-			<td>农村集体土地使用权</td>
-			<td></td>
-		</tr>
-		<tr class="title_line">
-			<td></td>
-			<td>地籍调查表</td>
-			<td></td>
-		</tr>
-		<tr class="blank_line6"> </tr>
-		<tr class="bottom_line"><td></td>
-			<td>宗地代码：
-			<input type="text">
-			</td>
-			<td></td>
-		</tr>
-		<tr class="bottom_line">
-			<td></td>
-			<td>土地权利人：
-			<input type="text">
-			</td>
-			<td></td>
-		</tr>
-		<tr class="blank_line1"></tr>		
-		<tr class="bottom_line">
-			<td></td>
-			<td>2020年4月9日</td>
-			<td></td>
-		</tr>
-		<tr class="bottom_line">
-			<td></td>
-			<td>开州区国土资源局印制</td>
-			<td></td>
-		</tr>
-		<tr class="blank_line1"></tr>
-	</tbody></table>
+	</tr>
+	<tr class="bottom_line">
+		<td></td>
+		<td id="index_id" colspan="2">编号：<input id="index" type="text" name="info" /></td>
+	</tr>
+	<tr class="blank_line1">
+		<td></td>
+	</tr>
+	<tr class="title_line">
+		<td></td>
+		<td>农村集体土地使用权</td>
+		<td></td>
+	</tr>
+	<tr class="title_line">
+		<td></td>
+		<td>地籍调查表</td>
+		<td></td>
+	</tr>
+	<tr class="blank_line6">
+		<td></td>
+	</tr>
+	<tr class="bottom_line">
+		<td></td>
+		<td>宗地代码：<input id="code" type="text" name="info" /></td>
+		</td>
+		<td></td>
+	</tr>
+	<tr class="bottom_line">
+		<td></td>
+		<td>土地权利人： <input id="name" type="text" name="info" /></td>
+		</td>
+		<td></td>
+	</tr>
+	<tr class="blank_line1">
+		<td></td>
+	</tr>
+	<tr class="bottom_line">
+		<td></td>
+		<td><input id="time_year" class="time" type="text" name="info" />年<input id="time_month"
+																				 class="time" type="text" name="info" />月<input id="time_day"
+																																class="time" type="text" name="info" />日</td>
+		<td></td>
+	</tr>
+	<tr class="bottom_line">
+		<td></td>
+		<td><input id="eare_name" class="time" type="text" name="info" />国土资源局印制</td>
+		<td></td>
+	</tr>
+	<tr class="blank_line1">
+		<td></td>
+	</tr>
+	</tbody>
+</table>
+</body>
 
-
-	</body></html>
+</html>
