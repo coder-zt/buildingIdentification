@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".signatureActivity">
+
+    <com.zhangtao.buildingidentification.Views.myCanvas
+        android:id="@+id/signature_area"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="14"/>
+
+    <ImageView
+        android:id="@+id/res"
+        android:layout_weight="14"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+
+    <LinearLayout
+        android:layout_weight="1"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <Button
+            android:id="@+id/btn_ok"
+            android:layout_weight="1"
+            android:layout_width="0dp"
+            android:text="确认"
+            android:layout_height="match_parent"/>
+
+        <Button
+            android:id="@+id/back_btn"
+            android:layout_weight="1"
+            android:text="重写"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"/>
+
+    </LinearLayout>
+
+</LinearLayout>

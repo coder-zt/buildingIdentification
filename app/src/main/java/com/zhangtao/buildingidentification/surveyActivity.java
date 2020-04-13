@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
@@ -23,7 +24,7 @@ public class surveyActivity extends AppCompatActivity implements TableBar.onItem
 
     public static final int TOLFET = 0;
     public static final int TORIGHT = 1;
-    public static final int gestureLength = 540;
+    public static final int gestureLength = 300;
     private ViewPager mViewPager;
     private String[] mDataList;
     private final static String TAG = "surveyActivity";
@@ -50,8 +51,8 @@ public class surveyActivity extends AppCompatActivity implements TableBar.onItem
         mDataList = this.getApplicationContext().getResources().getStringArray(R.array.survey_tab_name);//survey_tab_name
         mTableView = findViewById(R.id.table_view);
 
-        mTableView.getSettings().setJavaScriptEnabled(true);
         WebSettings webSettings = mTableView.getSettings();
+        webSettings.setJavaScriptEnabled(true);
         //设置true,才能让Webivew支持<meta>标签的viewport属性
         webSettings.setUseWideViewPort(true);
         //设置可以支持缩放
@@ -123,8 +124,12 @@ public class surveyActivity extends AppCompatActivity implements TableBar.onItem
                 break;
             case 3:
                 mTableView.loadUrl("file:///android_asset/signatureTest.html");
+                Intent intent = new Intent(surveyActivity.this, signatureActivity.class);
+                startActivity(intent);
                 break;
-
+            case 4:
+                mTableView.loadUrl("file:///android_asset/signature.html");
+                break;
         }
     }
 
