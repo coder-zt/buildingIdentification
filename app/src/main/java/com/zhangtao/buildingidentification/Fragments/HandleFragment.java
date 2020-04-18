@@ -25,6 +25,7 @@ import com.zhangtao.buildingidentification.Listeners.MyTouchListener;
 import com.zhangtao.buildingidentification.R;
 import com.zhangtao.buildingidentification.Views.mainToolBar;
 import com.zhangtao.buildingidentification.Views.operationPopupWindow;
+import com.zhangtao.buildingidentification.elements.BDPoint;
 import com.zhangtao.buildingidentification.interfaces.IMapEventCallback;
 import com.zhangtao.buildingidentification.interfaces.IOperation_Panel_Callback;
 import com.zhangtao.buildingidentification.surveyActivity;
@@ -51,7 +52,7 @@ public class HandleFragment extends BaseFragment implements View.OnClickListener
     private MapView mMapView;
     private String TAG = "HandleFragment";
     private GraphicsLayer mGraphicsLayer;
-    private List<Point> mPoints =  new ArrayList<>();
+    private List<BDPoint> mPoints =  new ArrayList<>();
     private View mView;
     private Context mContext;
     private MyTouchListener mMyTouchListener;
@@ -139,9 +140,8 @@ public class HandleFragment extends BaseFragment implements View.OnClickListener
     //向mPoins中添加点元素
     private void addPoint(float x, float y){
         mCurrentPointIndex = -1;
-        mPoints.add(mMapView.toMapPoint(x,y));
+        mPoints.add(new BDPoint(mMapView.toMapPoint(x,y)));
     }
-
 
     //画点
     private void drawPoint() {
@@ -149,66 +149,70 @@ public class HandleFragment extends BaseFragment implements View.OnClickListener
             return;
         }
         int i = 0;
-        for (Point point : mPoints) {
+        for (BDPoint point : mPoints) {
             //画出被选中的点
             Map<String, Object> attribute = new HashMap<>();
             attribute.put(TYPE_KEY, TYPE_POINT);
             if(i == mCurrentPointIndex){
-                Graphic graphic = new Graphic(point, POINT_SELECTED_SYMBOL, attribute);
+                Graphic graphic = new Graphic(point.getPoint(), POINT_SELECTED_SYMBOL, attribute);
                 mGraphicsLayer.addGraphic(graphic);
             }else{
-                mGraphicsLayer.addGraphic(new Graphic(point, POINT_ORIGIN_SYMBOL, attribute));
+                if (point.isBoundary()) {
+                    mGraphicsLayer.addGraphic(new Graphic(point.getPoint(), POINT_ORIGIN_SYMBOL, attribute));
+                }else{
+                    mGraphicsLayer.addGraphic(new Graphic(point.getPoint(), POINT_ORIGIN_SYMBOL, attribute));
+                }
             }
             i++;
         }
     }
-
-    //画线
-    private void drawLine() {
-        if(mPoints.size() == 0){
-            return;
-        }
-        int index = 0;
-        for (Point point : mPoints) {
-            Polyline line = new Polyline();
-            line.startPath(point);
-            line.lineTo(mPoints.get((index+1)%mPoints.size()));
-            Map<String, Object> attribute = new HashMap<>();
-            attribute.put(TYPE_KEY, TYPE_LINE);
-            attribute.put(ID_KEY, index);
-            if(index == mCurrentLineId){
-                mGraphicsLayer.addGraphic(new Graphic(line, LINE_SELECTED_SYMBOL, attribute));
-            }else{
-                mGraphicsLayer.addGraphic(new Graphic(line, LINE_ORIGIN_SYMBOL, attribute));
-            }
-            index++;
-        }
-
-    }
-
-    //画面
-    private void drawPolygon() {
-        if(mPoints.size() == 0){
-            return;
-        }
-        if (mPolygon == null) {
-            mPolygon = new Polygon();
-        }else{
-            mPolygon.setEmpty();
-        }
-        if (mPoints.size()>1) {
-            for (int i = 0; i < mPoints.size(); i++) {
-                if (i == 0) {
-                    mPolygon.startPath(mPoints.get(i));
-                } else {
-                    mPolygon.lineTo(mPoints.get(i));
-                }
-            }
-            mPolygon.lineTo(mPoints.get(0));
-            Graphic currentGraphic  = new Graphic(mPolygon, POLYGON_ORIGIN_SYMBOL);
-            mCurrentPloygonId = mGraphicsLayer.addGraphic(currentGraphic);
-        }
-    }
+//
+//    //画线
+//    private void drawLine() {
+//        if(mPoints.size() == 0){
+//            return;
+//        }
+//        int index = 0;
+//        for (Point point : mPoints) {
+//            Polyline line = new Polyline();
+//            line.startPath(point);
+//            line.lineTo(mPoints.get((index+1)%mPoints.size()));
+//            Map<String, Object> attribute = new HashMap<>();
+//            attribute.put(TYPE_KEY, TYPE_LINE);
+//            attribute.put(ID_KEY, index);
+//            if(index == mCurrentLineId){
+//                mGraphicsLayer.addGraphic(new Graphic(line, LINE_SELECTED_SYMBOL, attribute));
+//            }else{
+//                mGraphicsLayer.addGraphic(new Graphic(line, LINE_ORIGIN_SYMBOL, attribute));
+//            }
+//            index++;
+//        }
+//
+//    }
+//
+//    //画面
+//    private void drawPolygon() {
+//        if(mPoints.size() == 0){
+//            return;
+//        }
+//        if (mPolygon == null) {
+//            mPolygon = new Polygon();
+//        }else{
+//            mPolygon.setEmpty();
+//        }
+//        if (mPoints.size()>1) {
+//            for (int i = 0; i < mPoints.size(); i++) {
+//                if (i == 0) {
+//                    mPolygon.startPath(mPoints.get(i));
+//                } else {
+//                    mPolygon.lineTo(mPoints.get(i));
+//                }
+//            }
+//            mPolygon.lineTo(mPoints.get(0));
+//            Graphic currentGraphic  = new Graphic(mPolygon, POLYGON_ORIGIN_SYMBOL);
+//            mCurrentPloygonId = mGraphicsLayer.addGraphic(currentGraphic);
+//        }
+//    }
 
     private void getLength(Point point, Point point1) {
         double length = Math.sqrt(Math.pow((point.getX()-point1.getX()),2) + Math.pow((point.getY()-point1.getY()),2));
@@ -262,7 +266,6 @@ public class HandleFragment extends BaseFragment implements View.OnClickListener
         float x = point.getX();
         float y = point.getY();
         if(mIsEdit){
-
             mCurrentPointIndex = -1;
             //点击需要编辑的元素
             int ids[] =  mGraphicsLayer.getGraphicIDs(x, y, mTolerance);
@@ -324,8 +327,8 @@ public class HandleFragment extends BaseFragment implements View.OnClickListener
      */
     private int getPointIndex(Point target) {
         int i = 0;
-        for (Point point : mPoints) {
-            if (point.equals(target)) {
+        for (BDPoint point : mPoints) {
+            if (point.getPoint().equals(target)) {
                 return i;
             }
             i++;
@@ -367,7 +370,7 @@ public class HandleFragment extends BaseFragment implements View.OnClickListener
     private void drawOut() {
         mGraphicsLayer.removeAll();
 //        drawPolygon();
-        drawLine();
+//        drawLine();
         drawPoint();
     }
 
@@ -427,7 +430,7 @@ public class HandleFragment extends BaseFragment implements View.OnClickListener
             if (mCurrentPointIndex == -1) {
                 return;
             }
-            Point target = mPoints.get(mCurrentPointIndex);
+            Point target = mPoints.get(mCurrentPointIndex).getPoint();
             switch (dir) {
                 //向右
                 case 0:
@@ -458,7 +461,7 @@ public class HandleFragment extends BaseFragment implements View.OnClickListener
             Log.d(TAG, "clickedAddLineToMiddle:  " + mCurrentLine.getPoint(1));
             Point pointStart = mCurrentLine.getPoint(1);
             Point pointEnd = mCurrentLine.getPoint(0);
-            Point newPoint = new Point((pointStart.getX() + pointEnd.getX())/2,(pointStart.getY() + pointEnd.getY())/2);
+            BDPoint newPoint = new BDPoint(new Point((pointStart.getX() + pointEnd.getX())/2,(pointStart.getY() + pointEnd.getY())/2));
             mPoints.add( mPoints.indexOf(pointStart), newPoint);
             mCurrentLineId = -1;
             mCurrentLine = null;

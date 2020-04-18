@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
@@ -44,7 +45,7 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
 //        setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 //        setOutsideTouchable(true);
 //        setTouchable(true);
-//        setFocusable(true);
+        setFocusable(true);
         mContext = context;
         //载进来View
         mPopView = LayoutInflater.from(context).inflate(R.layout.operation_pop, null);

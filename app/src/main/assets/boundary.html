@@ -132,17 +132,17 @@
     <script>
         function toJson() {
             var data = '{"boundary_page":['
-            for (var index = 1; index <= 30; index++) {
-                var str = '{"' + index + '":{'
+            for (var indexcode = 1; indexcode <= 30; indexcode++) {
+                var str = '{"' + indexcode + '":{'
                 //四种name:jn\jn_type\jn_ltype\jn_lloc
                 //J1(3)
-                var JnLine = document.getElementsByName("J" + index)
+                var JnLine = document.getElementsByName("J" + indexcode)
                 //J1_type(6)
-                var Jn_type = document.getElementsByName("J" + index + "_type")
+                var Jn_type = document.getElementsByName("J" + indexcode + "_type")
                 //J1_ltype(8)
-                var Jn_ltype = document.getElementsByName("J" + index + "_ltype")
+                var Jn_ltype = document.getElementsByName("J" + indexcode + "_ltype")
                 //J1_lloc(3)----------J29_llocal
-                var Jn_llocal = document.getElementsByName("J" + index + "_llocal")
+                var Jn_llocal = document.getElementsByName("J" + indexcode + "_llocal")
                 //遍历JnLine
                 for (var i = 0; i < JnLine.length; i++) {
                     str += '"' + JnLine[i].id + '":"' + JnLine[i].value + '",'
@@ -175,7 +175,7 @@
                 }
                 str += '"llocal":"' + default_llocal + '"}}'
                 data += str
-                if(index < 30){
+                if(indexcode < 30){
                     data += ','
                 }
 
@@ -224,7 +224,7 @@
 
 <body>
 <!-- onclick="addJson()" -->
-<div class="title"  ondblclick="toJson()"> 界址表示表</div>
+<div class="title"  ondblclick="addJson()"> 界址表示表</div>
 <div class="tables">
     <table class="left_table">
         <tbody>

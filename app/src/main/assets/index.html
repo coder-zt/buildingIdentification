@@ -16,13 +16,13 @@
                                 }
                         }
                         str += '}}'
-<!--                        console.log(str);-->
+                        console.log(str);
                         Android.toJson(str);
                 }
 
 
                 function parseJsonFromHtml() {
-                        var text = '{"index_page" : {"index":"lllsztdlp","code":"lllsztdlp","name":"张滔",' +
+                        var text = '{"index_page" : {"indexcode":"lllsztdlp","code":"lllsztdlp","name":"张滔",' +
                                 ' "time_year":"2020","time_month":"4","time_day":"11","eare_name":"开州区"}}'
                         parseJson(text)
                 }
@@ -99,7 +99,7 @@
 
                 }
 
-                #index {
+                #indexcode {
                         margin-right: 20px;
                 }
 
@@ -120,14 +120,14 @@
 	</tr>
 	<tr class="bottom_line">
 		<td></td>
-		<td id="index_id" colspan="2">编号：<input id="index" type="text" name="info" /></td>
+		<td id="index_id" colspan="2">编号：<input id="indexcode" type="text" name="info" /></td>
 	</tr>
 	<tr class="blank_line1">
 		<td></td>
 	</tr>
 	<tr class="title_line">
 		<td></td>
-		<td>农村集体土地使用权</td>
+		<td onclick="parseJsonFromHtml()">农村集体土地使用权</td>
 		<td></td>
 	</tr>
 	<tr class="title_line">

@@ -59,4 +59,15 @@ public class Constant {
     //3. 面
     public final static int TYPE_POLYGON = 13;
 
+
+    //调查信息数据表
+    //数据库信息设置
+    //数据库名称
+    public static final String DATABASE_NAME = "BDDATABASE";
+    //数据库版本
+    public static final int DATABASE_VERSION = 1;
+    public static final String TABLE_INFO_NAME = "surveyInfo";
+
+    //Activity的信息传递相关字段
+    public static final String INTENT_TO_SURVEY="dataShow";
 }

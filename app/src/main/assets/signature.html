@@ -5,7 +5,7 @@
         table {
             width: 1080px;
             border-collapse: collapse;
-            height: 1450px;
+            height: 1500px;
             text-align: center;
            
         }
@@ -27,29 +27,38 @@
     </style>
     <script>
         function toJson() {
+        var isContinue = true
             var data = '{"signature_page":['
-            for (var index = 1; index <= 17; index++) {
+            for (var indexcode = 1; indexcode <= 17 && isContinue; indexcode++) {
+             if(indexcode < 17-1  && isContinue){
+                    str += ","
+                }
                 var str = '{'
-                var Line = document.getElementsByName("l" + index)
+                var Line = document.getElementsByName("l" + indexcode)
                 for(var i=0;i<Line.length;i++){
+                    if(Line[0].value == ""){
+                        isContinue = false
+                        break
+                    }
                     str+='"' + Line[i].id + '":"' + Line[i].value + '"'
-                    if(i < Line.length - 1){
+                    if(i < Line.length - 1 && isContinue){
                         str += ","
                     }
                 }
                 str += "}"
-                if(index < 17){
-                    str += ","
+
+                if(isContinue){
+                    data += str
                 }
-                data += str
+
             }
             data += ']}'
-<!--            console.log(data);-->
+            console.log(data);
              Android.toJson(data);
         }
 
         function addJson(){
-            var text = '{"signature_page":[{"起点号1":"j1","中点号1":"/","终点号1":"j2","权力人1":"dfgsgdagl","邻宗人1":"张滔","本宗人1":"李林璐","本日期1":"2020/4/13"},{"起点号2":"","中点号2":"","终点号2":"","权力人2":"","邻宗人2":"","本宗人2":"","本日期2":""},{"起点号3":"","中点号3":"","终点号3":"","权力人3":"","邻宗人3":"","本宗人3":"","本日期3":""},{"起点号4":"","中点号4":"","终点号4":"","权力人4":"","邻宗人4":"","本宗人4":"","本日期4":""},{"起点号5":"","中点号5":"","终点号5":"","权力人5":"","邻宗人5":"","本宗人5":"","本日期5":""},{"起点号6":"","中点号6":"","终点号6":"","权力人6":"","邻宗人6":"","本宗人6":"","本日期6":""},{"起点号7":"","中点号7":"","终点号7":"","权力人7":"","邻宗人7":"","本宗人7":"","本日期7":""},{"起点号8":"","中点号8":"","终点号8":"","权力人8":"","邻宗人8":"","本宗人8":"","本日期8":""},{"起点号9":"","中点号9":"","终点号9":"","权力人9":"","邻宗人9":"","本宗人9":"","本日期9":""},{"起点号10":"","中点号10":"","终点号10":"","权力人10":"","邻宗人10":"","本宗人10":"","本日期10":""},{"起点号11":"","中点号11":"","终点号11":"","权力人11":"","邻宗人11":"","本宗人11":"","本日期11":""},{"起点号12":"","中点号12":"","终点号12":"","权力人12":"","邻宗人12":"","本宗人12":"","本日期12":""},{"起点号13":"","中点号13":"","终点号13":"","权力人13":"","邻宗人13":"","本宗人13":"","本日期13":""},{"起点号14":"","中点号14":"","终点号14":"","权力人14":"","邻宗人14":"","本宗人14":"","本日期14":""},{"起点号15":"","中点号15":"","终点号15":"","权力人15":"","邻宗人15":"","本宗人15":"","本日期15":""},{"起点号16":"","中点号16":"","终点号16":"","权力人16":"","邻宗人16":"","本宗人16":"","本日期16":""},{"起点号17":"","中点号17":"","终点号17":"","权力人17":"","邻宗人17":"","本宗人17":"","本日期17":""}]}'
+            var text = '{"signature_page":[{"起点号1":"j1","中点号1":"/","终点号1":"j2","权力人1":"dfgsgdagl","本日期1":"2020/4/13"},{"起点号2":"","中点号2":"","终点号2":"","权力人2":"","邻宗人2":"","本宗人2":"","本日期2":""},{"起点号3":"","中点号3":"","终点号3":"","权力人3":"","邻宗人3":"","本宗人3":"","本日期3":""},{"起点号4":"","中点号4":"","终点号4":"","权力人4":"","邻宗人4":"","本宗人4":"","本日期4":""},{"起点号5":"","中点号5":"","终点号5":"","权力人5":"","邻宗人5":"","本宗人5":"","本日期5":""},{"起点号6":"","中点号6":"","终点号6":"","权力人6":"","邻宗人6":"","本宗人6":"","本日期6":""},{"起点号7":"","中点号7":"","终点号7":"","权力人7":"","邻宗人7":"","本宗人7":"","本日期7":""},{"起点号8":"","中点号8":"","终点号8":"","权力人8":"","邻宗人8":"","本宗人8":"","本日期8":""},{"起点号9":"","中点号9":"","终点号9":"","权力人9":"","邻宗人9":"","本宗人9":"","本日期9":""},{"起点号10":"","中点号10":"","终点号10":"","权力人10":"","邻宗人10":"","本宗人10":"","本日期10":""},{"起点号11":"","中点号11":"","终点号11":"","权力人11":"","邻宗人11":"","本宗人11":"","本日期11":""},{"起点号12":"","中点号12":"","终点号12":"","权力人12":"","邻宗人12":"","本宗人12":"","本日期12":""},{"起点号13":"","中点号13":"","终点号13":"","权力人13":"","邻宗人13":"","本宗人13":"","本日期13":""},{"起点号14":"","中点号14":"","终点号14":"","权力人14":"","邻宗人14":"","本宗人14":"","本日期14":""},{"起点号15":"","中点号15":"","终点号15":"","权力人15":"","邻宗人15":"","本宗人15":"","本日期15":""},{"起点号16":"","中点号16":"","终点号16":"","权力人16":"","邻宗人16":"","本宗人16":"","本日期16":""},{"起点号17":"","中点号17":"","终点号17":"","权力人17":"","邻宗人17":"","本宗人17":"","本日期17":""}]}'
             parseJson(text)
         }
 
@@ -60,6 +69,13 @@
                         document.getElementById(item).value = obj.signature_page[line][item]
                     }
             }
+        }
+        function setSignature(id,str){
+            document.getElementById(id).style.backgroundImage = "url('"+ str + "')"
+        }
+
+        function signature(e){
+            Android.signatureClicked(e.id)
         }
     </script>
 </head>
@@ -91,8 +107,8 @@
                 <td><input name="l1" id="中点号1" value=""  type="text"/></td>
                 <td><input name="l1" id="终点号1" value=""  type="text"/></td>
                 <td><input name="l1" id="权力人1" value=""  type="text"/></td>
-                <td><input name="l1" id="邻宗人1" value=""  type="text"/></td>
-                <td><input name="l1" id="本宗人1" value=""  type="text"/></td>
+                <td id = "邻宗人1" onclick="signature(this)"></td>
+                <td id = "本宗人1" onclick="signature(this)"></td>
                 <td><input name="l1" id="本日期1" value=""  type="text"/></td>
             </tr>
 
@@ -101,8 +117,8 @@
                 <td><input name="l2" id="中点号2"   value=""  type="text"/></td>
                 <td><input name="l2" id="终点号2"   value=""  type="text"/></td>
                 <td><input name="l2" id="权力人2"   value=""  type="text"/></td>
-                <td><input name="l2" id="邻宗人2"   value=""  type="text"/></td>
-                <td><input name="l2" id="本宗人2"   value=""  type="text"/></td>
+                <td id = "邻宗人2" onclick="signature(this)"></td>
+                <td id = "本宗人2" onclick="signature(this)"></td>
                 <td><input name="l2" id="本日期2"   value=""  type="text"/></td>
             </tr>
 
@@ -111,8 +127,8 @@
                 <td><input name="l3"  id="中点号3"  value=""  type="text"/></td>
                 <td><input name="l3"  id="终点号3"  value=""  type="text"/></td>
                 <td><input name="l3"  id="权力人3"  value=""  type="text"/></td>
-                <td><input name="l3"  id="邻宗人3"  value=""  type="text"/></td>
-                <td><input name="l3"  id="本宗人3"  value=""  type="text"/></td>
+                <td id = "邻宗人3" onclick="signature(this)"></td>
+                <td id = "本宗人3" onclick="signature(this)"></td>
                 <td><input name="l3"  id="本日期3"  value=""  type="text"/></td>
             </tr>
 
@@ -121,8 +137,8 @@
                 <td><input name="l4"  id="中点号4"  value=""  type="text"/></td>
                 <td><input name="l4"  id="终点号4"  value=""  type="text"/></td>
                 <td><input name="l4"  id="权力人4"  value=""  type="text"/></td>
-                <td><input name="l4"  id="邻宗人4"  value=""  type="text"/></td>
-                <td><input name="l4"  id="本宗人4"  value=""  type="text"/></td>
+                <td id = "邻宗人4" onclick="signature(this)"></td>
+                <td id = "本宗人4" onclick="signature(this)"></td>
                 <td><input name="l4"  id="本日期4"  value=""  type="text"/></td>
             </tr>
 
@@ -131,8 +147,8 @@
                 <td><input name="l5"  id="中点号5"  value=""  type="text"/></td>
                 <td><input name="l5"  id="终点号5"  value=""  type="text"/></td>
                 <td><input name="l5"  id="权力人5"  value=""  type="text"/></td>
-                <td><input name="l5"  id="邻宗人5"  value=""  type="text"/></td>
-                <td><input name="l5"  id="本宗人5"  value=""  type="text"/></td>
+                <td id = "邻宗人5" onclick="signature(this)"></td>
+                <td id = "本宗人5" onclick="signature(this)"></td>
                 <td><input name="l5"  id="本日期5"  value=""  type="text"/></td>
             </tr>
             <tr>
@@ -140,8 +156,8 @@
                 <td><input name="l6"  id="中点号6" value=""  type="text"/></td>
                 <td><input name="l6"  id="终点号6" value=""  type="text"/></td>
                 <td><input name="l6"  id="权力人6" value=""  type="text"/></td>
-                <td><input name="l6"  id="邻宗人6" value=""  type="text"/></td>
-                <td><input name="l6"  id="本宗人6" value=""  type="text"/></td>
+                <td id = "邻宗人6" onclick="signature(this)"></td>
+                <td id = "本宗人6" onclick="signature(this)"></td>
                 <td><input name="l6"  id="本日期6" value=""  type="text"/></td>
             </tr>
 
@@ -150,8 +166,8 @@
                 <td><input name="l7"  id="中点号7"  value=""  type="text"/></td>
                 <td><input name="l7"  id="终点号7"  value=""  type="text"/></td>
                 <td><input name="l7"  id="权力人7"  value=""  type="text"/></td>
-                <td><input name="l7"  id="邻宗人7"  value=""  type="text"/></td>
-                <td><input name="l7"  id="本宗人7"  value=""  type="text"/></td>
+                <td id = "邻宗人7" onclick="signature(this)"></td>
+                <td id = "本宗人7" onclick="signature(this)"></td>
                 <td><input name="l7"  id="本日期7"  value=""  type="text"/></td>
             </tr>
 
@@ -160,8 +176,8 @@
                 <td><input name="l8" id="中点号8"  value=""  type="text"/></td>
                 <td><input name="l8" id="终点号8"  value=""  type="text"/></td>
                 <td><input name="l8" id="权力人8"  value=""  type="text"/></td>
-                <td><input name="l8" id="邻宗人8"  value=""  type="text"/></td>
-                <td><input name="l8" id="本宗人8"  value=""  type="text"/></td>
+                <td id = "邻宗人8" onclick="signature(this)"></td>
+                <td id = "本宗人8" onclick="signature(this)"></td>
                 <td><input name="l8" id="本日期8"  value=""  type="text"/></td>
             </tr>
 
@@ -170,8 +186,8 @@
                 <td><input name="l9" id="中点号9"  value=""  type="text"/></td>
                 <td><input name="l9" id="终点号9"  value=""  type="text"/></td>
                 <td><input name="l9" id="权力人9"  value=""  type="text"/></td>
-                <td><input name="l9" id="邻宗人9"  value=""  type="text"/></td>
-                <td><input name="l9" id="本宗人9"  value=""  type="text"/></td>
+                <td id = "邻宗人9" onclick="signature(this)"></td>
+                <td id = "本宗人9" onclick="signature(this)"></td>
                 <td><input name="l9" id="本日期9"  value=""  type="text"/></td>
             </tr>
 
@@ -180,8 +196,8 @@
                 <td><input name="l10" id="中点号10"  value=""  type="text"/></td>
                 <td><input name="l10" id="终点号10"  value=""  type="text"/></td>
                 <td><input name="l10" id="权力人10"  value=""  type="text"/></td>
-                <td><input name="l10" id="邻宗人10"  value=""  type="text"/></td>
-                <td><input name="l10" id="本宗人10"  value=""  type="text"/></td>
+                <td id = "邻宗人10" onclick="signature(this)"></td>
+                <td id = "本宗人10" onclick="signature(this)"></td>
                 <td><input name="l10" id="本日期10"  value=""  type="text"/></td>
             </tr>
 
@@ -190,8 +206,8 @@
                 <td><input name="l11" id="中点号11"  value=""  type="text"/></td>
                 <td><input name="l11" id="终点号11"  value=""  type="text"/></td>
                 <td><input name="l11" id="权力人11"  value=""  type="text"/></td>
-                <td><input name="l11" id="邻宗人11"  value=""  type="text"/></td>
-                <td><input name="l11" id="本宗人11"  value=""  type="text"/></td>
+                <td id = "邻宗人11" onclick="signature(this)"></td>
+                <td id = "本宗人11" onclick="signature(this)"></td>
                 <td><input name="l11" id="本日期11"  value=""  type="text"/></td>
             </tr>
 
@@ -200,8 +216,8 @@
                 <td><input name="l12"  id="中点号12" value=""  type="text"/></td>
                 <td><input name="l12"  id="终点号12" value=""  type="text"/></td>
                 <td><input name="l12"  id="权力人12" value=""  type="text"/></td>
-                <td><input name="l12"  id="邻宗人12" value=""  type="text"/></td>
-                <td><input name="l12"  id="本宗人12" value=""  type="text"/></td>
+                <td id = "邻宗人12" onclick="signature(this)"></td>
+                <td id = "本宗人12" onclick="signature(this)"></td>
                 <td><input name="l12"  id="本日期12" value=""  type="text"/></td>
             </tr>
 
@@ -210,8 +226,8 @@
                 <td><input name="l13" id="中点号13"   value=""  type="text"/></td>
                 <td><input name="l13" id="终点号13"   value=""  type="text"/></td>
                 <td><input name="l13" id="权力人13"   value=""  type="text"/></td>
-                <td><input name="l13" id="邻宗人13"   value=""  type="text"/></td>
-                <td><input name="l13" id="本宗人13"   value=""  type="text"/></td>
+                <td id = "邻宗人13" onclick="signature(this)"></td>
+                <td id = "本宗人13" onclick="signature(this)"></td>
                 <td><input name="l13" id="本日期13"   value=""  type="text"/></td>
             </tr>
 
@@ -220,8 +236,8 @@
                 <td><input name="l14" id="中点号14"  value=""  type="text"/></td>
                 <td><input name="l14" id="终点号14"  value=""  type="text"/></td>
                 <td><input name="l14" id="权力人14"  value=""  type="text"/></td>
-                <td><input name="l14" id="邻宗人14"  value=""  type="text"/></td>
-                <td><input name="l14" id="本宗人14"  value=""  type="text"/></td>
+                <td id = "邻宗人14" onclick="signature(this)"></td>
+                <td id = "本宗人14" onclick="signature(this)"></td>
                 <td><input name="l14" id="本日期14"  value=""  type="text"/></td>
             </tr>
 
@@ -230,8 +246,8 @@
                 <td><input name="l15" id="中点号15" value=""  type="text"/></td>
                 <td><input name="l15" id="终点号15" value=""  type="text"/></td>
                 <td><input name="l15" id="权力人15" value=""  type="text"/></td>
-                <td><input name="l15" id="邻宗人15" value=""  type="text"/></td>
-                <td><input name="l15" id="本宗人15" value=""  type="text"/></td>
+                <td id = "邻宗人15" onclick="signature(this)"></td>
+                <td id = "本宗人15" onclick="signature(this)"></td>
                 <td><input name="l15" id="本日期15" value=""  type="text"/></td>
             </tr>
 
@@ -240,8 +256,8 @@
                 <td><input name="l16" id="中点号16"   value=""  type="text"/></td>
                 <td><input name="l16" id="终点号16"   value=""  type="text"/></td>
                 <td><input name="l16" id="权力人16"   value=""  type="text"/></td>
-                <td><input name="l16" id="邻宗人16"   value=""  type="text"/></td>
-                <td><input name="l16" id="本宗人16"   value=""  type="text"/></td>
+                <td id = "邻宗人16" onclick="signature(this)"></td>
+                <td id = "本宗人16" onclick="signature(this)"></td>
                 <td><input name="l16" id="本日期16"   value=""  type="text"/></td>
             </tr>
 
@@ -250,8 +266,8 @@
                 <td><input name="l17"  id="中点号17" value=""  type="text"/></td>
                 <td><input name="l17"  id="终点号17" value=""  type="text"/></td>
                 <td><input name="l17"  id="权力人17" value=""  type="text"/></td>
-                <td><input name="l17"  id="邻宗人17" value=""  type="text"/></td>
-                <td><input name="l17"  id="本宗人17" value=""  type="text"/></td>
+                <td id = "邻宗人17" onclick="signature(this)"></td>
+                <td id = "本宗人17" onclick="signature(this)"></td>
                 <td><input name="l17"  id="本日期17" value=""  type="text"/></td>
             </tr>
 

@@ -1,0 +1,117 @@
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style>
+        table {
+            width: 1080px;
+            border-collapse: collapse;
+            height: 1500px;
+            text-align: center;
+
+        }
+        td{
+            border: 1px #000 solid;
+        }
+
+        input {
+            width: 100%;
+            height: 100%;
+            text-align: center;
+            border-style: none;
+            font-size:16px;
+        }
+        .title{
+            height:50px;
+        }
+        textarea{
+            width: 100%;
+            height: 100%;
+            border-style: none;
+            font-size:24px;
+        }
+.info{
+    width:120px;
+}
+
+.info>p{
+    margin-left:10px ;
+}
+    </style>
+    <script>
+        function toJson() {
+            var data = '{"check_page":'
+
+                var str = '{'
+                var Line = document.getElementsByName("check")
+                for(var i=0;i<Line.length;i++){
+                    str+='"' + Line[i].id + '":"' + Line[i].value + '"'
+                    if(i < Line.length - 1){
+                        str += ","
+                    }
+                }
+            data += str
+            data += '}}'
+             Android.toJson(data)
+        }
+
+        function addJson(){
+            var text = '{"signature_page":[{"起点号1":"j1","中点号1":"/","终点号1":"j2","权力人1":"dfgsgdagl","本日期1":"2020/4/13"},{"起点号2":"","中点号2":"","终点号2":"","权力人2":"","邻宗人2":"","本宗人2":"","本日期2":""},{"起点号3":"","中点号3":"","终点号3":"","权力人3":"","邻宗人3":"","本宗人3":"","本日期3":""},{"起点号4":"","中点号4":"","终点号4":"","权力人4":"","邻宗人4":"","本宗人4":"","本日期4":""},{"起点号5":"","中点号5":"","终点号5":"","权力人5":"","邻宗人5":"","本宗人5":"","本日期5":""},{"起点号6":"","中点号6":"","终点号6":"","权力人6":"","邻宗人6":"","本宗人6":"","本日期6":""},{"起点号7":"","中点号7":"","终点号7":"","权力人7":"","邻宗人7":"","本宗人7":"","本日期7":""},{"起点号8":"","中点号8":"","终点号8":"","权力人8":"","邻宗人8":"","本宗人8":"","本日期8":""},{"起点号9":"","中点号9":"","终点号9":"","权力人9":"","邻宗人9":"","本宗人9":"","本日期9":""},{"起点号10":"","中点号10":"","终点号10":"","权力人10":"","邻宗人10":"","本宗人10":"","本日期10":""},{"起点号11":"","中点号11":"","终点号11":"","权力人11":"","邻宗人11":"","本宗人11":"","本日期11":""},{"起点号12":"","中点号12":"","终点号12":"","权力人12":"","邻宗人12":"","本宗人12":"","本日期12":""},{"起点号13":"","中点号13":"","终点号13":"","权力人13":"","邻宗人13":"","本宗人13":"","本日期13":""},{"起点号14":"","中点号14":"","终点号14":"","权力人14":"","邻宗人14":"","本宗人14":"","本日期14":""},{"起点号15":"","中点号15":"","终点号15":"","权力人15":"","邻宗人15":"","本宗人15":"","本日期15":""},{"起点号16":"","中点号16":"","终点号16":"","权力人16":"","邻宗人16":"","本宗人16":"","本日期16":""},{"起点号17":"","中点号17":"","终点号17":"","权力人17":"","邻宗人17":"","本宗人17":"","本日期17":""}]}'
+            parseJson(text)
+        }
+
+        function parseJson(tt){
+            var obj = JSON.parse(tt)
+            for(var item in obj.check_page){
+                 document.getElementById(item).value = obj.check_page[item]
+            }
+        }
+        function setSignature(id,str){
+            document.getElementById(id).style.backgroundImage = "url('"+ str + "')"
+            document.getElementById(id).style.backgroundRepeat = "no-repeat";
+        }
+
+        function signature(e){
+            Android.signatureClicked(e.id)
+        }
+    </script>
+</head>
+
+<body>
+<table>
+    <tbody>
+    <tr class="title">
+        <td colspan="5" onclick ="toJson()" >调查审核表</td>
+    </tr>
+    <tr height="420px">
+        <td  width="150px" rowspan="2" onclick="addJson()">权属调查记事</td>
+        <td colspan="4" ><textarea name="check" id="权属调查记事"></textarea></td>
+    </tr>
+    <tr height="80px">
+        <td class="info"><p>调查员签名：</p></td>
+        <td width="400px" id = "调查员签名" onclick="signature(this)"></td>
+        <td class="info"><p>日期：</p></td>
+        <td><input name="check" id="调查日期"   value=""  type="text"/></td>
+    </tr>
+    <tr height="420px">
+        <td rowspan="2" onclick="addJson()">地籍测量记事</td>
+        <td colspan="4"><textarea name="check" id="地籍测量记事"></textarea></td>
+    </tr>
+    <tr height="80px">
+        <td class="info"><p>测量员签名：</p></td>
+        <td id = "测量员签名" onclick="signature(this)"></td>
+        <td class="info"><p>日期：</p></td>
+        <td><input name="check" id="测量日期"   value=""  type="text"/></td>
+    </tr>
+    <tr height="370px">
+        <td rowspan="2" onclick="addJson()">地籍调查结果</br>审核意见</td>
+        <td colspan="4"><textarea name="check" id="审核意见"></textarea></td>
+    </tr>
+    <tr height="80px">
+        <td class="info"><p>审核人签名：</p></td>
+        <td id = "审核人签名" onclick="signature(this)"></td>
+        <td class="info"><p>日期：</p></td>
+        <td><input name="check" id="审核日期"   value=""  type="text"/></td>
+    </tr>
+    </tbody>
+</table>
+</body>

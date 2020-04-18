@@ -21,12 +21,22 @@
             android:layout_marginStart="10dp"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:text="房屋信息采集"
             android:gravity="center"
             android:textSize="28sp"
             android:textColor="@color/black"/>
+
+        <ImageView
+            android:id="@+id/menu_btn"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:src="@mipmap/menu"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="10dp"/>
+
     </LinearLayout>
 
     <com.zhangtao.buildingidentification.Views.TableBar

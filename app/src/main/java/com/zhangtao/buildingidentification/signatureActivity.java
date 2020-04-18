@@ -1,10 +1,15 @@
 package com.zhangtao.buildingidentification;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebSettings;
@@ -14,6 +19,8 @@ import android.widget.ImageView;
 
 import com.zhangtao.buildingidentification.Utils.TableBrowserApi;
 import com.zhangtao.buildingidentification.Views.myCanvas;
+
+import java.io.ByteArrayOutputStream;
 
 public class signatureActivity extends AppCompatActivity {
 
@@ -29,20 +36,20 @@ public class signatureActivity extends AppCompatActivity {
         myCanvas canvas = findViewById(R.id.signature_area);
         canvas.setPenColor(Color.BLACK);
         canvas.setBackColor(Color.WHITE);
+        canvas.setPaintWidth(20);
         Button okBtn = findViewById(R.id.btn_ok);
         Button cannelBtn = findViewById(R.id.back_btn);
-        ImageView imageView = findViewById(R.id.res);
-        imageView.setImageResource(R.mipmap.unedit);
         okBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Log.d(TAG, "onClick: ");
                 Bitmap bitmap = canvas.getBitMap();
                 Log.d(TAG, "onClick: " + bitmap.getHeight() + "===" + bitmap.getWidth());
-//                bitmap.setPixel(100, 270, Color.BLACK);
-
-
-                imageView.setImageBitmap(bitmap);
+                Intent intent = new Intent();
+                bitmap = scaleBitmap(bitmap, 160, 80);
+                intent.putExtra("signature", bitmap);
+                setResult(2, intent);
+                finish();
             }
         });
         cannelBtn.setOnClickListener(new View.OnClickListener() {
@@ -51,20 +58,31 @@ public class signatureActivity extends AppCompatActivity {
                 canvas.clear();
             }
         });
-//        WebSettings webSettings = mSignWebView.getSettings();
-//        webSettings.setJavaScriptEnabled(true);
-//        //设置true,才能让Webivew支持<meta>标签的viewport属性
-//        webSettings.setUseWideViewPort(true);
-//        //设置可以支持缩放
-//        webSettings.setSupportZoom(true);
-//        //设置出现缩放工具
-//        webSettings.setBuiltInZoomControls(true);
-//        //设定缩放控件隐藏
-//        webSettings.setDisplayZoomControls(false);
-//
-//        mApi = new TableBrowserApi();
-//        mSignWebView.addJavascriptInterface(mApi, "Android");
-//        mSignWebView.loadUrl("file:///android_asset/signatureTest.html");
-
     }
+
+    /**
+     * 根据给定的宽和高进行拉伸
+     *
+     * @param origin    原图
+     * @param newWidth  新图的宽
+     * @param newHeight 新图的高
+     * @return new Bitmap
+     */
+    private Bitmap scaleBitmap(Bitmap origin, int newWidth, int newHeight) {
+        if (origin == null) {
+            return null;
+        }
+        int height = origin.getHeight();
+        int width = origin.getWidth();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);// 使用后乘
+        Bitmap newBM = Bitmap.createBitmap(origin, 0, 0, width, height, matrix, false);
+        if (!origin.isRecycled()) {
+            origin.recycle();
+        }
+        return newBM;
+    }
+
 }

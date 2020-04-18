@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="300dp"
+    android:orientation="vertical" android:layout_width="330dp"
     android:layout_height="200dp">
     <RelativeLayout
         android:id="@+id/operation_area"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:gravity="center">
+        android:gravity="center"
+        android:background="#3490f0">
 
 
         <ImageView
@@ -64,6 +65,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:id="@+id/rg"
         android:layout_alignTop="@+id/operation_area"
         android:layout_toRightOf="@+id/operation_area">
 
@@ -87,4 +89,33 @@
             android:text="cm"/>
 
     </RadioGroup>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_toEndOf="@+id/rg"
+    android:orientation="vertical"
+    android:background="#999">
+
+    <CheckBox
+        android:layout_marginTop="20dp"
+        android:id="@+id/is_single"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="界址点"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:textSize="12dp"
+        android:gravity="center"/>
+
+    <Button
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="编辑完成"
+        android:textSize="12sp"/>
+
+</LinearLayout>
+
 </RelativeLayout>
