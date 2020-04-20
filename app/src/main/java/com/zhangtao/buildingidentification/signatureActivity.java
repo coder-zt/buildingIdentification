@@ -66,7 +66,7 @@ public class signatureActivity extends AppCompatActivity {
      * @param origin    原图
      * @param newWidth  新图的宽
      * @param newHeight 新图的高
-     * @return new Bitmap
+     * @return newbtn Bitmap
      */
     private Bitmap scaleBitmap(Bitmap origin, int newWidth, int newHeight) {
         if (origin == null) {

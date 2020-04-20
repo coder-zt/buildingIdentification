@@ -1,22 +1,36 @@
 package com.zhangtao.buildingidentification.Views;
 
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.text.Layout;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RadioButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhangtao.buildingidentification.R;
-import com.zhangtao.buildingidentification.interfaces.IOperation_Panel_Callback;
+import com.zhangtao.buildingidentification.Utils.DensityUtils;
+import com.zhangtao.buildingidentification.elements.BDPoint;
+import com.zhangtao.buildingidentification.interfaces.IOperationPanelCallback;
 import com.zhangtao.buildingidentification.interfaces.IOperation_Panel_Event;
 
+import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_CLOSE_LINE;
+import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_CREATE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_LINE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_POINT;
-import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_POLYGON;
+import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_NOTE;
 
 public class operationPopupWindow extends PopupWindow implements View.OnClickListener, IOperation_Panel_Event {
 
@@ -24,9 +38,9 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
     private View mLinePanel;
     private IWindowDismissed mIWindowDismissed;
     private View mPointPanel;
-    private View mPoloygnPanel;
+    private View mCreatePanel;
     private ImageView mPointDeleteBtn;
-    private IOperation_Panel_Callback mCallback;
+    private IOperationPanelCallback mCallback;
     private RadioButton mRdUnitM;
     private ImageView mUpBtn;
     private ImageView mDownBtn;
@@ -36,15 +50,24 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
     private RadioButton mRdUnitDm;
     private final Context mContext;
     private ImageView mLineAddBtn;
+    private EditText mBoundaryIndex;
+    private CheckBox mIsBoundary;
+    private TextView mCreateNote;
+    private TextView mCreateUncloseLine;
+    private TextView mCreateCloseLine;
+    private TextView mSelectTv;
+    private EditText mAddType;
+    private TextView mGetLenBtn;
+    private TextView mLenTextTv;
 
     public operationPopupWindow(Context context){
         //设置它宽高
         super(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //这里要注意：设置setOutsideTouchable之前，先要设置：setBackgroundDrawable,
         //否则点击外部无法关闭pop.
-//        setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//        setBackgroundDrawable(newbtn ColorDrawable(Color.TRANSPARENT));
 //        setOutsideTouchable(true);
-//        setTouchable(true);
+        setTouchable(true);
         setFocusable(true);
         mContext = context;
         //载进来View
@@ -65,7 +88,13 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         mLeftBtn.setOnClickListener(this);
         mRightBtn.setOnClickListener(this);
         //线操作的事件
-        mLineAddBtn.setOnClickListener(this);
+//        mLineAddBtn.setOnClickListener(this);
+        mSelectTv.setOnClickListener(this);
+        mGetLenBtn.setOnClickListener(this);
+        //新建
+        mCreateCloseLine.setOnClickListener(this);
+        mCreateUncloseLine.setOnClickListener(this);
+        mCreateNote.setOnClickListener(this);
     }
     private void initView() {
         //点的操作控件
@@ -78,11 +107,44 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         mRdUnitM = mPopView.findViewById(R.id.unit_m);
         mRdUnitDm = mPopView.findViewById(R.id.unit_dm);
         mRdUnitCm = mPopView.findViewById(R.id.unit_cm);
+        mIsBoundary = mPopView.findViewById(R.id.is_single);
+        mBoundaryIndex = mPopView.findViewById(R.id.boundary_index_et);
+        mIsBoundary.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if(isChecked){
+                    mBoundaryIndex.setVisibility(View.VISIBLE);
+                    //优化，index自动增加
+                }else{
+                    mBoundaryIndex.setVisibility(View.INVISIBLE);
+                }
+            }
+        });
+        //完成按钮
+        Button compleBtn = mPopView.findViewById(R.id.comple_btn);
+        compleBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mIsBoundary.isChecked()) {
+                    mCallback.clickCompleted(mBoundaryIndex.getText().toString());
+                }else{
+                    mCallback.clickCompleted(null);
+                }
+                dismiss();
+            }
+        });
         //线的操作控件
         mPointPanel = mPopView.findViewById(R.id.point_panel);
-        mLineAddBtn = mPopView.findViewById(R.id.btn_line_add);
-
-        mPoloygnPanel = mPopView.findViewById(R.id.polygon_panel);
+        mSelectTv = mPopView.findViewById(R.id.select_btn);
+        mAddType = mPopView.findViewById(R.id.type_text);
+        mGetLenBtn = mPopView.findViewById(R.id.get_len_btn);
+        mLenTextTv = mPopView.findViewById(R.id.length_text);
+//        mLineAddBtn = mPopView.findViewById(R.id.btn_line_add);
+        //新建
+        mCreatePanel = mPopView.findViewById(R.id.create_panel);
+        mCreateCloseLine = mPopView.findViewById(R.id.line_close_btn);
+        mCreateUncloseLine = mPopView.findViewById(R.id.line_btn);
+        mCreateNote = mPopView.findViewById(R.id.note_btn);
     }
 
 
@@ -107,14 +169,88 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
             case R.id.to_up:
                 clickOrientation(3);
                 break;
-            case R.id.btn_line_add:
-                clickAddLineToMiddle();
+//            case R.id.btn_line_add:
+//                clickAddLineToMiddle();
+//                break;
+            case R.id.line_btn:
+                mCallback.createElement(TYPE_LINE);
+                dismiss();
                 break;
+            case R.id.line_close_btn:
+                mCallback.createElement(TYPE_CLOSE_LINE);
+                dismiss();
+                break;
+            case R.id.note_btn:
+                mCallback.createElement(TYPE_NOTE);
+                dismiss();
+                break;
+            case R.id.select_btn:
+                showLineType(v);
+                break;
+            case R.id.get_len_btn:
+                getLineLength();
+                break;
+
         }
 
 
     }
 
+
+    /**
+     * 获取当前线段的长度
+     */
+    private void getLineLength() {
+        if (mCallback != null) {
+            float len = mCallback.getCurrentLineLength();
+            String result = String.format("%.3f",len);
+            mLenTextTv.setText(result + "m");
+        }
+    }
+
+    /**
+     * 设置多线段类型
+     * @param view
+     */
+    private void showLineType(View view) {
+        String[] types = mContext.getResources().getStringArray(R.array.line_type_name);
+        PopupWindow popupWindow = new PopupWindow();
+        popupWindow.setWidth(view.getWidth());
+        popupWindow.setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
+        ViewGroup mView = (ViewGroup)LayoutInflater.from(mContext).inflate(R.layout.pop_type, null, false);
+
+        int index = 0;
+        for (String type : types) {
+            TextView tv = new TextView(mContext);
+            tv.setText(type);
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextSize(DensityUtils.sp2px(mContext,8));
+            tv.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    TextView mTv = (TextView)view;
+                    TextView textView = (TextView)v;
+                    mTv.setText(textView.getText());
+                    if (TextUtils.equals(textView.getText(), "其他")) {
+                        mAddType.setVisibility(View.VISIBLE);
+                    }else{
+                        mAddType.setVisibility(View.INVISIBLE);
+                    }
+                    popupWindow.dismiss();
+                }
+            });
+            View hView = new View(mContext);
+            hView.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, DensityUtils.dp2px(mContext, 0.5f)));
+            hView.setBackgroundColor(Color.BLACK);
+            if(index < types.length){
+                mView.addView(hView);
+            }
+            mView.addView(tv);
+            index++;
+        }
+        popupWindow.setContentView(mView);
+        popupWindow.showAsDropDown(view);
+    }
 
 
     public void setWindowDismissedListener(IWindowDismissed listener){
@@ -154,13 +290,14 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         }
     }
 
+
     @Override
-    public void registerViewCallback(IOperation_Panel_Callback iOperation_panel_callback) {
-        mCallback = iOperation_panel_callback;
+    public void registerViewCallback(IOperationPanelCallback listener) {
+        mCallback = listener;
     }
 
     @Override
-    public void unRegisterViewCallback(IOperation_Panel_Callback iOperation_panel_callback) {
+    public void unRegisterViewCallback(IOperationPanelCallback iOperation_panel_callback) {
 
     }
 
@@ -169,19 +306,28 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         void dismissed();
     }
 
-    public void setPanel(int type){
+    public void setPanel(int type, BDPoint point){
         mPointPanel.setVisibility(View.GONE);
         mLinePanel.setVisibility(View.GONE);
-        mPoloygnPanel.setVisibility(View.GONE);
+        mCreatePanel.setVisibility(View.GONE);
         switch (type){
             case TYPE_POINT :
                 mPointPanel.setVisibility(View.VISIBLE);
+                if (point != null && point.isBoundary()) {
+                    mIsBoundary.setChecked(true);
+                    mBoundaryIndex.setText(point.getIndex());
+                }else{
+                    mIsBoundary.setChecked(false);
+                }
                 break;
             case TYPE_LINE :
                 mLinePanel.setVisibility(View.VISIBLE);
                 break;
-            case TYPE_POLYGON :
-                mPoloygnPanel.setVisibility(View.VISIBLE);
+            case TYPE_NOTE:
+//                mCreatePanel.setVisibility(View.VISIBLE);
+                break;
+            case TYPE_CREATE:
+                mCreatePanel.setVisibility(View.VISIBLE);
                 break;
             default:
                 break;

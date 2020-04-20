@@ -1,4 +1,4 @@
-package com.zhangtao.buildingidentification.Utils;
+package com.zhangtao.buildingidentification.elements;
 
 public class infoObject {
 

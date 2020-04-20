@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical" android:layout_width="330dp"
+    android:orientation="vertical" android:layout_width="370dp"
     android:layout_height="200dp"
     android:id="@+id/panel"
     android:background="#88ffffff">
@@ -20,39 +20,34 @@
         android:id="@+id/line_panel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/select_object"
-        android:layout_centerInParent="true"
         android:orientation="vertical"
         android:gravity="center"
         android:visibility="gone">
 
-        <com.zhangtao.buildingidentification.Views.Circle_ImageView
-            android:id="@+id/btn_line_add"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:padding="10dp"
-            android:src="@mipmap/delete_btn"
-            android:background="@drawable/shape_panel_circle"
-            android:layout_centerInParent="true"
-            android:layout_margin="24dp"
-            android:rotation="45"
-            android:layout_below="@+id/to_up"/>
+        <include layout="@layout/operation_panel_line"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="添加中点"/>
     </LinearLayout>
-<!--面-->
+
+<!--标注-->
     <LinearLayout
         android:id="@+id/polygon_panel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/select_object"
-        android:layout_centerInParent="true"
+        android:visibility="gone">
+        <include layout="@layout/operation_panel_line"/>
+
+        <include layout="@layout/operation_panel_line"/>
+
+    </LinearLayout>
+
+    <!--新建-->
+    <LinearLayout
+        android:id="@+id/create_panel"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:visibility="gone">
 
-        <include layout="@layout/operation_panel_polygon"/>
+        <include layout="@layout/operation_panel_create"/>
 
     </LinearLayout>
 </FrameLayout>

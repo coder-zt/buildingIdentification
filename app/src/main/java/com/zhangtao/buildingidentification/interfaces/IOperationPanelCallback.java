@@ -1,6 +1,6 @@
 package com.zhangtao.buildingidentification.interfaces;
 
-public interface IOperation_Panel_Callback {
+public interface IOperationPanelCallback {
 
     /**
      * 点击了删除按钮
@@ -19,4 +19,20 @@ public interface IOperation_Panel_Callback {
      * 点击了线上添加中点
      */
     void clickedAddLineToMiddle();
+
+    /**
+     * 点操作点击完成按钮
+     */
+    void clickCompleted(String index);
+
+    /**
+     * 创建元素
+     * @param type
+     */
+    void createElement(int type);
+
+    /**
+     * 获取线段的长度
+     */
+    float getCurrentLineLength();
 }

@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
-    android:layout_width="330dp"
+    android:layout_width="370dp"
     android:layout_height="wrap_content"
     android:background="@drawable/main_tool_bg">
+
 
     <ImageView
         android:layout_width="30dp"
@@ -38,10 +39,19 @@
         android:src="@mipmap/unedit"/>
 
     <ImageView
+        android:id="@+id/new_btn"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:src="@mipmap/newbtn"/>
+
+
+    <ImageView
         android:id="@+id/finshed_btn"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_margin="5dp"
         android:src="@mipmap/ok"/>
+
 
 </LinearLayout>

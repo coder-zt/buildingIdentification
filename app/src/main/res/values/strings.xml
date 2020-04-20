@@ -20,4 +20,12 @@
         <item name="fifth">界址签章表</item>
         <item name="sixth">调查审核表</item>
     </string-array>
+
+    <string-array name="line_type_name">
+        <item name="frist">界址线</item>
+        <item name="second">旱地</item>
+        <item name="thrid">晒场</item>
+        <item name="fourth">邻界址线</item>
+        <item name="fifth">其他</item>
+    </string-array>
 </resources>

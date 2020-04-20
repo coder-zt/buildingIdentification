@@ -11,7 +11,7 @@
 
     <com.zhangtao.buildingidentification.Views.mainToolBar
         android:id="@+id/toolbar"
-        android:layout_width="330dp"
+        android:layout_width="370dp"
         android:layout_height="40dp"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"/>

@@ -1,6 +1,7 @@
 package com.zhangtao.buildingidentification.Views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +23,7 @@ public class mainToolBar extends LinearLayout implements View.OnClickListener {
     private boolean mIsEdit = false;
     private onItemClicked mOnItemClicked;
     private ImageView mFinshedBtn;
+    private ImageView mCreateBtn;
 
     public mainToolBar(Context context) {
         this(context, null);
@@ -42,6 +44,7 @@ public class mainToolBar extends LinearLayout implements View.OnClickListener {
     private void initEvent() {
         mFinshedBtn.setOnClickListener(this);
         mEditBtn.setOnClickListener(this);
+        mCreateBtn.setOnClickListener(this);
     }
 
     public void setScale(String result){
@@ -53,6 +56,7 @@ public class mainToolBar extends LinearLayout implements View.OnClickListener {
         mCurrentScale = mView.findViewById(R.id.scale_tv);
         mEditBtn = mView.findViewById(R.id.edit_btn);
         mFinshedBtn = mView.findViewById(R.id.finshed_btn);
+        mCreateBtn = mView.findViewById(R.id.new_btn);
     }
 
     @Override
@@ -60,10 +64,20 @@ public class mainToolBar extends LinearLayout implements View.OnClickListener {
         switch(v.getId()){
             case R.id.edit_btn:
                 mIsEdit = !mIsEdit;
+                if(mIsEdit){
+                    mCreateBtn.setImageResource(R.mipmap.newable);
+                }else{
+                    mCreateBtn.setImageResource(R.mipmap.newbtn);
+                }
                 isEdit(mIsEdit);
                 break;
             case R.id.finshed_btn:
                 mOnItemClicked.finishedWorkedClick();
+                break;
+            case R.id.new_btn:
+                if(mIsEdit){
+                    mOnItemClicked.createElement();
+                }
                 break;
         }
     }
@@ -87,5 +101,7 @@ public class mainToolBar extends LinearLayout implements View.OnClickListener {
         void editBtnClick(boolean isEdit);
 
         void finishedWorkedClick();
+
+        void createElement();
     }
 }

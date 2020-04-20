@@ -3,14 +3,12 @@ package com.zhangtao.buildingidentification.Utils;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import com.google.gson.Gson;
+import com.zhangtao.buildingidentification.elements.DataObject;
+import com.zhangtao.buildingidentification.elements.infoObject;
 
-import java.lang.reflect.Array;
-import java.lang.reflect.Method;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;

@@ -8,6 +8,7 @@ import android.webkit.JavascriptInterface;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.zhangtao.buildingidentification.elements.infoObject;
 
 import org.json.JSONArray;
 import org.json.JSONException;

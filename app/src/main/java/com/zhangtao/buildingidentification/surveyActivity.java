@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,16 +21,15 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.zhangtao.buildingidentification.Utils.DBDao;
-import com.zhangtao.buildingidentification.Utils.DataObject;
+import com.zhangtao.buildingidentification.elements.DataObject;
 import com.zhangtao.buildingidentification.Utils.ImageManage;
 import com.zhangtao.buildingidentification.Utils.TableBrowserApi;
-import com.zhangtao.buildingidentification.Utils.infoObject;
+import com.zhangtao.buildingidentification.elements.infoObject;
 import com.zhangtao.buildingidentification.Views.TableBar;
 import com.zhangtao.buildingidentification.WebViewUtils.WebClient;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;

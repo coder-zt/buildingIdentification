@@ -1,15 +1,11 @@
 package com.zhangtao.buildingidentification.Fragments;
 
-import android.graphics.Color;
 import android.graphics.Rect;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.LinearLayout;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -18,8 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.zhangtao.buildingidentification.Adapters.ItemInfoAdapter;
 import com.zhangtao.buildingidentification.R;
 import com.zhangtao.buildingidentification.Utils.DBDao;
-import com.zhangtao.buildingidentification.Utils.DataObject;
-import com.zhangtao.buildingidentification.Utils.infoObject;
+import com.zhangtao.buildingidentification.elements.DataObject;
 
 import net.lucode.hackware.magicindicator.buildins.UIUtil;
 

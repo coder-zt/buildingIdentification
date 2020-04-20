@@ -1,7 +1,4 @@
-package com.zhangtao.buildingidentification.Utils;
-
-import android.os.Parcel;
-import android.os.Parcelable;
+package com.zhangtao.buildingidentification.elements;
 
 public class DataObject{
     private int _id;

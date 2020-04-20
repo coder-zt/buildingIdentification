@@ -34,10 +34,14 @@ public class Constant {
 
     //* * * * * 要素的样式 * * * * *
     //1.点样式
-    //1.1 原始样式
+    //1.1 普通点原始样式
     public static final SimpleMarkerSymbol POINT_ORIGIN_SYMBOL = new SimpleMarkerSymbol(Color.RED, 5,SimpleMarkerSymbol.STYLE.SQUARE);
-    //1.2 选中样式
+    //1.2 普通点选中样式
     public static final SimpleMarkerSymbol POINT_SELECTED_SYMBOL = new SimpleMarkerSymbol(Color.GREEN, 5, SimpleMarkerSymbol.STYLE.SQUARE);
+    //1.3 界址点原始样式
+    public static final SimpleMarkerSymbol POINT_BOUNDARY_ORIGIN_SYMBOL = new SimpleMarkerSymbol(Color.RED, 5,SimpleMarkerSymbol.STYLE.CIRCLE);
+    //1.4 界址点选中样式
+    public static final SimpleMarkerSymbol POINT_BOUNDARY_SELECTED_SYMBOL = new SimpleMarkerSymbol(Color.GREEN, 5, SimpleMarkerSymbol.STYLE.CIRCLE);
     //2. 线样式
     //2.1 原始样式
     public static final SimpleLineSymbol LINE_ORIGIN_SYMBOL = new SimpleLineSymbol(Color.BLUE, 1, SimpleLineSymbol.STYLE.SOLID);
@@ -54,11 +58,15 @@ public class Constant {
     public final static String ID_KEY = "ID";
     //1. 点
     public final static int TYPE_POINT = 11;
-    //2. 线
+    //2. 多线段
+    //2.1 非闭合多线段
     public final static int TYPE_LINE = 12;
-    //3. 面
-    public final static int TYPE_POLYGON = 13;
-
+    //2.2闭合多线段
+    public final static int TYPE_CLOSE_LINE = 121;
+    //3. 注解
+    public final static int TYPE_NOTE = 13;
+    //4. 新建元素
+    public final static int TYPE_CREATE = 14;
 
     //调查信息数据表
     //数据库信息设置
