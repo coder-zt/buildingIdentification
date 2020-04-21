@@ -208,7 +208,6 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
                     Graphic currentGraphic =  mGraphicsLayer.getGraphic(id);
                     switch ((int)currentGraphic.getAttributes().get(TYPE_KEY)){
                         case TYPE_POINT :
-                            Log.d(TAG, "onTapSingleTaped:选中了点元素");
                             if( grade == 3){
                                 break;
                             }
@@ -220,7 +219,6 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
                             mOperationPopWindow.showAsDropDown(mToolBar);
                             break;
                         case TYPE_LINE :
-                            Log.d(TAG, "onTapSingleTaped:选中了线元素");
                             if( grade > 2){
                                 break;
                             }
@@ -238,7 +236,6 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
                             mDataPresenter.setSelectTarget(TYPE_NOTE,currentGraphic.getGeometry() );
                             mOperationPopWindow.setPanel(TYPE_NOTE, null);
                             mOperationPopWindow.showAsDropDown(mToolBar);
-                            Log.d(TAG, "onTapSingleTaped:选中了面元素");
                             break;
                         default:
 

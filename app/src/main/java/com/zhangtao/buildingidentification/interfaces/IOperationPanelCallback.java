@@ -35,4 +35,14 @@ public interface IOperationPanelCallback {
      * 获取线段的长度
      */
     float getCurrentLineLength();
+
+    /**
+     * 在当前线段中创建一个新的点
+     */
+    void CreatePointOnLine();
+
+    /**
+     * 更新线段的信息
+     */
+    void commitInfoToLine(String type);
 }

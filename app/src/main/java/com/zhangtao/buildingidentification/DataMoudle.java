@@ -45,6 +45,10 @@ public class DataMoudle {
 
     //增删改查
 
+    /**
+     * 获取所有数据的图像
+     * @return
+     */
     public List<Graphic> getGraphics(){
         List<Graphic> graphics = new ArrayList<>();
         for (BDMutilLine bdMutilLine : mBDMutilLines) {
@@ -53,12 +57,20 @@ public class DataMoudle {
             }
 
         }
+        for (BDNote bdNote : mBDNotes) {
+            graphics.addAll(bdNote.getGraphic());
+        }
         for (BDPoint bdPoint : mBDPoints) {
             graphics.addAll(bdPoint.getGraphic());
         }
         return graphics;
     }
 
+    /**
+     * 设置当前所选点元素
+     * @param geometry
+     * @return
+     */
     public BDPoint setSelectPointTarget(Point geometry) {
         BDPoint mPoint = null;
         for (BDPoint bdPoint : mBDPoints) {
@@ -72,6 +84,10 @@ public class DataMoudle {
         return mPoint;
     }
 
+    /**
+     * 删除点元素
+     * @param currentBDPoint
+     */
     public void deletePoint(BDPoint currentBDPoint) {
         for (BDPoint bdPoint : mBDPoints) {
             if (bdPoint.isSamePoint(currentBDPoint.getPoint())) {
@@ -89,6 +105,11 @@ public class DataMoudle {
         }
     }
 
+    /**
+     * 设置选中的线元素
+     * @param geometry
+     * @return
+     */
     public BDMutilLine setSelectLineTarget(Polyline geometry) {
         for (BDMutilLine bdMutilLine : mBDMutilLines) {
             if (bdMutilLine.hasLine(geometry)) {
@@ -96,5 +117,24 @@ public class DataMoudle {
             }
         }
         return null;
+    }
+
+    /**
+     * 在线段中插入新的点元素
+     * @param currentBDMutilLine
+     * @param point
+     */
+    public void createMiddlePoint(BDMutilLine currentBDMutilLine, Point point) {
+        mBDPoints.add(currentBDMutilLine.CreateMiddlePoint(point));
+    }
+
+    /**
+     * 创建备注元素
+     * @param index
+     * @param currentBDPoint
+     */
+    public void createBDNote(String index, BDPoint currentBDPoint) {
+        BDNote note = new BDNote(index, currentBDPoint, currentBDPoint.getPoint());
+        mBDNotes.add(note);
     }
 }

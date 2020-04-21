@@ -2,10 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/main_tool_bg">
+    android:background="#fff000">
 
     <TextView
-        android:id="@+id/line_close_btn"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:text="多线段（闭合）"
@@ -13,7 +12,6 @@
         android:gravity="center"/>
 
     <TextView
-        android:id="@+id/line_btn"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:text="多线段（非闭合）"
@@ -21,7 +19,6 @@
         android:gravity="center"/>
 
     <TextView
-        android:id="@+id/note_btn"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:text="注解"

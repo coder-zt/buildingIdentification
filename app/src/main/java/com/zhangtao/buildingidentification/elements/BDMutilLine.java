@@ -101,11 +101,8 @@ public class BDMutilLine extends BDElement {
         int index = 0;
         for (Polyline polyline : mPolylines) {
             if(polyline.equals( geometry)){
-                Log.d(TAG, "hasLine: 相等");
                 mTargetLine = index;
                 return true;
-            }else{
-                Log.d(TAG, "hasLine: 不相等");
             }
             index++;
         }
@@ -113,12 +110,33 @@ public class BDMutilLine extends BDElement {
     }
 
     public float getCurrentLineLen(){
-
         Polyline polyline = mPolylines.get(mTargetLine);
         double x1 =  polyline.getPoint(0).getX();
         double y1 =  polyline.getPoint(0).getY();
         double x2 =  polyline.getPoint(1).getX();
         double y2 =  polyline.getPoint(1).getY();
         return (float) Math.abs(Math.sqrt(Math.pow(x1-x2, 2) + Math.pow(y1-y2, 2)));
+    }
+
+    public Point gerMiddlePoint(){
+        Polyline polyline = mPolylines.get(mTargetLine);
+        double x1 =  polyline.getPoint(0).getX();
+        double y1 =  polyline.getPoint(0).getY();
+        double x2 =  polyline.getPoint(1).getX();
+        double y2 =  polyline.getPoint(1).getY();
+        return new Point((x1+x2)/2, (y1+y2)/2);
+    }
+
+    public BDPoint CreateMiddlePoint(Point point) {
+        BDPoint bdPoint = new BDPoint(point);
+        mBDPoints.add(mTargetLine + 1,bdPoint );
+        return bdPoint;
+    }
+
+    public void setType(String type) {
+        mType = type;
+    }
+    public String getType(){
+        return mType;
     }
 }

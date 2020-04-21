@@ -75,16 +75,16 @@ public class BDPoint extends BDElement {
         attribute.put(TYPE_KEY, TYPE_POINT);
         if(mIsSelect){
             if(mIsBoundary){
-                TextSymbol textSymbol = new TextSymbol(22, mIndex, Color.BLUE);
-                graphics.add(new Graphic(mPoint,textSymbol));
+//                TextSymbol textSymbol = new TextSymbol(22, mIndex, Color.BLUE);
+//                graphics.add(new Graphic(mPoint,textSymbol));
                 graphics.add(new Graphic(mPoint, POINT_BOUNDARY_SELECTED_SYMBOL, attribute));
             }else{
                 graphics.add(new Graphic(mPoint, POINT_SELECTED_SYMBOL, attribute));
             }
         }else{
             if(mIsBoundary){
-                TextSymbol textSymbol = new TextSymbol(22, mIndex, Color.BLUE);
-                graphics.add(new Graphic(mPoint,textSymbol));
+//                TextSymbol textSymbol = new TextSymbol(22, mIndex, Color.BLUE);
+//                graphics.add(new Graphic(mPoint,textSymbol));
                 graphics.add(new Graphic(mPoint, POINT_BOUNDARY_ORIGIN_SYMBOL, attribute));
             }else{
                 graphics.add(new Graphic(mPoint, POINT_ORIGIN_SYMBOL, attribute));

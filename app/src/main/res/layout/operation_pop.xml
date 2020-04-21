@@ -30,13 +30,12 @@
 
 <!--标注-->
     <LinearLayout
-        android:id="@+id/polygon_panel"
+        android:id="@+id/note_panel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone">
-        <include layout="@layout/operation_panel_line"/>
 
-        <include layout="@layout/operation_panel_line"/>
+        <include layout="@layout/operation_panel_note"/>
 
     </LinearLayout>
 

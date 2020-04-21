@@ -102,6 +102,7 @@
 
 
     <Button
+        android:id="@+id/create_middle_point"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/length_line"
         android:layout_width="100dp"
@@ -112,6 +113,7 @@
         android:layout_alignLeft="@+id/type_line"/>
 
     <Button
+        android:id="@+id/complete_btn"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/length_line"
         android:layout_width="100dp"

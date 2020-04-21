@@ -8,6 +8,7 @@ import com.esri.core.geometry.Polyline;
 import com.esri.core.map.Graphic;
 import com.zhangtao.buildingidentification.elements.BDElement;
 import com.zhangtao.buildingidentification.elements.BDMutilLine;
+import com.zhangtao.buildingidentification.elements.BDNote;
 import com.zhangtao.buildingidentification.elements.BDPoint;
 import com.zhangtao.buildingidentification.interfaces.IOperationPanelCallback;
 
@@ -17,6 +18,7 @@ import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_CLOSE_LINE
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_LINE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_POINT;
 
+
 public class DataPresenter implements IOperationPanelCallback {
 
     private final PresenterCallback mCallback;
@@ -24,6 +26,7 @@ public class DataPresenter implements IOperationPanelCallback {
     private DataMoudle mDataMoudle;
     private BDPoint mCurrentBDPoint;
     private BDMutilLine mCurrentBDMutilLine;
+    private boolean mIsCreateMiddlePoint;
 
     public DataPresenter(PresenterCallback callbak){
         mCallback = callbak;
@@ -84,10 +87,17 @@ public class DataPresenter implements IOperationPanelCallback {
 
     }
 
+    /**
+     * 点元素完成编辑的提交
+     * @param index
+     */
     @Override
     public void clickCompleted(String index) {
         if(index != null){
             mCurrentBDPoint.setBoundary(true, index);
+            if (mDataMoudle != null) {
+                mDataMoudle.createBDNote(index, mCurrentBDPoint);
+            }
         }
         if (mCallback != null) {
             mCallback.refresh();
@@ -108,12 +118,28 @@ public class DataPresenter implements IOperationPanelCallback {
     @Override
     public float getCurrentLineLength() {
         BDMutilLine line =  (BDMutilLine)mCurrentBDMutilLine;
-return  line.getCurrentLineLen();
+        return  line.getCurrentLineLen();
+    }
+
+    @Override
+    public void CreatePointOnLine() {
+        mIsCreateMiddlePoint = true;
+
+    }
+
+    @Override
+    public void commitInfoToLine(String type) {
+        if (mCurrentBDMutilLine != null) {
+            mCurrentBDMutilLine.setType(type);
+        }
     }
 
     public void addPoint(Point point){
-        if (mDataMoudle != null) {
+        if (mDataMoudle != null && !mIsCreateMiddlePoint) {
             mDataMoudle.addPoint(point);
+        }else if(mIsCreateMiddlePoint && mCurrentBDMutilLine != null){
+            mDataMoudle.createMiddlePoint((BDMutilLine)mCurrentBDMutilLine, point);
+            mIsCreateMiddlePoint = false;
         }
     }
 
@@ -145,7 +171,7 @@ return  line.getCurrentLineLen();
             mCurrentBDPoint.setSelect(false);
             mCurrentBDPoint = null;
         }
-        if (mCurrentBDMutilLine != null) {
+        if (mCurrentBDMutilLine != null && !mIsCreateMiddlePoint) {
             mCurrentBDMutilLine.setTargetLine(-1);
             mCurrentBDMutilLine = null;
         }
