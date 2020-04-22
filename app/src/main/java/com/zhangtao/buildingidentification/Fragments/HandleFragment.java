@@ -15,6 +15,7 @@ import com.esri.android.map.MapView;
 import com.esri.android.map.RasterLayer;
 import com.esri.android.map.event.OnZoomListener;
 import com.esri.core.geometry.Envelope;
+import com.esri.core.geometry.Geometry;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polygon;
 import com.esri.core.geometry.Polyline;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.zhangtao.buildingidentification.Utils.Constant.ID_KEY;
+import static com.zhangtao.buildingidentification.Utils.Constant.NOTE_INFO;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_CREATE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_KEY;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_LINE;
@@ -233,7 +235,9 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
                                 break;
                             }
                             grade = 1;
-                            mDataPresenter.setSelectTarget(TYPE_NOTE,currentGraphic.getGeometry() );
+                            Object xx = currentGraphic.getAttributes().get(NOTE_INFO);
+                            Geometry target = (Point)xx;
+                            mDataPresenter.setSelectTarget(TYPE_NOTE,target);
                             mOperationPopWindow.setPanel(TYPE_NOTE, null);
                             mOperationPopWindow.showAsDropDown(mToolBar);
                             break;

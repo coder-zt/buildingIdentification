@@ -1,6 +1,7 @@
 package com.zhangtao.buildingidentification.elements;
 
 import android.graphics.Color;
+import android.util.Log;
 
 import com.esri.core.geometry.Point;
 import com.esri.core.map.Graphic;
@@ -23,6 +24,8 @@ import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_POINT;
  * 草图中的点元素
  */
 public class BDPoint extends BDElement {
+
+    public static final String TAG = "BDPoint";
 
     public BDPoint(Point point) {
         mPoint = point;
@@ -99,4 +102,14 @@ public class BDPoint extends BDElement {
         }
         return false;
     }
+
+    public static boolean isSamePoint(Point point, Point another) {
+        Log.d(TAG, "isSamePoint: " + (point.getY()+ point.getX()-another.getY()-another.getX()));
+        if(point.getY() == another.getY() && point.getX() == another.getX()){
+            return true;
+        }
+
+        return false;
+    }
+
 }

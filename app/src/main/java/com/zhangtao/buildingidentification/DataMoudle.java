@@ -137,4 +137,14 @@ public class DataMoudle {
         BDNote note = new BDNote(index, currentBDPoint, currentBDPoint.getPoint());
         mBDNotes.add(note);
     }
+
+    public  BDNote setSelectNoteTarget(Point geometry) {
+        for (BDNote bdNote : mBDNotes) {
+            if(BDPoint.isSamePoint(bdNote.getPoint(), geometry)){
+                bdNote.setSelected();
+                return bdNote;
+            }
+        }
+        return null;
+    }
 }

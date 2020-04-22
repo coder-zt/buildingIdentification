@@ -1,6 +1,8 @@
 package com.zhangtao.buildingidentification.interfaces;
 
-public interface IOperationPanelCallback {
+import com.zhangtao.buildingidentification.Views.BDNumber;
+
+public interface IOperationPanelCallback extends BDNumber.onTypeValueChange {
 
     /**
      * 点击了删除按钮
@@ -45,4 +47,5 @@ public interface IOperationPanelCallback {
      * 更新线段的信息
      */
     void commitInfoToLine(String type);
+
 }

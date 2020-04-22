@@ -1,28 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#fff000">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="370dp"
+    android:layout_height="200dp"
+    android:background="#eeefefef">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="多线段（闭合）"
-        android:textSize="24sp"
-        android:gravity="center"/>
+   <com.zhangtao.buildingidentification.Views.BDNumber
+       android:id="@+id/set_size"
+       android:layout_marginTop="10dp"
+       android:layout_marginLeft="10dp"
+       android:layout_width="160dp"
+       android:layout_height="30dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="多线段（非闭合）"
-        android:textSize="24sp"
-        android:gravity="center"/>
+    <com.zhangtao.buildingidentification.Views.BDNumber
+        android:id="@+id/set_angle"
+        android:layout_below="@+id/set_size"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="160dp"
+        android:layout_height="30dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:text="注解"
-        android:textSize="24sp"
-        android:gravity="center"/>
+    <com.zhangtao.buildingidentification.Views.BDNumber
+        android:id="@+id/set_padding"
+        android:layout_below="@+id/set_angle"
 
-</LinearLayout>
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_width="160dp"
+        android:layout_height="30dp"/>
+
+    <Button
+        android:id="@+id/add_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginBottom="10dp"
+        android:text="添加备注"/>
+
+    <Button
+        android:id="@+id/complete_btn"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:text="编辑完成"/>
+
+</RelativeLayout>

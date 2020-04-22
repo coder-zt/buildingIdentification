@@ -1,11 +1,13 @@
 package com.zhangtao.buildingidentification;
 
+import android.util.Log;
 import android.view.View;
 
 import com.esri.core.geometry.Geometry;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polyline;
 import com.esri.core.map.Graphic;
+import com.esri.core.symbol.TextSymbol;
 import com.zhangtao.buildingidentification.elements.BDElement;
 import com.zhangtao.buildingidentification.elements.BDMutilLine;
 import com.zhangtao.buildingidentification.elements.BDNote;
@@ -16,17 +18,20 @@ import java.util.List;
 
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_CLOSE_LINE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_LINE;
+import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_NOTE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_POINT;
 
 
 public class DataPresenter implements IOperationPanelCallback {
 
+    public static final String TAG = "DataPresenter";
     private final PresenterCallback mCallback;
     private BDElement mCurrentElement;
     private DataMoudle mDataMoudle;
     private BDPoint mCurrentBDPoint;
     private BDMutilLine mCurrentBDMutilLine;
     private boolean mIsCreateMiddlePoint;
+    private BDNote mCurrentBDNote;
 
     public DataPresenter(PresenterCallback callbak){
         mCallback = callbak;
@@ -124,7 +129,7 @@ public class DataPresenter implements IOperationPanelCallback {
     @Override
     public void CreatePointOnLine() {
         mIsCreateMiddlePoint = true;
-
+        Log.d(TAG, "setSelectTarget: " + mCurrentBDMutilLine.toString());
     }
 
     @Override
@@ -132,6 +137,19 @@ public class DataPresenter implements IOperationPanelCallback {
         if (mCurrentBDMutilLine != null) {
             mCurrentBDMutilLine.setType(type);
         }
+    }
+
+    @Override
+    public void valueChange(String name, int value) {
+        switch (name){
+            case "大小":
+                if (mCurrentBDNote != null) {
+                    mCurrentBDNote.setSize(value);
+                }
+
+                break;
+        }
+        mCallback.refresh();
     }
 
     public void addPoint(Point point){
@@ -158,7 +176,10 @@ public class DataPresenter implements IOperationPanelCallback {
                 break;
             case TYPE_LINE:
                 mCurrentBDMutilLine = mDataMoudle.setSelectLineTarget((Polyline)geometry);
+                Log.d(TAG, "setSelectTarget: " + mCurrentBDMutilLine.toString());
                 break;
+            case TYPE_NOTE:
+                mCurrentBDNote =  mDataMoudle.setSelectNoteTarget((Point)geometry);
         }
     }
 
@@ -176,6 +197,7 @@ public class DataPresenter implements IOperationPanelCallback {
             mCurrentBDMutilLine = null;
         }
     }
+
 
     public interface PresenterCallback{
         void refresh();

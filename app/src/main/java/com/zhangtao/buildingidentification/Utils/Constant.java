@@ -56,6 +56,8 @@ public class Constant {
     // * * * * * 地图元素的属性 * * * * *
     public final static String TYPE_KEY = "TYPE";
     public final static String ID_KEY = "ID";
+    //注解的信息
+    public final static String NOTE_INFO = "NOTE_INFO";
     //1. 点
     public final static int TYPE_POINT = 11;
     //2. 多线段
@@ -65,6 +67,7 @@ public class Constant {
     public final static int TYPE_CLOSE_LINE = 121;
     //3. 注解
     public final static int TYPE_NOTE = 13;
+
     //4. 新建元素
     public final static int TYPE_CREATE = 14;
 

@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static com.zhangtao.buildingidentification.Utils.Constant.NOTE_INFO;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_KEY;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_NOTE;
 
@@ -31,12 +32,14 @@ public class BDNote extends BDElement {
     //方向
     int mAngle;
     //大小
-    int mSize = 200;
+    int mSize = 20;
     //文字样式
     TextSymbol mTextSymbol;
     //其他元素的附属
     BDElement mParent;
-    private double mWidth;
+    //字间距
+    private double mWidth = 15;
+    private boolean mIsSelected;
 
     /**
      * 创建注解
@@ -63,9 +66,18 @@ public class BDNote extends BDElement {
         List<Graphic> Graphics = new ArrayList<>();
         Map<String, Object> attribute = new HashMap<>();
         attribute.put(TYPE_KEY, TYPE_NOTE);
+//        attribute.put(NOTE_INFO, mPoint.getX());
+//        attribute.put(NOTE_INFO + "y", mPoint.getY());
+        attribute.put(NOTE_INFO, mPoint);
         double index = 1;
         double middle = (mContent.length() + 1)/2.0;
-        for (Drawable drawable : createMapBitMap(mContent, mSize,-1*mAngle, Color.WHITE)) {
+        int color = -1;
+        if(mIsSelected){
+            color = Color.RED;
+        }else{
+            color = Color.WHITE;
+        }
+        for (Drawable drawable : createMapBitMap(mContent, mSize,-1*mAngle,color)) {
             PictureMarkerSymbol markerSymbol = new PictureMarkerSymbol(drawable);
             Graphics.add( new Graphic(new Point(mPoint.getX() + mWidth * Math.cos(mAngle/180.0 *Math.PI ) * (index-middle), mPoint.getY() + mWidth*Math.sin(mAngle/180.0 *Math.PI)*(index-middle)), markerSymbol, attribute));
             index++;
@@ -145,5 +157,9 @@ public class BDNote extends BDElement {
         }
         return noteList;
 
+    }
+
+    public void setSelected() {
+        mIsSelected = true;
     }
 }

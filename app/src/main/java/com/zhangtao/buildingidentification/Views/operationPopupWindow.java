@@ -3,6 +3,7 @@ package com.zhangtao.buildingidentification.Views;
 import android.content.Context;
 import android.graphics.Color;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -31,6 +32,7 @@ import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_NOTE;
 
 public class operationPopupWindow extends PopupWindow implements View.OnClickListener, IOperation_Panel_Event {
 
+    public static final String TAG = "operationPopupWindow";
     private final View mPopView;
     private View mLinePanel;
     private IWindowDismissed mIWindowDismissed;
@@ -60,6 +62,7 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
     private Button mAddMiddlePoint;
     private Button mCompleteBtn;
     private PopupWindow mTypePopupWindow;
+    private BDNumber mSetSize;
 
     public operationPopupWindow(Context context){
         //设置它宽高
@@ -147,6 +150,13 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
 //        mLineAddBtn = mPopView.findViewById(R.id.btn_line_add);
         //注解的操作控件
         mNotePanel = mPopView.findViewById(R.id.note_panel);
+        mSetSize = mPopView.findViewById(R.id.set_size);
+        mSetSize.init("大小", 10, 0, 50);
+
+        BDNumber setAngle = mPopView.findViewById(R.id.set_angle);
+        setAngle.init("角度", 0, -180, 180);
+        BDNumber setpadding = mPopView.findViewById(R.id.set_padding);
+        setpadding.init("字间距", 0, 0, 50);
         //新建
         mCreatePanel = mPopView.findViewById(R.id.create_panel);
         mCreateCloseLine = mPopView.findViewById(R.id.line_close_btn);
@@ -331,6 +341,7 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
     @Override
     public void registerViewCallback(IOperationPanelCallback listener) {
         mCallback = listener;
+        mSetSize.setOnTypeValueChange(mCallback);
     }
 
     @Override
