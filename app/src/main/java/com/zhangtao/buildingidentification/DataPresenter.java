@@ -140,13 +140,30 @@ public class DataPresenter implements IOperationPanelCallback {
     }
 
     @Override
+    public void addNoteForLine(String tag) {
+        if (mDataMoudle != null) {
+            mDataMoudle.createBDNoteForLine(tag);
+            mCallback.refresh();
+        }
+    }
+
+    @Override
     public void valueChange(String name, int value) {
         switch (name){
             case "大小":
                 if (mCurrentBDNote != null) {
                     mCurrentBDNote.setSize(value);
+                    break;
                 }
-
+            case "角度":
+                if (mCurrentBDNote != null) {
+                    mCurrentBDNote.setAngle(value);
+                }
+                break;
+            case "字间距":
+                if (mCurrentBDNote != null) {
+                    mCurrentBDNote.setWidth(value);
+                }
                 break;
         }
         mCallback.refresh();
@@ -161,7 +178,7 @@ public class DataPresenter implements IOperationPanelCallback {
         }
     }
 
-    public void setSelectTarget(int type, Geometry geometry) {
+    public BDElement setSelectTarget(int type, Geometry geometry) {
         if (mCurrentBDPoint != null) {
             mCurrentBDPoint.setSelect(false);
             mCurrentBDPoint = null;
@@ -173,14 +190,15 @@ public class DataPresenter implements IOperationPanelCallback {
         switch (type){
             case TYPE_POINT:
                 mCurrentBDPoint = mDataMoudle.setSelectPointTarget((Point)geometry);
-                break;
+                return mCurrentBDPoint;
             case TYPE_LINE:
                 mCurrentBDMutilLine = mDataMoudle.setSelectLineTarget((Polyline)geometry);
-                Log.d(TAG, "setSelectTarget: " + mCurrentBDMutilLine.toString());
-                break;
+                return mCurrentBDMutilLine;
             case TYPE_NOTE:
                 mCurrentBDNote =  mDataMoudle.setSelectNoteTarget((Point)geometry);
+                return mCurrentBDNote;
         }
+        return null;
     }
 
     public List<Graphic> getGraphics() {
@@ -195,6 +213,10 @@ public class DataPresenter implements IOperationPanelCallback {
         if (mCurrentBDMutilLine != null && !mIsCreateMiddlePoint) {
             mCurrentBDMutilLine.setTargetLine(-1);
             mCurrentBDMutilLine = null;
+        }
+        if (mCurrentBDNote != null) {
+            mCurrentBDNote.setSelected(false);
+            mCurrentBDNote = null;
         }
     }
 

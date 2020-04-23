@@ -57,7 +57,8 @@ public class Constant {
     public final static String TYPE_KEY = "TYPE";
     public final static String ID_KEY = "ID";
     //注解的信息
-    public final static String NOTE_INFO = "NOTE_INFO";
+    public final static String NOTE_INFO_X = "NOTE_INFO_X";
+    public final static String NOTE_INFO_Y = "NOTE_INFO_Y";
     //1. 点
     public final static int TYPE_POINT = 11;
     //2. 多线段

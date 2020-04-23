@@ -48,4 +48,8 @@ public interface IOperationPanelCallback extends BDNumber.onTypeValueChange {
      */
     void commitInfoToLine(String type);
 
+    /**
+     * 给线添加注解
+     */
+    void addNoteForLine(String tag);
 }

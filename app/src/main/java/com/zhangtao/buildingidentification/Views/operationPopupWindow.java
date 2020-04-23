@@ -18,8 +18,12 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esri.core.geometry.Point;
 import com.zhangtao.buildingidentification.R;
 import com.zhangtao.buildingidentification.Utils.DensityUtils;
+import com.zhangtao.buildingidentification.elements.BDElement;
+import com.zhangtao.buildingidentification.elements.BDMutilLine;
+import com.zhangtao.buildingidentification.elements.BDNote;
 import com.zhangtao.buildingidentification.elements.BDPoint;
 import com.zhangtao.buildingidentification.interfaces.IOperationPanelCallback;
 import com.zhangtao.buildingidentification.interfaces.IOperation_Panel_Event;
@@ -63,6 +67,10 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
     private Button mCompleteBtn;
     private PopupWindow mTypePopupWindow;
     private BDNumber mSetSize;
+    private BDNumber mSetAngle;
+    private BDNumber mSetpadding;
+    private Button mAddTypeNote;
+    private Button mAddLengthNote;
 
     public operationPopupWindow(Context context){
         //设置它宽高
@@ -97,6 +105,8 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         mGetLenBtn.setOnClickListener(this);
         mAddMiddlePoint.setOnClickListener(this);
         mCompleteBtn.setOnClickListener(this);
+        mAddTypeNote.setOnClickListener(this);
+        mAddLengthNote.setOnClickListener(this);
         //新建
         mCreateCloseLine.setOnClickListener(this);
         mCreateUncloseLine.setOnClickListener(this);
@@ -147,16 +157,18 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         mLenTextTv = mPopView.findViewById(R.id.length_text);
         mAddMiddlePoint = mPopView.findViewById(R.id.create_middle_point);
         mCompleteBtn = mPopView.findViewById(R.id.complete_btn);
+        mAddTypeNote = mPopView.findViewById(R.id.commit_type_btn);
+        mAddLengthNote = mPopView.findViewById(R.id.commit_len_btn);
 //        mLineAddBtn = mPopView.findViewById(R.id.btn_line_add);
         //注解的操作控件
         mNotePanel = mPopView.findViewById(R.id.note_panel);
         mSetSize = mPopView.findViewById(R.id.set_size);
         mSetSize.init("大小", 10, 0, 50);
 
-        BDNumber setAngle = mPopView.findViewById(R.id.set_angle);
-        setAngle.init("角度", 0, -180, 180);
-        BDNumber setpadding = mPopView.findViewById(R.id.set_padding);
-        setpadding.init("字间距", 0, 0, 50);
+        mSetAngle = mPopView.findViewById(R.id.set_angle);
+        mSetAngle.init("角度", 0, -180, 180);
+        mSetpadding = mPopView.findViewById(R.id.set_padding);
+        mSetpadding.init("字间距", 0, 0, 50);
         //新建
         mCreatePanel = mPopView.findViewById(R.id.create_panel);
         mCreateCloseLine = mPopView.findViewById(R.id.line_close_btn);
@@ -220,6 +232,22 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
                     }
                 }
                 dismiss();
+                break;
+            case R.id.commit_type_btn:
+                if (mCallback != null) {
+                    String textBtn = mSelectTv.getText().toString();
+                    if(!TextUtils.equals(textBtn, "点击选择")){
+                        if(TextUtils.equals(textBtn, "其他")){
+                            mCallback.commitInfoToLine(mAddType.getText().toString());
+                        }else{
+                            mCallback.commitInfoToLine(textBtn);
+                        }
+                    }
+                }
+                mCallback.addNoteForLine("type");
+                break;
+            case R.id.commit_len_btn:
+                mCallback.addNoteForLine("len");
                 break;
         }
 
@@ -342,6 +370,8 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
     public void registerViewCallback(IOperationPanelCallback listener) {
         mCallback = listener;
         mSetSize.setOnTypeValueChange(mCallback);
+        mSetAngle.setOnTypeValueChange(mCallback);
+        mSetpadding.setOnTypeValueChange(mCallback);
     }
 
     @Override
@@ -356,9 +386,9 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
     /**
      * 设置当前的操作面板
      * @param type
-     * @param point
+     * @param object
      */
-    public void setPanel(int type, BDPoint point){
+    public void setPanel(int type, BDElement object){
         mPointPanel.setVisibility(View.GONE);
         mLinePanel.setVisibility(View.GONE);
         mCreatePanel.setVisibility(View.GONE);
@@ -366,7 +396,8 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         switch (type){
             case TYPE_POINT :
                 mPointPanel.setVisibility(View.VISIBLE);
-                if (point != null && point.isBoundary()) {
+                BDPoint point = (BDPoint)object;
+                if (object != null && point.isBoundary()) {
                     mIsBoundary.setChecked(true);
                     mBoundaryIndex.setText(point.getIndex());
                 }else{
@@ -374,9 +405,19 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
                 }
                 break;
             case TYPE_LINE :
+                BDMutilLine line = (BDMutilLine)object;
+                if (line.getType() != null) {
+                    mSelectTv.setText(line.getType());
+
+                }
+                mLenTextTv.setText("" + line.getCurrentLineLen());
                 mLinePanel.setVisibility(View.VISIBLE);
                 break;
             case TYPE_NOTE:
+                BDNote note = (BDNote)object;
+                mSetSize.setValue(note.getSize());
+                mSetAngle.setValue(note.getAngle());
+                mSetpadding.setValue((int)note.getWidth());
                 mNotePanel.setVisibility(View.VISIBLE);
                 break;
             case TYPE_CREATE:

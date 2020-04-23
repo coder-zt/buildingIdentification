@@ -18,7 +18,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.zhangtao.buildingidentification.Utils.Constant.NOTE_INFO;
+
+import static com.zhangtao.buildingidentification.Utils.Constant.NOTE_INFO_X;
+import static com.zhangtao.buildingidentification.Utils.Constant.NOTE_INFO_Y;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_KEY;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_NOTE;
 
@@ -30,15 +32,32 @@ public class BDNote extends BDElement {
     //内容
     String mContent;
     //方向
-    int mAngle;
+    int mAngle = 0;
     //大小
     int mSize = 20;
     //文字样式
     TextSymbol mTextSymbol;
+
+    public int getAngle() {
+        return mAngle;
+    }
+
+    public void setAngle(int angle) {
+        mAngle = angle;
+    }
+
+    public double getWidth() {
+        return mWidth;
+    }
+
+    public void setWidth(double width) {
+        mWidth = width;
+    }
+
     //其他元素的附属
     BDElement mParent;
     //字间距
-    private double mWidth = 15;
+    private double mWidth = 2;
     private boolean mIsSelected;
 
     /**
@@ -68,7 +87,8 @@ public class BDNote extends BDElement {
         attribute.put(TYPE_KEY, TYPE_NOTE);
 //        attribute.put(NOTE_INFO, mPoint.getX());
 //        attribute.put(NOTE_INFO + "y", mPoint.getY());
-        attribute.put(NOTE_INFO, mPoint);
+        attribute.put(NOTE_INFO_X, mPoint.getX());
+        attribute.put(NOTE_INFO_Y, mPoint.getY());
         double index = 1;
         double middle = (mContent.length() + 1)/2.0;
         int color = -1;
@@ -159,7 +179,7 @@ public class BDNote extends BDElement {
 
     }
 
-    public void setSelected() {
-        mIsSelected = true;
+    public void setSelected(boolean isSelected) {
+        mIsSelected =isSelected;
     }
 }

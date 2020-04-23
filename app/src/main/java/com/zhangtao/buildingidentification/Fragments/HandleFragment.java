@@ -27,6 +27,7 @@ import com.zhangtao.buildingidentification.Listeners.MyTouchListener;
 import com.zhangtao.buildingidentification.R;
 import com.zhangtao.buildingidentification.Views.mainToolBar;
 import com.zhangtao.buildingidentification.Views.operationPopupWindow;
+import com.zhangtao.buildingidentification.elements.BDElement;
 import com.zhangtao.buildingidentification.elements.BDPoint;
 import com.zhangtao.buildingidentification.interfaces.IMapEventCallback;
 import com.zhangtao.buildingidentification.surveyActivity;
@@ -36,7 +37,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.zhangtao.buildingidentification.Utils.Constant.ID_KEY;
-import static com.zhangtao.buildingidentification.Utils.Constant.NOTE_INFO;
+import static com.zhangtao.buildingidentification.Utils.Constant.NOTE_INFO_X;
+import static com.zhangtao.buildingidentification.Utils.Constant.NOTE_INFO_Y;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_CREATE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_KEY;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_LINE;
@@ -208,16 +210,17 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
                 int grade = 0;
                 for (int id : ids) {
                     Graphic currentGraphic =  mGraphicsLayer.getGraphic(id);
+                    if (currentGraphic == null) {
+                        return;
+                    }
                     switch ((int)currentGraphic.getAttributes().get(TYPE_KEY)){
                         case TYPE_POINT :
                             if( grade == 3){
                                 break;
                             }
                             grade = 3;
-                            //更具点属性设置面板参数
-                            mDataPresenter.setSelectTarget(TYPE_POINT,currentGraphic.getGeometry() );
-//                            mCurrentPointIndex = getPointIndex();
-                            mOperationPopWindow.setPanel(TYPE_POINT, null);
+                            //根据点属性设置面板参数
+                            mOperationPopWindow.setPanel(TYPE_POINT,   mDataPresenter.setSelectTarget(TYPE_POINT,currentGraphic.getGeometry()));
                             mOperationPopWindow.showAsDropDown(mToolBar);
                             break;
                         case TYPE_LINE :
@@ -225,9 +228,9 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
                                 break;
                             }
                             grade = 2;
-                            mDataPresenter.setSelectTarget(TYPE_LINE,currentGraphic.getGeometry() );
-                            mCurrentLineId = (int)currentGraphic.getAttributes().get(ID_KEY);
-                            mOperationPopWindow.setPanel(TYPE_LINE, null);
+//                            mCurrentLineId = (int)currentGraphic.getAttributes().get(ID_KEY);
+                            BDElement bdElement = mDataPresenter.setSelectTarget(TYPE_LINE, currentGraphic.getGeometry());
+                            mOperationPopWindow.setPanel(TYPE_LINE, bdElement );
                             mOperationPopWindow.showAsDropDown(mToolBar);
                             break;
                         case TYPE_NOTE:
@@ -235,11 +238,14 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
                                 break;
                             }
                             grade = 1;
-                            Object xx = currentGraphic.getAttributes().get(NOTE_INFO);
-                            Geometry target = (Point)xx;
-                            mDataPresenter.setSelectTarget(TYPE_NOTE,target);
-                            mOperationPopWindow.setPanel(TYPE_NOTE, null);
-                            mOperationPopWindow.showAsDropDown(mToolBar);
+                            //注解的坐标信息
+                            Object X = currentGraphic.getAttributes().get(NOTE_INFO_X);
+                            Object Y = currentGraphic.getAttributes().get(NOTE_INFO_Y);
+                            if(X != null && Y != null){
+                                Geometry target = new Point((Double)X, (Double)Y);
+                                mOperationPopWindow.setPanel(TYPE_NOTE,  mDataPresenter.setSelectTarget(TYPE_NOTE,target));
+                                mOperationPopWindow.showAsDropDown(mToolBar);
+                            }
                             break;
                         default:
 

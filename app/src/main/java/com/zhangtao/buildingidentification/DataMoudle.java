@@ -141,10 +141,25 @@ public class DataMoudle {
     public  BDNote setSelectNoteTarget(Point geometry) {
         for (BDNote bdNote : mBDNotes) {
             if(BDPoint.isSamePoint(bdNote.getPoint(), geometry)){
-                bdNote.setSelected();
+                bdNote.setSelected(true);
                 return bdNote;
             }
         }
         return null;
+    }
+
+    public void createBDNoteForLine(String tag) {
+        if (mBDElement != null) {
+            BDMutilLine line =  (BDMutilLine) mBDElement;
+            Point point = line.gerMiddlePoint();
+            if(tag == "type"){
+                BDNote note = new BDNote(((BDMutilLine) mBDElement).getType(), mBDElement, point);
+                mBDNotes.add(note);
+            }else if(tag == "len"){
+                BDNote note = new BDNote("" + ((BDMutilLine) mBDElement).getCurrentLineLen(), mBDElement, point);
+                mBDNotes.add(note);
+            }
+
+        }
     }
 }

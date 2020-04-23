@@ -105,13 +105,10 @@ public class BDNumber extends RelativeLayout {
                     Log.d(TAG, "onTextChanged: " + Integer.toString(mValue) + mIsAuto);
                     mValueArea.setText(Integer.toString(mValue));
 
-                }else{
-                    if (mCallback != null) {
-                        mCallback.valueChange(mName, mValue);
-                    }
                 }
-
-
+                if (mCallback != null) {
+                    mCallback.valueChange(mName, mValue);
+                }
             }
 
             @Override
@@ -133,6 +130,10 @@ public class BDNumber extends RelativeLayout {
         return mValue;
     }
 
+    public void setValue(int value){
+            mValue = value;
+        mValueArea.setText(Integer.toString(mValue));
+    }
     public void setOnTypeValueChange(onTypeValueChange listener){
         mCallback = listener;
     }
