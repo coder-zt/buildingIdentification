@@ -52,4 +52,10 @@ public interface IOperationPanelCallback extends BDNumber.onTypeValueChange {
      * 给线添加注解
      */
     void addNoteForLine(String tag);
+
+    /**
+     * 添加额外的注解
+     * @param note
+     */
+    void addNoteBySelf(String note);
 }

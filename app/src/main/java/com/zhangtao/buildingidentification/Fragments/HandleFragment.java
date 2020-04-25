@@ -134,7 +134,7 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
         mToolBar = mView.findViewById(R.id.toolbar);
         mToolBar.setScale(Double.toString((mMapView.getScale())));
         if (mContext != null) {
-            mOperationPopWindow = new operationPopupWindow(mContext);
+            mOperationPopWindow = new operationPopupWindow(mContext, mToolBar);
         }
 
     }
@@ -202,6 +202,9 @@ public class HandleFragment extends BaseFragment implements mainToolBar.onItemCl
         float x = point.getX();
         float y = point.getY();
         if(mIsEdit){
+            if(mDataPresenter.getIsAddNote()){
+                mDataPresenter.addNoteForClick(mMapView.toMapPoint(x,y));
+            }
             //点击需要编辑的元素
             int ids[] =  mGraphicsLayer.getGraphicIDs(x, y, mTolerance);
             if(ids.length == 0){

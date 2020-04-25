@@ -71,8 +71,11 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
     private BDNumber mSetpadding;
     private Button mAddTypeNote;
     private Button mAddLengthNote;
+    private Button mAddNoteBtn;
+    private EditText mInputNote;
+    private final View mTopView;
 
-    public operationPopupWindow(Context context){
+    public operationPopupWindow(Context context, mainToolBar toolBar){
         //设置它宽高
         super(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         //这里要注意：设置setOutsideTouchable之前，先要设置：setBackgroundDrawable,
@@ -82,6 +85,7 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         setTouchable(true);
         setFocusable(true);
         mContext = context;
+        mTopView = toolBar;
         //载进来View
         mPopView = LayoutInflater.from(context).inflate(R.layout.operation_pop, null);
         //设置内容
@@ -107,6 +111,7 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         mCompleteBtn.setOnClickListener(this);
         mAddTypeNote.setOnClickListener(this);
         mAddLengthNote.setOnClickListener(this);
+        mAddNoteBtn.setOnClickListener(this);
         //新建
         mCreateCloseLine.setOnClickListener(this);
         mCreateUncloseLine.setOnClickListener(this);
@@ -164,11 +169,12 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
         mNotePanel = mPopView.findViewById(R.id.note_panel);
         mSetSize = mPopView.findViewById(R.id.set_size);
         mSetSize.init("大小", 10, 0, 50);
-
         mSetAngle = mPopView.findViewById(R.id.set_angle);
         mSetAngle.init("角度", 0, -180, 180);
         mSetpadding = mPopView.findViewById(R.id.set_padding);
         mSetpadding.init("字间距", 0, 0, 50);
+        mAddNoteBtn = mPopView.findViewById(R.id.add_note_btn);
+        mInputNote = mPopView.findViewById(R.id.note_input_et);
         //新建
         mCreatePanel = mPopView.findViewById(R.id.create_panel);
         mCreateCloseLine = mPopView.findViewById(R.id.line_close_btn);
@@ -200,16 +206,23 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
                 break;
             //创建新元素面板的事件
             case R.id.line_btn:
-                mCallback.createElement(TYPE_LINE);
+                if (mCallback != null) {
+                    mCallback.createElement(TYPE_LINE);
+                }
                 dismiss();
                 break;
             case R.id.line_close_btn:
-                mCallback.createElement(TYPE_CLOSE_LINE);
+                if (mCallback != null) {
+                    mCallback.createElement(TYPE_CLOSE_LINE);
+                }
                 dismiss();
                 break;
             case R.id.note_btn:
-                mCallback.createElement(TYPE_NOTE);
+                if (mCallback != null) {
+                    mCallback.createElement(TYPE_NOTE);
+                }
                 dismiss();
+                setPanel(TYPE_NOTE, null);
                 break;
             case R.id.select_btn:
                 showLineType(v);
@@ -248,6 +261,12 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
                 break;
             case R.id.commit_len_btn:
                 mCallback.addNoteForLine("len");
+                break;
+            case R.id.add_note_btn:
+                if (mCallback != null) {
+                    String note =  mInputNote.getText().toString();
+                    mCallback.addNoteBySelf(note);
+                }
                 break;
         }
 
@@ -414,11 +433,14 @@ public class operationPopupWindow extends PopupWindow implements View.OnClickLis
                 mLinePanel.setVisibility(View.VISIBLE);
                 break;
             case TYPE_NOTE:
-                BDNote note = (BDNote)object;
-                mSetSize.setValue(note.getSize());
-                mSetAngle.setValue(note.getAngle());
-                mSetpadding.setValue((int)note.getWidth());
+                if (object != null) {
+                    BDNote note = (BDNote)object;
+                    mSetSize.setValue(note.getSize());
+                    mSetAngle.setValue(note.getAngle());
+                    mSetpadding.setValue((int)note.getWidth());
+                }
                 mNotePanel.setVisibility(View.VISIBLE);
+                showAsDropDown(mTopView);
                 break;
             case TYPE_CREATE:
                 mCreatePanel.setVisibility(View.VISIBLE);

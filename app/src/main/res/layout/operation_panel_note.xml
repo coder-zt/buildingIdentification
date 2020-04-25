@@ -28,14 +28,29 @@
         android:layout_width="160dp"
         android:layout_height="30dp"/>
 
+    <TextView
+        android:id="@+id/note_tv"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:text="备注内容"
+        android:layout_marginLeft="40dp"
+        android:gravity="center"
+        android:layout_toRightOf="@+id/set_size"/>
+    <EditText
+        android:id="@+id/note_input_et"
+        android:layout_width="150dp"
+        android:layout_height="50dp"
+        android:layout_below="@+id/note_tv"
+        android:layout_toRightOf="@+id/set_size"
+        android:layout_marginLeft="40dp"/>
+
     <Button
-        android:id="@+id/add_btn"
-        android:layout_alignParentBottom="true"
+        android:id="@+id/add_note_btn"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginBottom="10dp"
+        android:layout_below="@+id/note_input_et"
+        android:layout_toRightOf="@+id/set_size"
+        android:layout_marginLeft="70dp"
         android:text="添加备注"/>
 
     <Button
@@ -44,8 +59,7 @@
         android:layout_marginBottom="10dp"
         android:layout_width="100dp"
         android:layout_height="50dp"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="30dp"
+        android:layout_centerHorizontal="true"
         android:text="编辑完成"/>
 
 </RelativeLayout>

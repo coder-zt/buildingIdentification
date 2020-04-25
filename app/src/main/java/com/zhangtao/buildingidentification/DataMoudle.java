@@ -162,4 +162,9 @@ public class DataMoudle {
 
         }
     }
+
+    public void createBDNoteForClick(Point toMapPoint, String addNote) {
+        BDNote note = new BDNote(addNote, null, toMapPoint);
+        mBDNotes.add(note);
+    }
 }

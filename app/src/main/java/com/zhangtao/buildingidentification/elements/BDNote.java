@@ -85,8 +85,6 @@ public class BDNote extends BDElement {
         List<Graphic> Graphics = new ArrayList<>();
         Map<String, Object> attribute = new HashMap<>();
         attribute.put(TYPE_KEY, TYPE_NOTE);
-//        attribute.put(NOTE_INFO, mPoint.getX());
-//        attribute.put(NOTE_INFO + "y", mPoint.getY());
         attribute.put(NOTE_INFO_X, mPoint.getX());
         attribute.put(NOTE_INFO_Y, mPoint.getY());
         double index = 1;

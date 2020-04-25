@@ -1,13 +1,11 @@
 package com.zhangtao.buildingidentification;
 
 import android.util.Log;
-import android.view.View;
 
 import com.esri.core.geometry.Geometry;
 import com.esri.core.geometry.Point;
 import com.esri.core.geometry.Polyline;
 import com.esri.core.map.Graphic;
-import com.esri.core.symbol.TextSymbol;
 import com.zhangtao.buildingidentification.elements.BDElement;
 import com.zhangtao.buildingidentification.elements.BDMutilLine;
 import com.zhangtao.buildingidentification.elements.BDNote;
@@ -16,7 +14,6 @@ import com.zhangtao.buildingidentification.interfaces.IOperationPanelCallback;
 
 import java.util.List;
 
-import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_CLOSE_LINE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_LINE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_NOTE;
 import static com.zhangtao.buildingidentification.Utils.Constant.TYPE_POINT;
@@ -32,6 +29,8 @@ public class DataPresenter implements IOperationPanelCallback {
     private BDMutilLine mCurrentBDMutilLine;
     private boolean mIsCreateMiddlePoint;
     private BDNote mCurrentBDNote;
+    private String mAddNote;
+    private boolean mIsAddNote;
 
     public DataPresenter(PresenterCallback callbak){
         mCallback = callbak;
@@ -148,6 +147,17 @@ public class DataPresenter implements IOperationPanelCallback {
     }
 
     @Override
+    public void addNoteBySelf(String note) {
+        mAddNote = note;
+
+        mIsAddNote = true;
+    }
+
+    public boolean getIsAddNote(){
+        return mIsAddNote;
+    }
+
+    @Override
     public void valueChange(String name, int value) {
         switch (name){
             case "大小":
@@ -217,6 +227,14 @@ public class DataPresenter implements IOperationPanelCallback {
         if (mCurrentBDNote != null) {
             mCurrentBDNote.setSelected(false);
             mCurrentBDNote = null;
+        }
+    }
+
+    public void addNoteForClick(Point toMapPoint) {
+        if (mDataMoudle != null && mAddNote != null) {
+            mDataMoudle.createBDNoteForClick(toMapPoint,mAddNote );
+            mIsAddNote = false;
+            mCallback.refresh();
         }
     }
 

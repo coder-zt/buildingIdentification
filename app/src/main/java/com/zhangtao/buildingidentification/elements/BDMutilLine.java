@@ -110,6 +110,7 @@ public class BDMutilLine extends BDElement {
     }
 
     public float getCurrentLineLen(){
+
         Polyline polyline = mPolylines.get(mTargetLine);
         double x1 =  polyline.getPoint(0).getX();
         double y1 =  polyline.getPoint(0).getY();
@@ -119,6 +120,7 @@ public class BDMutilLine extends BDElement {
     }
 
     public Point gerMiddlePoint(){
+
         Polyline polyline = mPolylines.get(mTargetLine);
         double x1 =  polyline.getPoint(0).getX();
         double y1 =  polyline.getPoint(0).getY();
